@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-globals */
+//eslint 예외처리?
 // 캐시 이름
 const CACHE_NAME = "cache-v1";
 
