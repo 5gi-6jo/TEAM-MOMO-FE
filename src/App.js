@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import { logger } from './shared/utils';
 
 function App() {
+  logger('test');
   return (
     <div className="App">
       <div>jaksldfjlkadsjkf</div>
