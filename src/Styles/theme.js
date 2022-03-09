@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css } from 'styled-components';
 
 const calRem = size => `${size / 16}rem`;
 
@@ -25,21 +25,32 @@ const fontWeight = {
 
 const color = {
   // 가장 진한 색이 1이며, 숫자가 커질수록 점점 옅은 색으로 셋팅해두었습니다.
-  mainBlue: "#5327ff",
-  mainMint: "#83ffca",
-  mainGray: "#dedfe0",
-  white: "#fff",
-  black: "#292b2d",
-  mint: "#bcffe2",
-  blue1: "#8689ff",
-  blue2: "#afb1ff",
-  blue3: "#d8d9ff",
-  gray1: "#464b50",
-  gray2: "#757b80",
-  gray3: "#a6abb2",
-  gray4: "#e5e5e5",
-  darkLine: "#3F4448",
-  danger: "#ff8b6f",
+  mainBlue: '#5327ff',
+  mainMint: '#83ffca',
+  mainGray: '#dedfe0',
+  white: '#fff',
+  black: '#292b2d',
+  mint: '#bcffe2',
+  blue1: '#8689ff',
+  blue2: '#afb1ff',
+  blue3: '#d8d9ff',
+  gray1: '#464b50',
+  gray2: '#757b80',
+  gray3: '#a6abb2',
+  gray4: '#e5e5e5',
+  darkLine: '#3F4448',
+  danger: '#ff8b6f',
+};
+const deviceSizes = {
+  mobile: '375px',
+  tablet: '768px',
+  laptop: '1024px',
+};
+
+const device = {
+  mobile: `screen and (min-width: ${deviceSizes.mobile})`,
+  tablet: `screen and (min-width: ${deviceSizes.tablet})`,
+  laptop: `screen and (min-width: ${deviceSizes.laptop})`,
 };
 
 const theme = {
@@ -47,6 +58,7 @@ const theme = {
   fontWeight,
   color,
   calRem,
+  device,
 };
 
 export default theme;
