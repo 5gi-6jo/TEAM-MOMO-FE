@@ -1,12 +1,12 @@
 import logo from './logo.svg';
-import './App.css';
 import { logger } from './shared/utils';
+import Calendar from './components/Calendar';
 
 function App() {
   logger('test');
   return (
     <div className="App">
-      <div>jaksldfjlkadsjkf</div>
+      <Calendar />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
