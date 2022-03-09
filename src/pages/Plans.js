@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import webImg from '../img/backImg.png';
+
+// const writeIcon = '../img/review_write.png';
 
 /**
  * @param {*} props
@@ -11,9 +12,9 @@ import webImg from '../img/backImg.png';
 
 const Plans = props => {
   return (
-    <React.Fragment>
-      <div>Plans</div>
-    </React.Fragment>
+    <>
+      <div>plans</div>
+    </>
   );
 };
 

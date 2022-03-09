@@ -1,5 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+const writeIcon = '/icons/review_write.png';
 
 /**
  * @param {*} props
@@ -9,15 +12,33 @@ import styled from 'styled-components';
  */
 
 const Main = props => {
+  const navigate = useNavigate();
   return (
     <React.Fragment>
       <div>Main</div>
+      <WriteButton
+        onClick={() => {
+          navigate('/edit', { replace: true });
+        }}
+      />
     </React.Fragment>
   );
 };
 
 // 스타일 컴포넌트 작성 위치
 const StyleComponent = styled.div``;
+
+const WriteButton = styled.div`
+  position: fixed;
+  bottom: 96px;
+  left: 50%;
+  margin-left: 25%;
+  width: 60px;
+  height: 60px;
+  background-image: url(${writeIcon});
+  background-size: cover;
+  cursor: pointer;
+`;
 
 // default props 작성 위치
 Main.defaultProps = {};

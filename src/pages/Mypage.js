@@ -9,7 +9,11 @@ import styled from 'styled-components';
  */
 
 const Mypage = props => {
-  return <React.Fragment>{/* something... */}</React.Fragment>;
+  return (
+    <React.Fragment>
+      <div>mypage</div>
+    </React.Fragment>
+  );
 };
 
 // 스타일 컴포넌트 작성 위치

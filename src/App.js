@@ -10,6 +10,8 @@ import webImg from './img/backImg.png';
 import Main from './pages/Main';
 import Plans from './pages/Plans';
 import PlansEdit from './pages/PlansEdit';
+import Footer from './pages/Footer';
+import Mypage from './pages/Mypage';
 
 function App() {
   logger('test');
@@ -24,10 +26,11 @@ function App() {
             <Route path="/plans" element={<Plans />} />
             <Route path="/Edit" element={<PlansEdit />} />
             <Route path="/Edit/:id" element={<PlansEdit />} />
-            <Route path="/plans" element={<Plans />} />
+            <Route path="/mypage" element={<Mypage />} />
             <Route path="/plans" element={<Plans />} />
             <Route path="/plans" element={<Plans />} />
           </Routes>
+          <Footer />
         </Wrap>
       </ThemeProvider>
     </>
