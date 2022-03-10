@@ -16,7 +16,13 @@ const Footer = props => {
     <>
       <NavBox>
         <Grid is_flex>
-          <ButtonWrap onClick={() => {}}>지도</ButtonWrap>
+          <ButtonWrap
+            onClick={() => {
+              navigate('/plansdetail', { replace: true });
+            }}
+          >
+            지도
+          </ButtonWrap>
           <ButtonWrap
             onClick={() => {
               navigate('/', { replace: true });
