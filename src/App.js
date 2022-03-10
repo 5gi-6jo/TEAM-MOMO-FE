@@ -79,5 +79,5 @@ const Wrap = styled.div`
     position: relative;
   }
 `;
-//tesetasdf
+
 export default App;
