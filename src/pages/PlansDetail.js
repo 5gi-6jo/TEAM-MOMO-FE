@@ -43,8 +43,12 @@ const PlansDetail = props => {
   };
   return (
     <>
-      <div>PlansDetail2</div>
-      <input type="file" accept="image/*" onChange={handleFileInput} />
+      <div>PlansDetail3</div>
+      <input
+        type="file"
+        accept="image/x-png,image/jpeg"
+        onChange={handleFileInput}
+      />
       <Img src={preview ? preview : 'http://via.placeholder.com/400x300'} />
     </>
   );
