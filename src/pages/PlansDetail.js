@@ -38,6 +38,7 @@ const PlansDetail = props => {
       //     console.log(error);
       //   });
       // logger('보냄');
+      //테스트 코드
       dispatch(setPreview(render.result));
     };
   };
