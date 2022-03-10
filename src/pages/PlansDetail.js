@@ -1,5 +1,4 @@
-import { render } from '@testing-library/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { setPreview } from '../redux/modules/image';
@@ -16,7 +15,6 @@ import { logger } from '../shared/utils';
 
 const PlansDetail = props => {
   const dispatch = useDispatch();
-  const [selecteFile, setSelecteFile] = useState(null);
   const preview = useSelector(state => state.image.preview);
 
   const handleFileInput = e => {
