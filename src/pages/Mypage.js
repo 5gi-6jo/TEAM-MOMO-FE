@@ -17,7 +17,7 @@ const Mypage = props => {
 };
 
 // 스타일 컴포넌트 작성 위치
-const StyleComponent = styled.div``;
+const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 
 // default props 작성 위치
 Mypage.defaultProps = {};
