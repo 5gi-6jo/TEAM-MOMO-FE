@@ -1,8 +1,9 @@
+// import axios from 'axios';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { setPreview } from '../redux/modules/image';
-import { logger } from '../shared/utils';
+// import { logger } from '../shared/utils';
 
 // const writeIcon = '../img/review_write.png';
 
@@ -24,14 +25,30 @@ const PlansDetail = props => {
     render.readAsDataURL(file);
 
     render.onloadend = () => {
-      logger(render.result);
+      const formData = new FormData();
+      formData.append('file', e.target.files[0]);
+      // axios
+      //   .post('http://3.36.63.204/api/upload', formData, {
+      //     headers: { 'Content-Type': 'multipart/form-data' },
+      //   })
+      //   .then(res => {
+      //     console.log(res);
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //   });
+      // logger('보냄');
       dispatch(setPreview(render.result));
     };
   };
   return (
     <>
       <div>PlansDetail</div>
-      <input type="file" onChange={handleFileInput} />
+      <input
+        type="file"
+        accept="image/*;capture=camera"
+        onChange={handleFileInput}
+      />
       <Img src={preview ? preview : 'http://via.placeholder.com/400x300'} />
     </>
   );
