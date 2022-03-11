@@ -5,26 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import promiseMiddleware from 'redux-promise';
-import reduxThunk from 'redux-thunk';
-
-const createStoreWidthMiddleware = applyMiddleware(
-  promiseMiddleware,
-  reduxThunk,
-)(createStore);
+import { store } from './redux/configureStore';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider
-      store={createStoreWidthMiddleware(
-        // 리듀서를 생성 후 넣어 준다.
-        //
-        // 개발자 도구를 사용하기 위한 설정
-        window.__REDUX_DEVTOOLS_EXTENSION__ &&
-          window.__REDUX_DEVTOOLS_EXTENSION__(),
-      )}
-    >
+    <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
@@ -33,6 +18,7 @@ ReactDOM.render(
   document.getElementById('root'),
 );
 
+// test test
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
