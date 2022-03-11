@@ -50,7 +50,7 @@ function Register(props) {
         <label>Password</label>
         <input type="password" value={password} onChange={onPasswordHandler} />
 
-        <label>ConfirmPasword</label>
+        <label>PaswordCheck</label>
         <input
           type="password"
           value={passwordCheck}
