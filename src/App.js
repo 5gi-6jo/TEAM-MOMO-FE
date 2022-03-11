@@ -14,6 +14,9 @@ import Footer from './pages/Footer';
 import Mypage from './pages/Mypage';
 import PlansDetail from './pages/PlansDetail';
 
+import Register from './pages/Register';
+import Login from './pages/Login';
+
 function App() {
   logger('test');
 
@@ -30,6 +33,8 @@ function App() {
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/plansdetail" element={<PlansDetail />} />
             <Route path="/plans" element={<Plans />} />
+            <Route path="/Register" element={<Register />} />
+            <Route path="/Login" element={<Login />} />
           </Routes>
           <Footer />
         </Wrap>
