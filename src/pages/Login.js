@@ -1,45 +1,29 @@
-import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import LoginForm from '../components/LoginForm';
 
-function Login(props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Login = ({ isLogin }) => {
+  const navigate = useNavigate();
 
-  const onEmailHandler = e => {
-    setEmail(e.currentTarget.value);
-  };
-
-  const onPasswordHandler = e => {
-    setPassword(e.currentTargetValue);
-  };
-
-  const onSubmitHandler = e => {
-    e.preventDefault();
-  };
+  useEffect(() => {
+    if (isLogin) {
+      alert('이미 로그인이 되어있습니다.');
+      navigate('/');
+    }
+  });
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100vh',
-      }}
-    >
-      <form
-        onSubmit={onSubmitHandler}
-        style={{ display: 'flex', flexDirection: 'column' }}
-      >
-        <label>Email</label>
-        <input type="email" value={email} onChange={onEmailHandler} />
-        <label>Password</label>
-        <input type="password" value={password} onChange={onPasswordHandler} />
-        <br />
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <>
+      <Title>로그인</Title>
+      <LoginForm />
+    </>
   );
-}
+};
 
-export default withRouter(Login);
+const Title = styled.h1`
+  font-size: 1.5rem;
+  margin: 1em 0;
+`;
+
+export default Login;

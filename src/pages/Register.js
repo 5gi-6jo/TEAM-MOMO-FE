@@ -1,66 +1,29 @@
-import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import RegisterForm from '../components/RegisterForm';
 
-function Register(props) {
-  const [email, setEmail] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordCheck, setPasswordCheck] = useState('');
+const Register = ({ isLogin }) => {
+  const navigate = useNavigate();
 
-  const onEmailHandler = e => {
-    setEmail(e.currentTarget.value);
-  };
-
-  const onNicknameHandler = e => {
-    setNickname(e.currentTarget.value);
-  };
-
-  const onPasswordHandler = e => {
-    setPassword(e.currentTarget.value);
-  };
-
-  const onPasswordCheckHandler = e => {
-    setPasswordCheck(e.currentTarget.value);
-  };
-
-  const onSubmitHandler = e => {
-    e.preventDefault();
-  };
+  useEffect(() => {
+    if (isLogin) {
+      alert('이미 로그인이 되어있습니다.');
+      navigate('/', { replace: true });
+    }
+  });
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100vh',
-      }}
-    >
-      <form
-        onSubmit={onSubmitHandler}
-        style={{ display: 'flex', flexDirection: 'column' }}
-      >
-        <label>Email</label>
-        <input type="email" value={email} onChange={onEmailHandler} />
-
-        <label>Name</label>
-        <input type="test" value={nickname} onChange={onNicknameHandler} />
-
-        <label>Password</label>
-        <input type="password" value={password} onChange={onPasswordHandler} />
-
-        <label>PaswordCheck</label>
-        <input
-          type="password"
-          value={passwordCheck}
-          onChange={onPasswordCheckHandler}
-        />
-        <br />
-        <button type="submit">회원 가입</button>
-      </form>
-    </div>
+    <>
+      <Title>회원가입</Title>
+      <RegisterForm />
+    </>
   );
-}
+};
 
-export default withRouter(Register);
+const Title = styled.h1`
+  font-size: 1.5rem;
+  margin: 1em 0;
+`;
+
+export default Register;
