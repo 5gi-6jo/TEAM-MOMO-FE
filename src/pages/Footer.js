@@ -44,6 +44,20 @@ const Footer = props => {
           >
             마이페이지
           </ButtonWrap>
+          <ButtonWrap
+            onClick={() => {
+              navigate('/Login', { replace: true });
+            }}
+          >
+            로그인
+          </ButtonWrap>
+          <ButtonWrap
+            onClick={() => {
+              navigate('/Register', { replace: true });
+            }}
+          >
+            회원가입
+          </ButtonWrap>
         </Grid>
       </NavBox>
     </>
