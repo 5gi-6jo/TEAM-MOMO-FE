@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import moment from 'moment';
 const writeIcon = '/icons/review_write.png';
 
 /**
@@ -13,6 +14,8 @@ const writeIcon = '/icons/review_write.png';
 
 const Main = props => {
   const navigate = useNavigate();
+  const today = moment().format();
+  console.log(today);
   return (
     <React.Fragment>
       <div>Main</div>

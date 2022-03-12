@@ -14,10 +14,43 @@ import Footer from './pages/Footer';
 import Mypage from './pages/Mypage';
 import PlansDetail from './pages/PlansDetail';
 
+
+import firebase from 'firebase/compat/app';
+import { getMessaging } from 'firebase/messaging/sw';
 import Register from './pages/Register';
 import Login from './pages/Login';
 
+
 function App() {
+  const firebaseConfig = {
+    apiKey: 'AIzaSyDotjET2LCSTEOzuqLMRTbklh4UK3NXyZ8',
+    authDomain: 'momo-cbc21.firebaseapp.com',
+    projectId: 'momo-cbc21',
+    storageBucket: 'momo-cbc21.appspot.com',
+    messagingSenderId: '680572525834',
+    appId: '1:680572525834:web:27670f661e197779556ef3',
+    measurementId: 'G-CXWX95R14M',
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  const messages = getMessaging();
+
+  // messages
+  //   .requestPermission()
+  //   .then(function () {
+  //     return messages.getToken();
+  //   })
+  //   .then(function (token) {
+  //     console.log(token);
+  //   })
+  //   .catch(function (err) {
+  //     console.log('fcm error : ', err);
+  //   });
+
+  // messages.onMessage(function (payload) {
+  //   console.log(payload.notification.title);
+  //   console.log(payload.notification.body);
+  // });
   logger('test');
 
   return (
