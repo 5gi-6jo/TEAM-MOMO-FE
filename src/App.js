@@ -14,12 +14,9 @@ import Footer from './pages/Footer';
 import Mypage from './pages/Mypage';
 import PlansDetail from './pages/PlansDetail';
 
-
 import firebase from 'firebase/compat/app';
-import { getMessaging } from 'firebase/messaging/sw';
 import Register from './pages/Register';
 import Login from './pages/Login';
-
 
 function App() {
   const firebaseConfig = {
@@ -32,8 +29,6 @@ function App() {
     measurementId: 'G-CXWX95R14M',
   };
   firebase.initializeApp(firebaseConfig);
-
-  const messages = getMessaging();
 
   // messages
   //   .requestPermission()

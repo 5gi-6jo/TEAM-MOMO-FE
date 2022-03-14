@@ -14,8 +14,7 @@ const writeIcon = '/icons/review_write.png';
 
 const Main = props => {
   const navigate = useNavigate();
-  const today = moment().format();
-  console.log(today);
+
   return (
     <React.Fragment>
       <div>Main</div>
@@ -32,8 +31,8 @@ const Main = props => {
 const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 
 const WriteButton = styled.div`
-  position: fixed;
-  bottom: 96px;
+  position: absolute;
+  bottom: 7vh;
   left: 50%;
   margin-left: 25%;
   width: 60px;
