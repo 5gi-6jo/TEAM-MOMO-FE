@@ -28,6 +28,8 @@ const color = {
   gray1: '#5A5A5A',
   gray2: '#8C8C8C',
   gray3: '#C4C4C4',
+  gray4: '#9E9E9E',
+  gray5: '#E9E9E9',
   orange: '#F84914',
 
   mainBlue: '#5327ff',

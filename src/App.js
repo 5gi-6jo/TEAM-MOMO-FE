@@ -10,7 +10,7 @@ import webImg from './img/backImg.png';
 import Main from './pages/Main';
 import Plans from './pages/Plans';
 import PlansEdit from './pages/PlansEdit';
-import Footer from './pages/Footer';
+import Footer from './shared/Footer';
 import Mypage from './pages/Mypage';
 import PlansDetail from './pages/PlansDetail';
 

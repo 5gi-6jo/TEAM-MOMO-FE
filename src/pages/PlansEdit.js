@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Grid, Input, Select, Text } from '../elements';
+import AllimTimerButton from '../components/AllimTimerButton';
+import { Button, Grid, Input, Select } from '../elements';
+import Headerbar from '../shared/Headerbar';
 import theme from '../Styles/theme';
 
 /**
@@ -11,9 +14,16 @@ import theme from '../Styles/theme';
  */
 
 const PlansEdit = props => {
+  const navigate = useNavigate();
+
   return (
     <React.Fragment>
       <Grid padding="16px">
+        <Headerbar
+          _onClickClose={() => {
+            navigate(-1);
+          }}
+        />
         <Grid padding="10px">
           <Input
             islabel
@@ -42,10 +52,16 @@ const PlansEdit = props => {
           ></Input>
         </Grid>
         <Grid padding="10px">
-          <Text bold color={theme.color.gray1}>
-            모임 시간*
-          </Text>
-          <Select></Select>
+          <Select
+            islabel
+            labelBold
+            labelColor={theme.color.gray1}
+            labelText="모임 시간*"
+          />
+          <AllimTimerButton />
+        </Grid>
+        <Grid padding="10px">
+          <Button>모임 추가하기</Button>
         </Grid>
       </Grid>
     </React.Fragment>
