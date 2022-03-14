@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Grid, Input, Select, Text } from '../elements';
+import theme from '../Styles/theme';
 
 /**
  * @param {*} props
@@ -11,7 +13,41 @@ import styled from 'styled-components';
 const PlansEdit = props => {
   return (
     <React.Fragment>
-      <div>PlansEdit</div>
+      <Grid padding="16px">
+        <Grid padding="10px">
+          <Input
+            islabel
+            labelBold
+            labelColor={theme.color.gray1}
+            labelText="모임 이름*"
+            placeholder="모임 이름을 입력해주세요."
+          ></Input>
+        </Grid>
+        <Grid padding="10px">
+          <Input
+            islabel
+            labelBold
+            labelColor={theme.color.gray1}
+            labelText="장소*"
+            placeholder="장소를 입력해주세요."
+          ></Input>
+        </Grid>
+        <Grid padding="10px">
+          <Input
+            islabel
+            labelBold
+            labelColor={theme.color.gray1}
+            labelText="설명*"
+            placeholder="설명을 입력해주세요."
+          ></Input>
+        </Grid>
+        <Grid padding="10px">
+          <Text bold color={theme.color.gray1}>
+            모임 시간*
+          </Text>
+          <Select></Select>
+        </Grid>
+      </Grid>
     </React.Fragment>
   );
 };

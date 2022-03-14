@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Text } from '../elements';
+import theme from '../Styles/theme';
 
 // const writeIcon = '../img/review_write.png';
 
@@ -14,6 +16,9 @@ const Plans = props => {
   return (
     <>
       <div>plans</div>
+      <Text size="17px" bold color={theme.color.gray3}>
+        test
+      </Text>
     </>
   );
 };
