@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import theme from '../Styles/theme';
 
 const Text = props => {
-  // bold : font-weight / size : font-size /
-  // to : text-overflow / ws : white-space
+  // bold : font-weight / size : font-size / lineheight: line-height
+  // textoverf : text-overflow / ws : white-space /overf:overflow
   const {
     children,
     width,
@@ -12,9 +11,10 @@ const Text = props => {
     color,
     size,
     margin,
-    // to,
+    lineheight,
+    textoverf,
     ws,
-    // overflow,
+    overf,
     cursor,
 
     // media
@@ -27,8 +27,9 @@ const Text = props => {
     color,
     size,
     margin,
-    // overflow,
-    // to,
+    lineheight,
+    overf,
+    textoverf,
     ws,
     cursor,
 
@@ -50,29 +51,32 @@ Text.defaultProps = {
   color: 'black',
   size: '1em',
   margin: 'auto',
+  lineheight: 'null',
   cursor: 'default',
 
   // media
   m_size: '1em',
-  // overflow: false,
-  // to: false,
+  overf: false,
+  textoverf: false,
   ws: false,
 };
 
 const DefaultText = styled.p`
   width: ${props => props.width};
-  font-weight: ${props => (props.bold ? '700' : '500')};
+  font-weight: ${props => (props.bold ? '700' : '400')};
   color: ${props => props.color};
   font-size: ${props => props.size};
   margin: ${props => props.margin};
-  /* ${props => (props.overflow ? `overflow: ${props.overflow}` : '')};
-  ${props => (props.to ? 'text-overflow: ellipsis' : '')};
-  ${props => (props.ws ? `white-space: ${props.ws}` : '')}; */
+  ${props => (props.lineheight ? `line-height: ${props.lineheight}` : '')};
+  ${props => (props.overf ? `overflow:auto` : '')};
+  ${props => (props.textoverf ? 'text-overflow: ellipsis' : '')};
+  ${props => (props.ws ? `white-space: ${props.ws}` : '')};
   cursor: ${props => props.cursor};
-
-  @media ${theme.device.mobileM} {
-    font-size: ${props => props.m_size};
-  }
 `;
 
+// @media ${theme.device.mobileM} {
+//   font-size: ${props => props.m_size};
+//   ${props =>
+//     props.m_lineheight ? `line-height: ${props.m_lineheight}` : ''};
+// }
 export default Text;

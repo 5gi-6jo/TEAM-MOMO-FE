@@ -13,6 +13,7 @@ const Grid = props => {
     children,
     center,
     left,
+    heightCenter,
     _onClick,
   } = props;
 
@@ -24,6 +25,8 @@ const Grid = props => {
     bg: bg,
     center: center,
     left: left,
+    height: height,
+    heightCenter: heightCenter,
     _onClick: () => {},
   };
   return (
@@ -45,6 +48,7 @@ Grid.defaultProps = {
   bg: false,
   center: false,
   left: false,
+  heightCenter: false,
 };
 
 const GridBox = styled.div`

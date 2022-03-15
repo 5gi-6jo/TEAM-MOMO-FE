@@ -20,7 +20,7 @@ const Main = props => {
       <div>Main</div>
       <WriteButton
         onClick={() => {
-          navigate('/edit', { replace: true });
+          navigate('/edit');
         }}
       />
     </React.Fragment>
