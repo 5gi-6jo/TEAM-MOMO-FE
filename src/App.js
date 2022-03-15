@@ -9,7 +9,7 @@ import webImg from './img/backImg.png';
 
 import Main from './pages/Main';
 import Plans from './pages/Plans';
-import PlansEdit from './pages/PlansEdit';
+import AddPlans from './pages/AddPlans';
 import Footer from './shared/Footer';
 import Mypage from './pages/Mypage';
 import PlansDetail from './pages/PlansDetail';
@@ -17,6 +17,7 @@ import PlansDetail from './pages/PlansDetail';
 import firebase from 'firebase/compat/app';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import EditPlans from './pages/EditPlans';
 
 function App() {
   const firebaseConfig = {
@@ -56,8 +57,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/plans" element={<Plans />} />
-            <Route path="/Edit" element={<PlansEdit />} />
-            <Route path="/Edit/:id" element={<PlansEdit />} />
+            <Route path="/Edit" element={<AddPlans />} />
+            <Route path="/Edit/:id" element={<EditPlans />} />
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/plansdetail" element={<PlansDetail />} />
             <Route path="/plans" element={<Plans />} />

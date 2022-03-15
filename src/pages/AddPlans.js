@@ -13,13 +13,14 @@ import theme from '../Styles/theme';
  * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
  */
 
-const PlansEdit = props => {
+const AddPlans = props => {
   const navigate = useNavigate();
 
   return (
     <React.Fragment>
       <Grid padding="16px">
         <Headerbar
+          text="모임 추가하기"
           _onClickClose={() => {
             navigate(-1);
           }}
@@ -72,6 +73,6 @@ const PlansEdit = props => {
 const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 
 // default props 작성 위치
-PlansEdit.defaultProps = {};
+AddPlans.defaultProps = {};
 
-export default PlansEdit;
+export default AddPlans;

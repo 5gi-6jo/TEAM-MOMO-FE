@@ -46,9 +46,9 @@ const RegisterForm = props => {
 
     const registerData = {
       email: email,
-      username: nickname,
+      nickname: nickname,
       password: pw,
-      passwordCheck: pwCheck,
+      checkPassword: pwCheck,
     };
 
     dispatch(sighupAxios({ registerData, navigate }));

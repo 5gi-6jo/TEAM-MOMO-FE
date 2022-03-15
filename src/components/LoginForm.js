@@ -2,9 +2,12 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { Grid } from '../elements';
 import Button from '../elements/Button';
 import { signinAxios } from '../redux/modules/user';
 import { checkEmail } from '../shared/functions';
+
+import theme from '../Styles/theme';
 
 const LoginForm = props => {
   const navigate = useNavigate();
@@ -39,6 +42,14 @@ const LoginForm = props => {
 
   return (
     <Form onSubmit={onLogin}>
+      {/* <Grid padding="10px">
+        <Input
+          labelBold
+          labelColor={theme.color.gray1}
+          labelText="이메일"
+          placeholder="이메일 주소 (아이디)"
+        ></Input>
+      </Grid> */}
       <Box>
         <Label htmlFor="이메일">이메일</Label>
         <Input ref={emailRef} type="text" placeholder="이메일을 입력하세요" />

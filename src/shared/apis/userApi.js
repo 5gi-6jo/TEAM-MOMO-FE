@@ -10,7 +10,7 @@ class UserApi {
   async signUp({ registerData, navigate }) {
     const sighupConfig = {
       method: 'post',
-      url: `${this.base}/api/register`,
+      url: `${this.base}/users/signup`,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -33,7 +33,7 @@ class UserApi {
   async signIn({ loginData, navigate }) {
     const signinConfig = {
       method: 'post',
-      url: `${this.base}/api/login`,
+      url: `${this.base}/users/login`,
       headers: {
         'Content-Type': 'application/json',
       },

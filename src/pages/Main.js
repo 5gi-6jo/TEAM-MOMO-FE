@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import moment from 'moment';
+import { getPlans } from '../redux/modules/plan';
+import { useDispatch } from 'react-redux';
 const writeIcon = '/icons/review_write.png';
 
 /**
@@ -13,7 +15,11 @@ const writeIcon = '/icons/review_write.png';
  */
 
 const Main = props => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(getPlans());
+  }, [dispatch]);
 
   return (
     <React.Fragment>

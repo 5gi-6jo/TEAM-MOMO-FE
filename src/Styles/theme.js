@@ -36,13 +36,12 @@ const color = {
   mainMint: '#83ffca',
   mainGray: '#dedfe0',
   white: '#fff',
-  black: '#292b2d',
+  black: '#292929',
   mint: '#bcffe2',
   blue1: '#8689ff',
   blue2: '#afb1ff',
   blue3: '#d8d9ff',
 
-  gray4: '#e5e5e5',
   darkLine: '#3F4448',
   danger: '#ff8b6f',
 };
