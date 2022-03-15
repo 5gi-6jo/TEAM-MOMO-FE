@@ -60,7 +60,7 @@ export const userSlice = createSlice({
   },
   extraReducers: {
     [sighupAxios.fulfilled]: (state, action) => {
-      state = state;
+      // state = state;
     },
     [signinAxios.fulfilled]: (state, action) => {
       state.user_info = {
