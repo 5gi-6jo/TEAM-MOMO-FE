@@ -2,6 +2,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Grid from '../elements/Grid';
+import { AiOutlineCalendar } from 'react-icons/ai';
+import { MdOutlinePlace } from 'react-icons/md';
+import { FiBookOpen } from 'react-icons/fi';
+import { BsPerson } from 'react-icons/bs';
 
 /**
  * @param {*} props
@@ -15,35 +19,43 @@ const Footer = props => {
   return (
     <>
       <NavBox>
-        <Grid is_flex>
-          <ButtonWrap
-            onClick={() => {
+        <Grid is_flex center>
+          <Grid
+            is_cursor
+            center
+            _onClick={() => {
               navigate('/', { replace: true });
             }}
           >
-            홈
-          </ButtonWrap>
-          <ButtonWrap
-            onClick={() => {
+            <AiOutlineCalendar size="20px" />
+          </Grid>
+          <Grid
+            is_cursor
+            center
+            _onClick={() => {
               navigate('/plansdetail', { replace: true });
             }}
           >
-            지도
-          </ButtonWrap>
-          <ButtonWrap
-            onClick={() => {
+            <MdOutlinePlace size="20px" />
+          </Grid>
+          <Grid
+            is_cursor
+            center
+            _onClick={() => {
               navigate('/plans', { replace: true });
             }}
           >
-            일정(추억)
-          </ButtonWrap>
-          <ButtonWrap
-            onClick={() => {
+            <FiBookOpen size="20px" />
+          </Grid>
+          <Grid
+            is_cursor
+            center
+            _onClick={() => {
               navigate('/mypage', { replace: true });
             }}
           >
-            마이페이지
-          </ButtonWrap>
+            <BsPerson size="20px" />
+          </Grid>
           <ButtonWrap
             onClick={() => {
               navigate('/Login', { replace: true });
@@ -89,6 +101,7 @@ const NavBox = styled.div`
   justify-content: space-around;
   bottom: 0;
   margin: 0 auto;
+
   left: 0;
   right: 0;
   @media ${({ theme }) => theme.device.laptop} {

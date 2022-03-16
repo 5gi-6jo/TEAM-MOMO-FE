@@ -1,8 +1,14 @@
 // import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { setPreview } from '../redux/modules/image';
+import { getOnePlan } from '../redux/modules/plan';
+import Headerbar from '../shared/Headerbar';
+import { Button, Grid, Text } from '../elements';
+import theme from '../Styles/theme';
+import { FiUpload } from 'react-icons/fi';
 // import { logger } from '../shared/utils';
 
 // const writeIcon = '../img/review_write.png';
@@ -15,8 +21,18 @@ import { setPreview } from '../redux/modules/image';
  */
 
 const PlansDetail = props => {
+  useEffect(() => {
+    dispatch(getOnePlan(planId));
+  }, []);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const preview = useSelector(state => state.image.preview);
+  //리덕스에서 한개의 모임 데이터 받아옴
+  const Plan = useSelector(state => state.plan.showplan);
+  const img = Plan.imageList;
+  //부모에서 넘겨받을때 모임 아이디를 받음
+  const planId = useLocation().state;
+  console.log(planId, Plan);
 
   const handleFileInput = e => {
     const render = new FileReader();
@@ -43,13 +59,48 @@ const PlansDetail = props => {
   };
   return (
     <>
-      <div>PlansDetail3</div>
+      <Headerbar
+        is_Edit
+        text="나의 모임"
+        _onClickClose={() => {
+          navigate(-1);
+        }}
+        _onClickEdit={() => {
+          console.log('Edit');
+        }}
+      />
+      <Grid padding="20px">
+        <Text color={theme.color.black} bold>
+          {Plan.planName}
+        </Text>
+        <Text color={theme.color.gray4} size="9px">
+          {Plan.destination}
+        </Text>
+      </Grid>
+      <Grid is_flex center>
+        {img && img.map(plan => <Img key={plan.imageId} src={plan.image} />)}
+      </Grid>
+      {/* <Img src={preview ? preview : 'http://via.placeholder.com/400x300'} />; */}
+      <Button
+        is_float
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        <FiUpload size="24px" />
+      </Button>
+      <button
+        onClick={() => {
+          console.log('test');
+        }}
+      >
+        불러오기 테스트
+      </button>
       <input
         type="file"
         accept="image/x-png,image/jpeg"
         onChange={handleFileInput}
       />
-      <Img src={preview ? preview : 'http://via.placeholder.com/400x300'} />
     </>
   );
 };

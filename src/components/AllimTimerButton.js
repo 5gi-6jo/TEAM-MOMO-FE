@@ -11,6 +11,7 @@ import theme from '../Styles/theme';
  */
 
 const AllimTimerButton = props => {
+  //서버한테 보내줄때 분단위로 정수형으로 보내기
   return (
     <>
       <Grid>

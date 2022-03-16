@@ -87,20 +87,21 @@ const ElButton = styled.button`
 `;
 
 const FloatButton = styled.button`
-  width: 50px;
-  height: 50px;
+  width: 54px;
+  height: 54px;
   background-color: ${theme.color.orange};
   color: #ffffff;
   box-sizing: border-box;
-  font-size: 36px;
+  font-size: 24px;
   font-weight: 800;
-  position: fixed;
-  bottom: 50px;
-  right: 16px;
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
   text-align: center;
   vertical-align: middle;
   border: none;
   border-radius: 50px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 `;
 
 export default Button;
