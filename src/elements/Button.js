@@ -13,12 +13,21 @@ const Button = props => {
     padding,
     is_disabled,
     is_edit,
+    _accept,
+    _onChange,
+    _type,
   } = props;
 
   if (is_float) {
     return (
       <React.Fragment>
-        <FloatButton disabled={is_disabled} onClick={_onClick}>
+        <FloatButton
+          type={_type}
+          accept={_accept}
+          disabled={is_disabled}
+          onClick={_onClick}
+          _onChange={_onChange}
+        >
           {name ? name : children}
         </FloatButton>
       </React.Fragment>

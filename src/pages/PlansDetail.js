@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { setPreview } from '../redux/modules/image';
-import { getOnePlan } from '../redux/modules/plan';
+import { getImage, getOnePlan, setUploadImage } from '../redux/modules/plan';
 import Headerbar from '../shared/Headerbar';
-import { Button, Grid, Text } from '../elements';
+import { Button, Grid, Input, Text } from '../elements';
 import theme from '../Styles/theme';
 import { FiUpload } from 'react-icons/fi';
 // import { logger } from '../shared/utils';
@@ -21,41 +21,54 @@ import { FiUpload } from 'react-icons/fi';
  */
 
 const PlansDetail = props => {
-  useEffect(() => {
-    dispatch(getOnePlan(planId));
-  }, []);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const preview = useSelector(state => state.image.preview);
   //리덕스에서 한개의 모임 데이터 받아옴
   const Plan = useSelector(state => state.plan.showplan);
+  const Images = useSelector(state => state.images);
+
   const img = Plan.imageList;
+
   //부모에서 넘겨받을때 모임 아이디를 받음
   const planId = useLocation().state;
   console.log(planId, Plan);
-
+  useEffect(() => {
+    dispatch(getOnePlan(planId));
+  }, []);
   const handleFileInput = e => {
     const render = new FileReader();
-    const file = e.target.files[0];
 
-    render.readAsDataURL(file);
+    const files = e.target.files;
+    const formData = new FormData();
 
-    render.onloadend = () => {
-      const formData = new FormData();
-      formData.append('file', e.target.files[0]);
-      // axios
-      //   .post('http://3.36.63.204/api/upload', formData, {
-      //     headers: { 'Content-Type': 'multipart/form-data' },
-      //   })
-      //   .then(res => {
-      //     console.log(res);
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //   });
-      // logger('보냄');
-      dispatch(setPreview(render.result));
-    };
+    for (let i = 0; i < files.length; i++) {
+      formData.append('file', files[i]);
+    }
+
+    // console.log(formData);
+    const data = { formData, planId };
+    dispatch(setUploadImage(data));
+    console.log('send');
+
+    // render.readAsDataURL(file);
+
+    // render.onloadend = () => {
+    //   const formData = new FormData();
+    //   formData.append('file', e.target.files[0]);
+    //   // axios
+    //   //   .post('http://3.36.63.204/api/upload', formData, {
+    //   //     headers: { 'Content-Type': 'multipart/form-data' },
+    //   //   })
+    //   //   .then(res => {
+    //   //     console.log(res);
+    //   //   })
+    //   //   .catch(error => {
+    //   //     console.log(error);
+    //   //   });
+    //   // logger('보냄');
+    //   dispatch(setPreview(render.result));
+    // };
   };
   return (
     <>
@@ -63,7 +76,7 @@ const PlansDetail = props => {
         is_Edit
         text="나의 모임"
         _onClickClose={() => {
-          navigate(-1);
+          navigate('/');
         }}
         _onClickEdit={() => {
           console.log('Edit');
@@ -77,21 +90,41 @@ const PlansDetail = props => {
           {Plan.destination}
         </Text>
       </Grid>
-      <Grid is_flex center>
-        {img && img.map(plan => <Img key={plan.imageId} src={plan.image} />)}
+      <Grid is_Grid>
+        {img &&
+          img.map(plan => (
+            <Img
+              key={plan.imageId}
+              src={plan.image}
+              onClick={() => {
+                navigate(`/plansdetail/${planId}/images`, {
+                  state: {
+                    Plan: Plan,
+                    planId: planId,
+                    imageId: plan.imageId,
+                    image: plan.image,
+                  },
+                });
+              }}
+            />
+          ))}
       </Grid>
       {/* <Img src={preview ? preview : 'http://via.placeholder.com/400x300'} />; */}
-      <Button
+      <Input
         is_float
+        _type="file"
+        _accept="image/x-png,image/jpeg"
+        _onChange={handleFileInput}
         onClick={() => {
-          navigate(-1);
+          console.log('button');
         }}
       >
         <FiUpload size="24px" />
-      </Button>
+      </Input>
       <button
         onClick={() => {
-          console.log('test');
+          console.log('Images', Images);
+          dispatch(getImage(planId));
         }}
       >
         불러오기 테스트
@@ -109,7 +142,7 @@ const PlansDetail = props => {
 const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 const Img = styled.img`
   display: block;
-  width: 50%;
+  width: 100%;
   height: auto;
 `;
 

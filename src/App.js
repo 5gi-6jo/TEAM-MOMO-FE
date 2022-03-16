@@ -13,13 +13,13 @@ import AddPlans from './pages/AddPlans';
 import Footer from './shared/Footer';
 import Mypage from './pages/Mypage';
 import PlansDetail from './pages/PlansDetail';
+import PlansDetailImage from './pages/PlansDetailImage';
 
 import firebase from 'firebase/compat/app';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import EditPlans from './pages/EditPlans';
 import Map from './pages/Map';
-
 
 function App() {
   const firebaseConfig = {
@@ -63,6 +63,10 @@ function App() {
             <Route path="/Edit/:id" element={<EditPlans />} />
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/plansdetail/:id" element={<PlansDetail />} />
+            <Route
+              path="/plansdetail/:id/images"
+              element={<PlansDetailImage />}
+            />
             <Route path="/plans" element={<Plans />} />
             <Route path="/Register" element={<Register />} />
             <Route path="/Login" element={<Login />} />
