@@ -13,7 +13,7 @@ import { FiSettings } from 'react-icons/fi';
  */
 
 const Headerbar = props => {
-  const { _onClickClose, text, _onClickEdit } = props;
+  const { _onClickClose, text, _onClickEdit, is_Edit } = props;
 
   return (
     <>
@@ -22,7 +22,9 @@ const Headerbar = props => {
         <GrClose size="22px" cursor="pointer" onClick={_onClickClose} />
         <Text bold>{text}</Text>
         <div></div>
-        <FiSettings size="22px" onClick={_onClickEdit} />
+        {is_Edit && (
+          <FiSettings size="22px" cursor="pointer" onClick={_onClickEdit} />
+        )}
       </Grid>
       <hr />
     </>

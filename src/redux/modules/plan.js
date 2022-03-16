@@ -6,9 +6,9 @@ const Planapi = new PlanApi();
 
 export const getPlans = createAsyncThunk(
   'plan/getPlans',
-  async (planId, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      return await URL.get(`/plans/main`, planId).then(
+      return await URL.get(`/plans/main`, _).then(
         response => response.data.data,
       );
     } catch (error) {
@@ -38,9 +38,11 @@ export const getPlans = createAsyncThunk(
 // );
 export const getOnePlan = createAsyncThunk(
   'plan/getOnePlan',
-  async (_, { rejectWithValue }) => {
+  async (planId, { rejectWithValue }) => {
     try {
-      return await URL.get(`/plans/1`, _).then(response => response.data.data);
+      return await URL.get(`/plans/1`, planId).then(
+        response => response.data.data,
+      );
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -52,6 +54,7 @@ export const planSlice = createSlice({
   name: 'plan',
   initialState: {
     plans: [],
+    showplan: [],
   },
   reducers: {
     // getPlans: (state, action) => {
@@ -69,7 +72,7 @@ export const planSlice = createSlice({
         state.plans = action.payload;
       })
       .addCase(getOnePlan.fulfilled, (state, action) => {
-        state.plans = action.payload;
+        state.showplan = action.payload;
       });
     // [getPlansAxios.fulfiled]: (state, action) => {
     //   //

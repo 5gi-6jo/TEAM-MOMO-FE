@@ -60,7 +60,7 @@ function App() {
             <Route path="/Edit" element={<AddPlans />} />
             <Route path="/Edit/:id" element={<EditPlans />} />
             <Route path="/mypage" element={<Mypage />} />
-            <Route path="/plansdetail" element={<PlansDetail />} />
+            <Route path="/plansdetail/:id" element={<PlansDetail />} />
             <Route path="/plans" element={<Plans />} />
             <Route path="/Register" element={<Register />} />
             <Route path="/Login" element={<Login />} />

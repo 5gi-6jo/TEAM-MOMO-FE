@@ -1,7 +1,7 @@
 // import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { setPreview } from '../redux/modules/image';
 import { getOnePlan } from '../redux/modules/plan';
@@ -22,15 +22,17 @@ import { FiUpload } from 'react-icons/fi';
 
 const PlansDetail = props => {
   useEffect(() => {
-    dispatch(getOnePlan(1));
+    dispatch(getOnePlan(planId));
   }, []);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const preview = useSelector(state => state.image.preview);
-  const Plan = useSelector(state => state.plan.plans);
-  const list = useSelector(state => state.plan.data);
+  //리덕스에서 한개의 모임 데이터 받아옴
+  const Plan = useSelector(state => state.plan.showplan);
   const img = Plan.imageList;
-  console.log(preview, Plan, img);
+  //부모에서 넘겨받을때 모임 아이디를 받음
+  const planId = useLocation().state;
+  console.log(planId, Plan);
 
   const handleFileInput = e => {
     const render = new FileReader();
@@ -58,6 +60,7 @@ const PlansDetail = props => {
   return (
     <>
       <Headerbar
+        is_Edit
         text="나의 모임"
         _onClickClose={() => {
           navigate(-1);
@@ -68,14 +71,14 @@ const PlansDetail = props => {
       />
       <Grid padding="20px">
         <Text color={theme.color.black} bold>
-          모임 이름
+          {Plan.planName}
         </Text>
         <Text color={theme.color.gray4} size="9px">
-          주소
+          {Plan.destination}
         </Text>
       </Grid>
       <Grid is_flex center>
-        {img && img.map(plan => <Img src={plan.image} />)}
+        {img && img.map(plan => <Img key={plan.imageId} src={plan.image} />)}
       </Grid>
       {/* <Img src={preview ? preview : 'http://via.placeholder.com/400x300'} />; */}
       <Button
