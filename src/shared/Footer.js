@@ -70,6 +70,13 @@ const Footer = props => {
           >
             회원가입
           </ButtonWrap>
+          <ButtonWrap
+            onClick={() => {
+              navigate('/Map', { replace: true });
+            }}
+          >
+            지도(임시메뉴창)
+          </ButtonWrap>
         </Grid>
       </NavBox>
     </>
