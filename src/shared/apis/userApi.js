@@ -2,7 +2,8 @@ import axios from 'axios';
 
 class UserApi {
   constructor() {
-    this.base = process.env.REACT_APP_BE_IP_LYW;
+    // this.base = process.env.REACT_APP_BE_IP_LYW;
+    this.base = 'https://www.seoultaste.click';
   }
 
   getToken = () => sessionStorage.getItem('token');
