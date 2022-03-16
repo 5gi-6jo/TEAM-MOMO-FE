@@ -72,6 +72,7 @@ const DefaultText = styled.p`
   ${props => (props.textoverf ? 'text-overflow: ellipsis' : '')};
   ${props => (props.ws ? `white-space: ${props.ws}` : '')};
   cursor: ${props => props.cursor};
+  letter-spacing: -1px;
 `;
 
 // @media ${theme.device.mobileM} {
