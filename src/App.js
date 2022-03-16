@@ -18,6 +18,8 @@ import firebase from 'firebase/compat/app';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import EditPlans from './pages/EditPlans';
+import Map from './pages/Map';
+
 
 function App() {
   const firebaseConfig = {
@@ -64,6 +66,7 @@ function App() {
             <Route path="/plans" element={<Plans />} />
             <Route path="/Register" element={<Register />} />
             <Route path="/Login" element={<Login />} />
+            <Route path="/Map" element={<Map />} />
           </Routes>
           <Footer />
         </Wrap>
