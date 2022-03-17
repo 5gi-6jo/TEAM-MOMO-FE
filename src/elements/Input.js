@@ -1,5 +1,7 @@
 import React from 'react';
+import theme from '../Styles/theme';
 import styled from 'styled-components';
+import { FiUpload } from 'react-icons/fi';
 
 import { Text, Grid } from './index';
 
@@ -12,14 +14,37 @@ const Input = props => {
     _onChange,
     type,
     islabel,
+    is_float,
+    _type,
+    _accept,
   } = props;
 
+  if (is_float) {
+    return (
+      <FloatInput>
+        <FiUpload
+          size="24px"
+          style={{ position: 'absolute', top: '15px', left: '15px' }}
+        />
+        <FileInput
+          type={_type}
+          accept={_accept}
+          onChange={_onChange}
+          placeholder={placeholder}
+          multiple
+        ></FileInput>
+      </FloatInput>
+    );
+  }
   if (islabel) {
     return (
       <Grid>
-        <Text bold={labelBold} color={labelColor} margin="0px">
-          {labelText}
-        </Text>
+        <Text
+          bold={labelBold}
+          color={labelColor}
+          margin="0px"
+          lineheight="20px"
+        ></Text>
         <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
       </Grid>
     );
@@ -41,6 +66,7 @@ Input.defaultProps = {
   labelColor: '#000',
   placeholder: '텍스트를 입력해주세요.',
   type: 'text',
+  is_float: false,
   _onChange: () => {},
 };
 
@@ -59,6 +85,42 @@ const ElInput = styled.input`
   box-sizing: border-box;
   border-radius: 10px;
   background: #ffffff;
+`;
+const FloatInput = styled.div`
+  width: 54px;
+  height: 54px;
+  background-color: ${theme.color.orange};
+  color: #ffffff;
+  box-sizing: border-box;
+  font-size: 24px;
+  font-weight: 800;
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+`;
+const FileInput = styled.input`
+  width: 54px;
+  height: 54px;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+  border-radius: 50px;
+  font-size: 45px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  opacity: 0;
+
+  filter: alpha(opacity=0);
+  -ms-filter: 'alpha(opacity=0)';
+  -khtml-opacity: 0;
+  -moz-opacity: 0;
 `;
 
 export default Input;

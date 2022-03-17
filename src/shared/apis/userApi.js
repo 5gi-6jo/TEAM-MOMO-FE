@@ -44,12 +44,13 @@ class UserApi {
     return axios(signinConfig)
       .then(res => {
         console.log(res);
-        alert(res.data.msg);
-        navigate('/', { replace: true });
-        return res.data;
+
+        // alert(res.data.msg);
+        // navigate('/', { replace: true });
+        return res.headers.authorization;
       })
       .catch(err => {
-        alert(err.response.data.msg);
+        // alert(err.response.data.msg);
         console.log(err.response);
       });
   }

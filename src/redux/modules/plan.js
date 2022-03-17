@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { URL } from '../../shared/apis/API';
 import PlanApi from '../../shared/apis/planApi';
+import { MOCK } from '../../shared/apis/plans';
 
 const Planapi = new PlanApi();
 
@@ -11,6 +13,7 @@ export const getPlans = createAsyncThunk(
       return await URL.get(`/plans/main`, _).then(
         response => response.data.data,
       );
+      return MOCK.Plans.data;
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -40,9 +43,43 @@ export const getOnePlan = createAsyncThunk(
   'plan/getOnePlan',
   async (planId, { rejectWithValue }) => {
     try {
-      return await URL.get(`/plans/1`, planId).then(
+      return await URL.get(`/plans/${planId}`, planId).then(
         response => response.data.data,
       );
+      // return MOCK.PlanDetail.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+export const setUploadImage = createAsyncThunk(
+  'plan/setUploadImage',
+  async (data, { rejectWithValue }) => {
+    try {
+      const formdata = new FormData();
+      for (let i = 0; i < data.files.length; i++) {
+        formdata.append('files', data.files[i]);
+      }
+      return await URL.post(`/plans/${data.planId}/images`, formdata, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }).then(res => {
+        console.log(res);
+      });
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const getImage = createAsyncThunk(
+  'plan/getImage',
+  async (planId, { rejectWithValue }) => {
+    try {
+      return await URL.get(`/plans/${planId}/images`).then(res => {
+        console.log(res);
+      });
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -55,6 +92,7 @@ export const planSlice = createSlice({
   initialState: {
     plans: [],
     showplan: [],
+    images: [],
   },
   reducers: {
     // getPlans: (state, action) => {
@@ -73,6 +111,10 @@ export const planSlice = createSlice({
       })
       .addCase(getOnePlan.fulfilled, (state, action) => {
         state.showplan = action.payload;
+      })
+      .addCase(setUploadImage.fulfilled, (state, action) => {
+        console.log(state, action.payload);
+        state.images = action.payload;
       });
     // [getPlansAxios.fulfiled]: (state, action) => {
     //   //

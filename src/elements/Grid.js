@@ -16,6 +16,7 @@ const Grid = props => {
     heightCenter,
     is_cursor,
     _onClick,
+    is_Grid,
   } = props;
 
   const styles = {
@@ -29,6 +30,7 @@ const Grid = props => {
     height: height,
     heightCenter: heightCenter,
     is_cursor: is_cursor,
+    is_Grid: is_Grid,
     _onClick: () => {},
   };
   return (
@@ -52,6 +54,7 @@ Grid.defaultProps = {
   left: false,
   heightCenter: false,
   is_cursor: false,
+  is_Grid: false,
 };
 
 const GridBox = styled.div`
@@ -72,6 +75,12 @@ const GridBox = styled.div`
       ? `display: flex; align-items: center; justify-content: flex-start;`
       : ''}
   ${props => (props.is_cursor ? `cursor:pointer` : '')}
+  
+  ${props =>
+    props.is_Grid
+      ? `display:grid;grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;`
+      : ''}
 `;
 
 export default Grid;
