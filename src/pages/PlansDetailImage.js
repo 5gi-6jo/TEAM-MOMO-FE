@@ -3,10 +3,9 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { setPreview } from '../redux/modules/image';
-import { getOnePlan } from '../redux/modules/plan';
 import Headerbar from '../shared/Headerbar';
 import { Button, Image, Grid, Text } from '../elements';
+import { log_in } from '../img';
 import theme from '../Styles/theme';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 // import { logger } from '../shared/utils';
@@ -93,6 +92,14 @@ const PlansDetailImage = () => {
           />
         )}
       </ImageDiv>
+      <Wrap>
+        <Icon
+          src={log_in}
+          onClick={() => {
+            console.log('log_in');
+          }}
+        />
+      </Wrap>
     </>
   );
 };
@@ -108,6 +115,32 @@ const ImageDiv = styled.div`
   background-color: ${theme.color.realblack};
 `;
 
+const Icon = styled.div`
+  min-width: 36px;
+  min-height: 36px;
+  background-image: url(${props => props.src});
+  background-repeat: no-repeat;
+  margin-right: 12px;
+`;
+const Wrap = styled.div`
+  width: 100%;
+  height: 72px;
+  position: absolute;
+  bottom: 76px;
+  left: 0;
+  display: flex;
+  justify-content: space-evenly;
+  border-radius: 12px;
+  background-color: ${theme.color.orange};
+  justify-content: space-evenly;
+  padding: 18px 20px;
+  box-sizing: border-box;
+
+  & .lastIcon:last-child {
+    margin: 0;
+  }
+  z-index: 135;
+`;
 // default props 작성 위치
 PlansDetailImage.defaultProps = {};
 

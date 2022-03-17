@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { URL } from '../../shared/apis/API';
 import PlanApi from '../../shared/apis/planApi';
 import { MOCK } from '../../shared/apis/plans';
@@ -42,7 +43,7 @@ export const getOnePlan = createAsyncThunk(
   'plan/getOnePlan',
   async (planId, { rejectWithValue }) => {
     try {
-      return await URL.get(`/plans/1`, planId).then(
+      return await URL.get(`/plans/${planId}`, planId).then(
         response => response.data.data,
       );
       // return MOCK.PlanDetail.data;
@@ -54,10 +55,13 @@ export const getOnePlan = createAsyncThunk(
 );
 export const setUploadImage = createAsyncThunk(
   'plan/setUploadImage',
-  async ({ formdata, planId }, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
-      console.log(formdata, planId);
-      return await URL.post(`/plans/${planId}/images`, formdata, {
+      const formdata = new FormData();
+      for (let i = 0; i < data.files.length; i++) {
+        formdata.append('files', data.files[i]);
+      }
+      return await URL.post(`/plans/${data.planId}/images`, formdata, {
         headers: { 'Content-Type': 'multipart/form-data' },
       }).then(res => {
         console.log(res);

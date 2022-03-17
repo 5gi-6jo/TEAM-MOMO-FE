@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { setPreview } from '../redux/modules/image';
-import { getImage, getOnePlan, setUploadImage } from '../redux/modules/plan';
+import { getImage, getOnePlan } from '../redux/modules/plan';
 import Headerbar from '../shared/Headerbar';
-import { Button, Grid, Input, Text } from '../elements';
+import { Grid, Input, Text } from '../elements';
 import theme from '../Styles/theme';
 import { FiUpload } from 'react-icons/fi';
 // import { logger } from '../shared/utils';
@@ -32,43 +32,22 @@ const PlansDetail = props => {
 
   //부모에서 넘겨받을때 모임 아이디를 받음
   const planId = useLocation().state;
-  console.log(planId, Plan);
+  console.log(Plan);
   useEffect(() => {
     dispatch(getOnePlan(planId));
   }, []);
   const handleFileInput = e => {
-    const render = new FileReader();
-
     const files = e.target.files;
     const formData = new FormData();
 
     for (let i = 0; i < files.length; i++) {
-      formData.append('file', files[i]);
+      formData.append('files', files[i]);
     }
 
     // console.log(formData);
-    const data = { formData, planId };
-    dispatch(setUploadImage(data));
-    console.log('send');
-
-    // render.readAsDataURL(file);
-
-    // render.onloadend = () => {
-    //   const formData = new FormData();
-    //   formData.append('file', e.target.files[0]);
-    //   // axios
-    //   //   .post('http://3.36.63.204/api/upload', formData, {
-    //   //     headers: { 'Content-Type': 'multipart/form-data' },
-    //   //   })
-    //   //   .then(res => {
-    //   //     console.log(res);
-    //   //   })
-    //   //   .catch(error => {
-    //   //     console.log(error);
-    //   //   });
-    //   // logger('보냄');
-    //   dispatch(setPreview(render.result));
-    // };
+    const data = { files, planId };
+    // dispatch(setUploadImage(data));
+    dispatch(getImage(planId));
   };
   return (
     <>
