@@ -1,6 +1,6 @@
 /*global kakao*/
 import React, { useEffect } from 'react';
-import { Marker } from './Marker';
+import Marker from './Marker';
 
 const Location = () => {
   useEffect(() => {
@@ -27,6 +27,7 @@ const Location = () => {
         console.log(position.coords.longitude);
         let locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
           message = '<div style="padding:5px;">모두모여!!</div>'; // 인포윈도우에 표시될 내용입니다
+        console.log(locPosition);
 
         // 마커와 인포윈도우를 표시합니다
         displayMarker(locPosition, message);
@@ -64,33 +65,55 @@ const Location = () => {
     }
 
     // 서버에서 받아온 marker리스트를 표시합니다
-    Marker.forEach(el => {
-      // 마커를 생성합니다
-      const marker = new kakao.maps.Marker({
-        //마커가 표시 될 지도
-        map: map,
-        //마커가 표시 될 위치
-        position: new kakao.maps.LatLng(el.lat, el.lng),
-      });
-      // 마커에 표시할 인포윈도우를 생성합니다
-      var infowindow = new kakao.maps.InfoWindow({
-        content: el.title, // 인포윈도우에 표시할 내용
-      });
+    // Marker.forEach(el => {
+    //   // 마커를 생성합니다
+    //   const marker = new kakao.maps.Marker({
+    //     //마커가 표시 될 지도
+    //     map: map,
+    //     //마커가 표시 될 위치
+    //     position: new kakao.maps.LatLng(el.lat, el.lng),
+    //     // export const Marker = [
+    //     //   {
+    //     //     title: '모여라1',
+    //     //     lat: 37.55390232236185,
+    //     //     lng: 126.9810124843774,
+    //     //   },
+    //     //   {
+    //     //     title: '모여라2',
+    //     //     lat: 37.57605746531094,
+    //     //     lng: 126.97694718879282,
+    //     //   },
+    //     //   {
+    //     //     title: '모여라3',
+    //     //     lat: 37.515830047374855,
+    //     //     lng: 127.07296457925408,
+    //     //   },
+    //     //   {
+    //     //     title: '모여라4',
+    //     //     lat: 37.503989016993636,
+    //     //     lng: 127.00472031567072,
+    //     //   },
+    //     // ];
+    //   });
+    //   // 마커에 표시할 인포윈도우를 생성합니다
+    //   var infowindow = new kakao.maps.InfoWindow({
+    //     content: el.title, // 인포윈도우에 표시할 내용
+    //   });
 
-      // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-      // 이벤트 리스너로는 클로저를 만들어 등록합니다
-      // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-      kakao.maps.event.addListener(
-        marker,
-        'mouseover',
-        makeOverListener(map, marker, infowindow),
-      );
-      kakao.maps.event.addListener(
-        marker,
-        'mouseout',
-        makeOutListener(infowindow),
-      );
-    });
+    //   // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+    //   // 이벤트 리스너로는 클로저를 만들어 등록합니다
+    //   // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+    //   kakao.maps.event.addListener(
+    //     marker,
+    //     'mouseover',
+    //     makeOverListener(map, marker, infowindow),
+    //   );
+    //   kakao.maps.event.addListener(
+    //     marker,
+    //     'mouseout',
+    //     makeOutListener(infowindow),
+    //   );
+    // });
     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
     function makeOverListener(map, marker, infowindow) {
       return function () {

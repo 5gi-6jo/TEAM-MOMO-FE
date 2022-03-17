@@ -2,7 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import moment from 'moment';
+import Calendar from '../components/Calendar';
+
+// import moment from 'moment';
 const writeIcon = '/icons/review_write.png';
 
 /**
@@ -18,6 +20,7 @@ const Main = props => {
   return (
     <React.Fragment>
       <div>Main</div>
+      <Calendar />
       <WriteButton
         onClick={() => {
           navigate('/edit', { replace: true });
