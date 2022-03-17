@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { getPlans } from '../redux/modules/plan';
 import { useDispatch, useSelector } from 'react-redux';
+import { MOCK } from '../shared/apis/API';
 const writeIcon = '/icons/review_write.png';
 
 /**
