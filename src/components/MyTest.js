@@ -1,66 +1,55 @@
 import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import Location from './Location';
+import { setMarkerRedux } from '../redux/modules/mainsys';
 
 import * as SockJS from 'sockjs-client';
 import * as StompJs from 'stompjs';
-
-// // proxy
-// const { createProxyMiddleware } = require('http-proxy-middleware');
-
-// module.exports = app => {
-//   app.use(
-//     '/api',
-//     createProxyMiddleware({
-//       target: 'http://localhost:8080',
-//       changeOrigin: true,
-//     }),
-//   );
-//   app.use(
-//     '/ws-stomp',
-//     createProxyMiddleware({ target: 'http://localhost:8080', ws: true }),
-//   );
-// };
-
-// soket
-const Marker = () => {
+import { useDispatch } from 'react-redux';
+const MyTest = () => {
+  const dispatch = useDispatch();
   const [count, setCount] = useState(0);
   const [delay, setDelay] = useState(1000);
-  const MyUseInterval = (callback, delay) => {
-    const savedCallback = useRef();
 
-    // Remember the latest function.
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    // Set up the interval.
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  };
   const client = useRef({});
 
   const [url, setUrl] = useState([
     { title: 'test', lat: 3414.324324, lng: 32432.124 },
   ]);
   const [marker, setMarker] = useState([
-    { title: 'test', lat: 3414.324324, lng: 32432.124 },
-    { title: 'test', lat: 3414.324324, lng: 32432.124 },
-    { title: 'test', lat: 3414.324324, lng: 32432.124 },
+    {
+      title: '모여라1',
+      lat: 37.55390232236185,
+      lng: 126.9810124843774,
+    },
+    {
+      title: '모여라2',
+      lat: 37.57605746531094,
+      lng: 126.97694718879282,
+    },
+    {
+      title: '모여라3',
+      lat: 37.515830047374855,
+      lng: 127.07296457925408,
+    },
+    {
+      title: '모여라4',
+      lat: 37.503989016993636,
+      lng: 127.00472031567072,
+    },
   ]);
 
-  useEffect(() => {
-    connect();
-    // publish();
+  // useEffect(() => {
+  //   // connect();
+  //   // publish();
 
-    return () => disconnect();
+  //   return () => disconnect();
+  // }, []);
+  useEffect(() => {
+    console.log('ChatRoomEffect');
+    dispatch(setMarkerRedux(marker));
+
+    publish();
   }, []);
 
   const connect = () => {
@@ -93,7 +82,6 @@ const Marker = () => {
   };
 
   const publish = () => {
-    // MyUseInterval(() => {
     if (!client.current.connected) {
       return;
     }
@@ -104,7 +92,6 @@ const Marker = () => {
       // url = [{title:'test' lat: 3414.324324 lng: 32432.124}]
     });
     setUrl('');
-    // }, delay);
   };
 
   const subscribe = () => {
@@ -112,12 +99,20 @@ const Marker = () => {
       setMarker(_marker => [..._marker, JSON.parse(body)]);
     });
   };
+
   console.log(marker);
   return (
     <>
-      <div>{marker}</div>
+      <div>marker</div>
+      <button
+        onClick={() => {
+          dispatch(setMarkerRedux(marker));
+        }}
+      >
+        버튼
+      </button>
     </>
   );
 };
 
-export default Marker;
+export default MyTest;
