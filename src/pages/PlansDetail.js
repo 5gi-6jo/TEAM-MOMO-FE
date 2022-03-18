@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { setPreview } from '../redux/modules/image';
-import { getImage, getOnePlan } from '../redux/modules/plan';
+import { getImage, getOnePlan, setUploadImage } from '../redux/modules/plan';
+import { setFooterView } from '../redux/modules/mainsys.js';
 import Headerbar from '../shared/Headerbar';
 import { Grid, Input, Text } from '../elements';
 import theme from '../Styles/theme';
@@ -46,7 +47,7 @@ const PlansDetail = props => {
 
     // console.log(formData);
     const data = { files, planId };
-    // dispatch(setUploadImage(data));
+    dispatch(setUploadImage(data));
     dispatch(getImage(planId));
   };
   return (
@@ -76,6 +77,7 @@ const PlansDetail = props => {
               key={plan.imageId}
               src={plan.image}
               onClick={() => {
+                dispatch(setFooterView(false));
                 navigate(`/plansdetail/${planId}/images`, {
                   state: {
                     Plan: Plan,

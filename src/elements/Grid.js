@@ -17,6 +17,7 @@ const Grid = props => {
     is_cursor,
     _onClick,
     is_Grid,
+    addStyle,
   } = props;
 
   const styles = {
@@ -35,7 +36,7 @@ const Grid = props => {
   };
   return (
     <React.Fragment>
-      <GridBox {...styles} onClick={_onClick}>
+      <GridBox style={addStyle} {...styles} onClick={_onClick}>
         {children}
       </GridBox>
     </React.Fragment>

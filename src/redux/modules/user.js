@@ -24,6 +24,8 @@ export const signinAxios = createAsyncThunk(
     const userData = await Userapi.signIn({ loginData, navigate });
     if (userData) {
       dispatch(setUserToSession(userData.userData));
+      // navigate('/', { replace: true });
+
       return userData;
     }
   },
@@ -64,8 +66,8 @@ export const userSlice = createSlice({
     },
     [signinAxios.fulfilled]: (state, action) => {
       state.user_info = {
-        username: action.payload.userData.username,
-        userid: action.payload.userData.userId,
+        // username: action.payload.userData.username,
+        // userid: action.payload.userData.userId,
       };
       state.is_login = true;
     },

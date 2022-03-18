@@ -17,6 +17,7 @@ const Input = props => {
     is_float,
     _type,
     _accept,
+    ref,
   } = props;
 
   if (is_float) {
@@ -44,8 +45,15 @@ const Input = props => {
           color={labelColor}
           margin="0px"
           lineheight="20px"
-        ></Text>
-        <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
+        >
+          {labelText}
+        </Text>
+        <ElInput
+          type={type}
+          ref={ref}
+          placeholder={placeholder}
+          onChange={_onChange}
+        />
       </Grid>
     );
   }
@@ -53,7 +61,12 @@ const Input = props => {
   return (
     <React.Fragment>
       <Grid>
-        <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
+        <ElInput
+          type={type}
+          ref={ref}
+          placeholder={placeholder}
+          onChange={_onChange}
+        />
       </Grid>
     </React.Fragment>
   );

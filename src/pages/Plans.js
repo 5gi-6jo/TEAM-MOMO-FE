@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Text } from '../elements';
 import theme from '../Styles/theme';
@@ -13,8 +13,24 @@ import theme from '../Styles/theme';
  */
 
 const Plans = props => {
+  //copy테스트
+  const [success, setSuccess] = useState(false);
+
+  const textInput = useRef();
+
+  const copy = () => {
+    const el = textInput.current;
+    el.select();
+    document.execCommand('copy');
+    setSuccess(true);
+  };
+
   return (
     <>
+      <input type="text" ref={textInput}></input>
+      <button onClick={copy}>copy</button>
+
+      {success ? <div style={{ color: 'green' }}>Success!</div> : null}
       <div>plans</div>
       <Text size="17px" bold color={theme.color.gray3}>
         test

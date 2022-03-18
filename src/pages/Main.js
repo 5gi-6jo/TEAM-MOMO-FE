@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Calendar from '../components/Calendar';
-
+import { getPlans } from '../redux/modules/plan';
+import { useDispatch, useSelector } from 'react-redux';
 // import moment from 'moment';
 const writeIcon = '/icons/review_write.png';
 
@@ -15,15 +16,34 @@ const writeIcon = '/icons/review_write.png';
  */
 
 const Main = props => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const Plans = useSelector(state => state.plan.plans);
+  useEffect(
+    () => {
+      dispatch(getPlans());
+    },
+    [dispatch],
+    Plans,
+  );
   return (
     <React.Fragment>
       <div>Main</div>
       <Calendar />
+      {Plans &&
+        Plans.map(plan => (
+          <div
+            key={`plans=${plan.planId}`}
+            onClick={() => {
+              navigate(`/plansdetail/${plan.planId}`, { state: plan.planId });
+            }}
+          >
+            {plan.planName}
+          </div>
+        ))}
       <WriteButton
         onClick={() => {
-          navigate('/edit', { replace: true });
+          navigate('/edit');
         }}
       />
     </React.Fragment>
