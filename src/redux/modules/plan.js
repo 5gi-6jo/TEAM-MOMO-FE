@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { URL } from '../../shared/apis/API';
 import { MOCK } from '../../shared/apis/plans';
 
-const ismock = false;
+const ismock = true;
 export const getPlans = createAsyncThunk(
   'plan/getPlans',
   async (_, { rejectWithValue }) => {
@@ -67,6 +67,19 @@ export const setPlans = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       }).then(res => res.data);
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+export const editPlans = createAsyncThunk(
+  'plan/editPlans',
+  async (data, planId, { rejectWithValue }) => {
+    try {
+      return await URL.put(`/plans/${planId}`, data).then(res => {
+        console.log(res);
+      });
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);

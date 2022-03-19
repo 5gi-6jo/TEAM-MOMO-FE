@@ -60,8 +60,6 @@ const PlansDetailImage = () => {
       <Headerbar
         text={props.Plan.planName}
         _onClickClose={() => {
-          dispatch(setFooterView(true));
-
           navigate(`/plansdetail/${props.planId}`, { state: props.planId });
         }}
         _onClickEdit={() => {

@@ -1,11 +1,12 @@
 // import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { setPreview } from '../redux/modules/image';
 import { getImage, getOnePlan, setUploadImage } from '../redux/modules/plan';
 import { setFooterView } from '../redux/modules/mainsys.js';
+
+import EditPlans from './EditPlans';
 import Headerbar from '../shared/Headerbar';
 import { Grid, Input, Text } from '../elements';
 import theme from '../Styles/theme';
@@ -30,6 +31,8 @@ const PlansDetail = props => {
   const Images = useSelector(state => state.images);
 
   const img = Plan.imageList;
+
+  const [showModal, setShowModal] = useState('');
 
   //부모에서 넘겨받을때 모임 아이디를 받음
   const planId = useLocation().state;
@@ -59,7 +62,8 @@ const PlansDetail = props => {
           navigate('/');
         }}
         _onClickEdit={() => {
-          console.log('Edit');
+          setShowModal(true);
+          // navigate(`/Edit/${planId}`);
         }}
       />
       <Grid padding="20px">
@@ -77,7 +81,7 @@ const PlansDetail = props => {
               key={plan.imageId}
               src={plan.image}
               onClick={() => {
-                dispatch(setFooterView(false));
+                // dispatch(setFooterView(false));
                 navigate(`/plansdetail/${planId}/images`, {
                   state: {
                     Plan: Plan,
@@ -90,7 +94,7 @@ const PlansDetail = props => {
             />
           ))}
       </Grid>
-      {/* <Img src={preview ? preview : 'http://via.placeholder.com/400x300'} />; */}
+
       <Input
         is_float
         _type="file"
@@ -102,19 +106,15 @@ const PlansDetail = props => {
       >
         <FiUpload size="24px" />
       </Input>
-      <button
-        onClick={() => {
-          console.log('Images', Images);
-          dispatch(getImage(planId));
-        }}
-      >
-        불러오기 테스트
-      </button>
-      <input
-        type="file"
-        accept="image/x-png,image/jpeg"
-        onChange={handleFileInput}
-      />
+
+      {showModal && (
+        <EditPlans
+          des={Plan.destination}
+          show={showModal}
+          id={planId}
+          setshow={setShowModal}
+        />
+      )}
     </>
   );
 };
