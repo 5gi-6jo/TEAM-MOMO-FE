@@ -124,7 +124,9 @@ const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 const Img = styled.img`
   display: block;
   width: 100%;
-  height: auto;
+  min-height: 175px;
+  max-height: 175px;
+  object-fit: cover;
 `;
 
 // default props 작성 위치
