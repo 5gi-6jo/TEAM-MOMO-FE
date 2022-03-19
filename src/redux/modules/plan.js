@@ -1,19 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { URL } from '../../shared/apis/API';
-import PlanApi from '../../shared/apis/planApi';
 import { MOCK } from '../../shared/apis/plans';
 
-const Planapi = new PlanApi();
-
+const ismock = true;
 export const getPlans = createAsyncThunk(
   'plan/getPlans',
   async (_, { rejectWithValue }) => {
     try {
-      return await URL.get(`/plans/main`, _).then(
-        response => response.data.data,
-      );
-      return MOCK.Plans.data;
+      if (ismock) return MOCK.Plans.data;
+      console.log(sessionStorage.getItem('token').split('Bearer ')[1]);
+      return await URL.get(`/plans/main`, {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+      }).then(response => response.data.data);
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -43,16 +44,49 @@ export const getOnePlan = createAsyncThunk(
   'plan/getOnePlan',
   async (planId, { rejectWithValue }) => {
     try {
-      return await URL.get(`/plans/${planId}`, planId).then(
-        response => response.data.data,
-      );
-      // return MOCK.PlanDetail.data;
+      if (ismock) return MOCK.PlanDetail.data;
+      return await URL.get(`/plans/${planId}`, {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+      }).then(response => response.data.data);
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
     }
   },
 );
+export const setPlans = createAsyncThunk(
+  'plan/setPlans',
+  async (data, { rejectWithValue }) => {
+    try {
+      return await URL.post('/plans', data, {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+      }).then(res => res.data);
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+export const editPlans = createAsyncThunk(
+  'plan/editPlans',
+  async (data, planId, { rejectWithValue }) => {
+    try {
+      return await URL.put(`/plans/${planId}`, data).then(res => {
+        console.log(res);
+      });
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const setUploadImage = createAsyncThunk(
   'plan/setUploadImage',
   async (data, { rejectWithValue }) => {
@@ -62,10 +96,11 @@ export const setUploadImage = createAsyncThunk(
         formdata.append('files', data.files[i]);
       }
       return await URL.post(`/plans/${data.planId}/images`, formdata, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      }).then(res => {
-        console.log(res);
-      });
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+          'Content-Type': 'multipart/form-data',
+        },
+      }).then(res => res.data.data);
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -77,7 +112,26 @@ export const getImage = createAsyncThunk(
   'plan/getImage',
   async (planId, { rejectWithValue }) => {
     try {
-      return await URL.get(`/plans/${planId}/images`).then(res => {
+      return await URL.get(`/plans/${planId}/images`, {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+      }).then(res => {
+        console.log(res);
+      });
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+export const deleteImage = createAsyncThunk(
+  'plan/deleteImage',
+  async (imageId, { rejectWithValue }) => {
+    try {
+      console.log(imageId);
+      return await URL.delete(`/plans/images/${imageId}`).then(res => {
         console.log(res);
       });
     } catch (error) {
@@ -114,8 +168,12 @@ export const planSlice = createSlice({
       })
       .addCase(setUploadImage.fulfilled, (state, action) => {
         console.log(state, action.payload);
+        state.showplan.imageList = state.showplan.imageList.concat(
+          action.payload,
+        );
         state.images = action.payload;
       });
+
     // [getPlansAxios.fulfiled]: (state, action) => {
     //   //
     // },

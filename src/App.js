@@ -20,6 +20,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import EditPlans from './pages/EditPlans';
 import Map from './pages/Map';
+import { useSelector } from 'react-redux';
 
 function App() {
   const firebaseConfig = {
@@ -32,6 +33,7 @@ function App() {
     measurementId: 'G-CXWX95R14M',
   };
   firebase.initializeApp(firebaseConfig);
+  const is_footer = useSelector(state => state.main.is_footer);
 
   // messages
   //   .requestPermission()
@@ -72,7 +74,7 @@ function App() {
             <Route path="/Login" element={<Login />} />
             <Route path="/Map" element={<Map />} />
           </Routes>
-          <Footer />
+          {is_footer && <Footer />}
         </Wrap>
       </ThemeProvider>
     </>

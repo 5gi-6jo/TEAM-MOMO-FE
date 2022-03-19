@@ -52,7 +52,7 @@ export const MOCK = {
         {
           imageId: 5,
           image:
-            'https://firebasestorage.googleapis.com/v0/b/myinsta-60d69.appspot.com/o/images%2Fundefined_1646148345084?alt=media&token=68c1bac6-ce90-4914-870d-b9ccd57da351',
+            'https://firebasestorage.googleapis.com/v0/b/myinsta-60d69.appspot.com/o/images%2Fundefined_1646148469611?alt=media&token=e1361922-3a25-48b8-acd9-87a41c527d14',
         },
       ],
       contents: '본문',

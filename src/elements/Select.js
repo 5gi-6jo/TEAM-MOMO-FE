@@ -9,7 +9,8 @@ const Select = props => {
     labelBold,
     labelColor,
     placeholder,
-    _onChange,
+    _onChangeTime,
+    _onChangeMinute,
     type,
     islabel,
   } = props;
@@ -23,14 +24,14 @@ const Select = props => {
           {labelText}
         </Text>
         <Grid left center margin="2px">
-          <ElSelect placeholder={placeholder} onChange={_onChange}>
+          <ElSelect placeholder={placeholder} onChange={_onChangeTime}>
             {time.map((v, i) => {
-              return <option key={`${v}시`}>{v}시</option>;
+              return <option key={`${v}시`}>{('00' + v).slice(-2)}시</option>;
             })}
           </ElSelect>
-          <ElSelect placeholder={placeholder} onChange={_onChange}>
+          <ElSelect placeholder={placeholder} onChange={_onChangeMinute}>
             {minute.map((v, i) => {
-              return <option key={`${v}분`}>{v}분</option>;
+              return <option key={`${v}분`}>{('00' + v).slice(-2)}분</option>;
             })}
           </ElSelect>
         </Grid>
@@ -41,12 +42,12 @@ const Select = props => {
   return (
     <React.Fragment>
       <Grid left center>
-        <ElSelect placeholder={placeholder} onChange={_onChange}>
+        <ElSelect placeholder={placeholder} onChange={_onChangeTime}>
           {time.map((v, i) => {
             return <option key={`${v}시`}>{v}시</option>;
           })}
         </ElSelect>
-        <ElSelect placeholder={placeholder} onChange={_onChange}>
+        <ElSelect placeholder={placeholder} onChange={_onChangeMinute}>
           {minute.map((v, i) => {
             return <option key={`${v}분`}>{v}분</option>;
           })}

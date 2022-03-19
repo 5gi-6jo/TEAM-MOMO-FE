@@ -1,13 +1,16 @@
 // import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Headerbar from '../shared/Headerbar';
-import { Button, Image, Grid, Text } from '../elements';
-import { log_in } from '../img';
+import { Image, Grid } from '../elements';
+import { log_in, trash_2 } from '../img';
 import theme from '../Styles/theme';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { setFooterView } from '../redux/modules/mainsys';
+import { saveAs } from 'file-saver';
+import { deleteImage } from '../redux/modules/plan';
 // import { logger } from '../shared/utils';
 
 // const writeIcon = '../img/review_write.png';
@@ -32,8 +35,26 @@ const PlansDetailImage = () => {
   const forwardimage = props.Plan.imageList[imageidx + 1];
 
   console.log(props);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(setFooterView(false));
+    return dispatch(setFooterView(true));
+  }, []);
 
+  const downloadButton = () => {
+    fetch(props.image, { method: 'GET' })
+      .then(res => {
+        return res.blob();
+      })
+      .then(blob => {
+        saveAs(blob, 'image.jpg');
+      })
+      .catch(err => {
+        console.error('err: ', err);
+      });
+    console.log('log_in');
+
+    saveAs(props.image, 'image.jpg');
+  };
   return (
     <>
       <Headerbar
@@ -46,9 +67,7 @@ const PlansDetailImage = () => {
         }}
       />
       <ImageDiv>
-        <Image shape="rectangle" src={props.image}>
-          <Grid is_flex center></Grid>
-        </Image>
+        <Image shape="rectangle" src={props.image}></Image>
         {backimage && (
           <IoIosArrowBack
             cursor="pointer"
@@ -57,7 +76,7 @@ const PlansDetailImage = () => {
               left: '1%',
             }}
             size="46px"
-            color={theme.color.orange}
+            color={theme.color.white}
             onClick={() => {
               navigate(`/plansdetail/${props.planId}/images`, {
                 state: {
@@ -78,7 +97,7 @@ const PlansDetailImage = () => {
               right: '1%',
             }}
             size="46px"
-            color={theme.color.orange}
+            color={theme.color.white}
             onClick={() => {
               navigate(`/plansdetail/${props.planId}/images`, {
                 state: {
@@ -93,12 +112,37 @@ const PlansDetailImage = () => {
         )}
       </ImageDiv>
       <Wrap>
-        <Icon
-          src={log_in}
-          onClick={() => {
-            console.log('log_in');
+        <Grid
+          center
+          is_cursor
+          addStyle={{
+            display: 'flex',
+            textAlign: 'center',
+            justifyContent: 'center',
           }}
-        />
+          _onClick={downloadButton}
+        >
+          <Icon src={log_in} />
+        </Grid>
+        <Grid
+          center
+          is_cursor
+          addStyle={{
+            display: 'flex',
+            textAlign: 'center',
+            justifyContent: 'center',
+          }}
+          _onClick={() => {
+            console.log('trash_2');
+            const data = {
+              imageId: props.imageId,
+            };
+            dispatch(deleteImage(data));
+            navigate(`/plansdetail/${props.planId}`, { state: props.planId });
+          }}
+        >
+          <Icon src={trash_2} />
+        </Grid>
       </Wrap>
     </>
   );
@@ -124,16 +168,14 @@ const Icon = styled.div`
 `;
 const Wrap = styled.div`
   width: 100%;
-  height: 72px;
+  height: 46px;
   position: absolute;
-  bottom: 76px;
+  bottom: 2.6%;
   left: 0;
   display: flex;
   justify-content: space-evenly;
-  border-radius: 12px;
-  background-color: ${theme.color.orange};
-  justify-content: space-evenly;
-  padding: 18px 20px;
+  background-color: ${theme.color.realblack};
+  padding: 12px 0px;
   box-sizing: border-box;
 
   & .lastIcon:last-child {

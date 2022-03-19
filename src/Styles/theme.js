@@ -33,11 +33,11 @@ const color = {
   orange: '#F84914',
   black: '#292929',
   realblack: '#000000',
+  white: '#fff',
 
   mainBlue: '#5327ff',
   mainMint: '#83ffca',
   mainGray: '#dedfe0',
-  white: '#fff',
   mint: '#bcffe2',
   blue1: '#8689ff',
   blue2: '#afb1ff',

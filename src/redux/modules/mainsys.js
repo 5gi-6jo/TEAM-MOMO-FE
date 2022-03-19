@@ -4,11 +4,14 @@ export const mainSlice = createSlice({
   name: 'main',
   initialState: {
     marker: '',
-    is_footer: false,
+    is_footer: true,
   },
   reducers: {
     setMarkerRedux: (state, action) => {
       state.marker = action.payload;
+    },
+    setFooterView: (state, action) => {
+      if (state.is_footer !== action.payload) state.is_footer = action.payload;
     },
     // getPlans: (state, action) => {
     //   const planlist = action.payload;
@@ -21,6 +24,6 @@ export const mainSlice = createSlice({
   },
   extraReducers: builder => {},
 });
-export const { setMarkerRedux } = mainSlice.actions;
+export const { setMarkerRedux, setFooterView } = mainSlice.actions;
 
 export default mainSlice.reducer;

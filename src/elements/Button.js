@@ -16,6 +16,8 @@ const Button = props => {
     _accept,
     _onChange,
     _type,
+    abled,
+    value,
   } = props;
 
   if (is_float) {
@@ -27,6 +29,7 @@ const Button = props => {
           disabled={is_disabled}
           onClick={_onClick}
           _onChange={_onChange}
+          value={value}
         >
           {name ? name : children}
         </FloatButton>
@@ -38,11 +41,17 @@ const Button = props => {
     width: width,
     padding: padding,
     is_edit: is_edit,
+    abled: abled,
   };
 
   return (
     <React.Fragment>
-      <ElButton disabled={is_disabled} {...styles} onClick={_onClick}>
+      <ElButton
+        disabled={is_disabled}
+        value={value}
+        {...styles}
+        onClick={_onClick}
+      >
         {name ? name : children}
       </ElButton>
     </React.Fragment>
@@ -59,6 +68,7 @@ Button.defaultProps = {
   padding: '12px',
   is_disabled: false,
   is_edit: false,
+  abled: false,
 };
 // background-color : ${theme.color.gray3}
 // props =>
@@ -79,7 +89,7 @@ const ElButton = styled.button`
   ${props =>
     props.is_edit
       ? props =>
-          props.disabled
+          props.abled
             ? `background-color:${theme.color.gray5};
             color: ${theme.color.gray1};`
             : `background-color:${theme.color.white};
@@ -87,7 +97,7 @@ const ElButton = styled.button`
   border: 1px solid ${theme.color.orange};
             `
       : props =>
-          props.disabled
+          props.abled
             ? `background-color:${theme.color.orange};
             color: ${theme.color.white};`
             : `background-color:${theme.color.gray5};
