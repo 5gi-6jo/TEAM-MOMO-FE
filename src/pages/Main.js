@@ -1,11 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Calendar from '../components/Calendar';
+import Headerbar from '../shared/Headerbar';
 import { getPlans } from '../redux/modules/plan';
 import { useDispatch, useSelector } from 'react-redux';
-// import moment from 'moment';
+import { Grid, Input, Text } from '../elements';
+
+// import moment from 'moment';import theme from '../Styles/theme';
+import { IoIosAddCircle } from 'react-icons/io';
+import theme from '../Styles/theme';
+
 const writeIcon = '/icons/review_write.png';
 
 /**
@@ -26,26 +32,50 @@ const Main = props => {
     [dispatch],
     Plans,
   );
+
+  const textInput = useRef();
+
+  const copy = () => {
+    const el = textInput.current;
+    el.select();
+    document.execCommand('copy');
+  };
   return (
     <React.Fragment>
-      <div>Main</div>
-      <Calendar />
-      {Plans &&
-        Plans.map(plan => (
-          <div
-            key={`plans=${plan.planId}`}
-            onClick={() => {
-              navigate(`/plansdetail/${plan.planId}`, { state: plan.planId });
-            }}
-          >
-            {plan.planName}
-          </div>
-        ))}
-      <WriteButton
-        onClick={() => {
-          navigate('/edit');
-        }}
-      />
+      <Grid padding="20px">
+        <Headerbar />
+        <TextBox>
+          <Text color={theme.color.black} size="20px">
+            모여라님(icon)
+            <br />
+            약속 늦지않게
+            <br />
+            조심하세요!
+          </Text>
+        </TextBox>
+
+        <Calendar />
+        {Plans &&
+          Plans.map(plan => (
+            <div
+              key={`plans=${plan.planId}`}
+              onClick={() => {
+                navigate(`/plansdetail/${plan.planId}`, { state: plan.planId });
+              }}
+            >
+              {plan.planName}
+              <>
+                <input type="text" value="url" ref={textInput} readOnly></input>
+                <button onClick={copy}>copy</button>
+              </>
+            </div>
+          ))}
+        <WriteButton
+          onClick={() => {
+            navigate('/edit');
+          }}
+        />
+      </Grid>
     </React.Fragment>
   );
 };
@@ -64,6 +94,8 @@ const WriteButton = styled.div`
   background-size: cover;
   cursor: pointer;
 `;
+
+const TextBox = styled.div``;
 
 // default props 작성 위치
 Main.defaultProps = {};
