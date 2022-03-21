@@ -18,6 +18,8 @@ const Input = props => {
     _type,
     _accept,
     ref,
+    _onChlick,
+    value,
   } = props;
 
   if (is_float) {
@@ -53,6 +55,8 @@ const Input = props => {
           ref={ref}
           placeholder={placeholder}
           onChange={_onChange}
+          onClick={_onChlick}
+          value={value}
         />
       </Grid>
     );
@@ -81,6 +85,7 @@ Input.defaultProps = {
   type: 'text',
   is_float: false,
   _onChange: () => {},
+  _onChlick: () => {},
 };
 
 const ElTextarea = styled.textarea`

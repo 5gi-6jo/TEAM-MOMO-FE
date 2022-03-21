@@ -23,6 +23,9 @@ import Login from './pages/Login';
 import EditPlans from './pages/EditPlans';
 import Map from './pages/Map';
 import { useSelector } from 'react-redux';
+import PlanChating from './pages/PlanChating';
+import PlanMap from './pages/PlanMap';
+import PlanSelectMap from './pages/PlanSelectMap';
 
 function App() {
   const firebaseConfig = {
@@ -77,6 +80,8 @@ function App() {
             <Route path="/Register" element={<Register />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Map" element={<Map />} />
+            <Route path="/chating" element={<PlanChating />} />
+            <Route path="/planmap" element={<PlanMap />} />
           </Routes>
           {is_footer && <Footer />}
         </Wrap>

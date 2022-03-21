@@ -16,7 +16,7 @@ const Image = props => {
   if (shape === 'rectangle') {
     return (
       <AspectOutter>
-        <AspectInner ref={ref} {...styles}></AspectInner>
+        <AspectInner src={props.src} ref={ref} {...styles}></AspectInner>
       </AspectOutter>
     );
   }
@@ -45,14 +45,22 @@ const ImageDefault = styled.div`
 const AspectOutter = styled.div`
   width: 100%;
   min-width: 250px;
+  height: 100%;
+  display: flex;
+  align-items: center;
 `;
 
-const AspectInner = styled.div`
+const AspectInner = styled.img`
   position: relative;
-  padding-top: 75%;
-  overflow: hidden;
-  background-image: url('${props => props.src}');
-  background-size: cover;
+  width: 100%;
+  object-fit: contain; //cover
+  /* padding-top: 75%; */
+  /* overflow: hidden; */
+  /* background-image: url('${props => props.src}'); */
+  /* background-size: contain;
+  background-repeat: no-repeat; */
+
+  height: 100%;
 `;
 
 const ImageCircle = styled.div`
