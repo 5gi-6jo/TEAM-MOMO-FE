@@ -53,7 +53,6 @@ const AddPlans = props => {
     }
   }, []);
 
-  console.log(address);
   return (
     <React.Fragment>
       <Grid>
@@ -201,7 +200,6 @@ const AddPlans = props => {
                   noticeTime: abled,
                 };
                 dispatch(setPlans(data));
-                // navigate('/');
               }}
             >
               모임 추가하기

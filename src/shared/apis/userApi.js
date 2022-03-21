@@ -1,4 +1,4 @@
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 
 class UserApi {
   constructor() {
@@ -46,7 +46,7 @@ class UserApi {
         console.log(res);
 
         // alert(res.data.msg);
-        navigate('/', { replace: true });
+        navigate('/main', { replace: true });
         console.log(res.headers.authorization);
         // axios.defaults.headers.common['Authorization'] =
         //   res.headers.authorization;

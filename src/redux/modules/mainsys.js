@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import moment from 'moment';
 
 export const mainSlice = createSlice({
   name: 'main',
@@ -7,6 +8,7 @@ export const mainSlice = createSlice({
     is_footer: true,
     publicChats: [],
     des: '',
+    calendarDay: moment().format().split('+')[0],
   },
   reducers: {
     setMarkerRedux: (state, action) => {
@@ -21,10 +23,18 @@ export const mainSlice = createSlice({
     setDestination: (state, action) => {
       state.des = action.payload;
     },
+    setCalendarDay: (state, action) => {
+      state.calendarDay = action.payload;
+    },
   },
   extraReducers: builder => {},
 });
-export const { setMarkerRedux, setFooterView, setPublicChats, setDestination } =
-  mainSlice.actions;
+export const {
+  setMarkerRedux,
+  setFooterView,
+  setPublicChats,
+  setDestination,
+  setCalendarDay,
+} = mainSlice.actions;
 
 export default mainSlice.reducer;

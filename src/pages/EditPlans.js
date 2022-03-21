@@ -8,7 +8,7 @@ import Headerbar from '../shared/Headerbar';
 import theme from '../Styles/theme';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { editPlans, setPlans } from '../redux/modules/plan';
+import { editPlans, setOnePlan, setPlans } from '../redux/modules/plan';
 
 import { GrClose } from 'react-icons/gr';
 import { FiSettings } from 'react-icons/fi';
@@ -43,7 +43,6 @@ const AddPlans = props => {
       setMinute('00');
     }
   }, []);
-  console.log(selectTime);
 
   return (
     <>
@@ -198,13 +197,17 @@ const AddPlans = props => {
                     id: props.id,
                     planName: name,
                     contents: contenst,
-                    destination: props.des,
-                    planDate: selectTime,
+                    address: props.des.address,
+                    lat: props.des.lat,
+                    lng: props.des.lng,
+                    planDate: selectTime.split('+')[0],
                     noticeTime: abled,
                   };
                   props.setshow(false);
+                  console.log(data);
 
-                  // dispatch(editPlans(data));
+                  dispatch(editPlans(data));
+                  dispatch(setOnePlan(data));
                 }}
               >
                 모임 추가하기
