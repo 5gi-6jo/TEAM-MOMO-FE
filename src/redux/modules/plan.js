@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { URL } from '../../shared/apis/API';
 import { MOCK } from '../../shared/apis/plans';
 
-const ismock = true;
+const ismock = false;
 export const getPlans = createAsyncThunk(
   'plan/getPlans',
   async (_, { rejectWithValue }) => {

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Text } from '../elements';
+// import { testcol } from '../shared/apis/Socket';
 import theme from '../Styles/theme';
 
 // const writeIcon = '../img/review_write.png';
@@ -24,6 +25,7 @@ const Plans = props => {
     document.execCommand('copy');
     setSuccess(true);
   };
+  // testcol();
 
   return (
     <>

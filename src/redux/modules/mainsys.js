@@ -5,6 +5,8 @@ export const mainSlice = createSlice({
   initialState: {
     marker: '',
     is_footer: true,
+    publicChats: [],
+    des: '',
   },
   reducers: {
     setMarkerRedux: (state, action) => {
@@ -13,17 +15,16 @@ export const mainSlice = createSlice({
     setFooterView: (state, action) => {
       if (state.is_footer !== action.payload) state.is_footer = action.payload;
     },
-    // getPlans: (state, action) => {
-    //   const planlist = action.payload;
-    //   state.data = planlist;
-    // },
-    // getOnePlan: (state, action) => {
-    //   console.log(state, action.payload);
-    //   state.plan.data.push(action.payload);
-    // },
+    setPublicChats: (state, action) => {
+      state.publicChats.push(action.payload);
+    },
+    setDestination: (state, action) => {
+      state.des = action.payload;
+    },
   },
   extraReducers: builder => {},
 });
-export const { setMarkerRedux, setFooterView } = mainSlice.actions;
+export const { setMarkerRedux, setFooterView, setPublicChats, setDestination } =
+  mainSlice.actions;
 
 export default mainSlice.reducer;

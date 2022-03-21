@@ -77,6 +77,13 @@ const Footer = props => {
           >
             지도(임시메뉴창)
           </ButtonWrap>
+          <ButtonWrap
+            onClick={() => {
+              navigate('/planmap', { replace: true });
+            }}
+          >
+            chating
+          </ButtonWrap>
         </Grid>
       </NavBox>
     </>
