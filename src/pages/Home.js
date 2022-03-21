@@ -1,8 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../elements/Button';
-import { Grid, Input, Text } from '../elements';
+import { Text } from '../elements';
 import theme from '../Styles/theme';
 import { KAKAO_AUTH_URL } from '../service/OAuth';
 
@@ -14,7 +13,6 @@ import { KAKAO_AUTH_URL } from '../service/OAuth';
  */
 
 const Home = () => {
-  const navigate = useNavigate();
   return (
     <React.Fragment>
       <TextBox>
@@ -25,7 +23,7 @@ const Home = () => {
           <br />
         </Text>
       </TextBox>
-      <Button onClick={KAKAO_AUTH_URL} name={'카카오톡으로 시작하기'} />
+      <a href={KAKAO_AUTH_URL}>카카오톡으로 시작하기</a>
       <Button name={'이메일 로그인·회원가입하기'} />
     </React.Fragment>
   );
