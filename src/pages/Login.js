@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginForm from '../components/LoginForm';
+import Button from '../elements/Button';
 
 const Login = ({ isLogin }) => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Login = ({ isLogin }) => {
     <>
       <Title>로그인</Title>
       <LoginForm />
+      <Button name={'회원가입하기'} />
     </>
   );
 };

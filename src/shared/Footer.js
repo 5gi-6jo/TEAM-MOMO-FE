@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Grid from '../elements/Grid';
 import { AiOutlineCalendar } from 'react-icons/ai';
+import { AiOutlineHome } from 'react-icons/ai';
 import { MdOutlinePlace } from 'react-icons/md';
 import { FiBookOpen } from 'react-icons/fi';
 import { BsPerson } from 'react-icons/bs';
@@ -25,6 +26,15 @@ const Footer = props => {
             center
             _onClick={() => {
               navigate('/', { replace: true });
+            }}
+          >
+            <AiOutlineHome size="20px" />
+          </Grid>
+          <Grid
+            is_cursor
+            center
+            _onClick={() => {
+              navigate('/main', { replace: true });
             }}
           >
             <AiOutlineCalendar size="20px" />

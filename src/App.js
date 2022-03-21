@@ -14,6 +14,7 @@ import Footer from './shared/Footer';
 import Mypage from './pages/Mypage';
 import PlansDetail from './pages/PlansDetail';
 import PlansDetailImage from './pages/PlansDetailImage';
+import Home from './pages/Home';
 
 import firebase from 'firebase/compat/app';
 import Register from './pages/Register';
@@ -59,7 +60,8 @@ function App() {
         <WebVer />
         <Wrap>
           <Routes>
-            <Route path="/" element={<Main />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/main" element={<Main />} />
             <Route path="/plans" element={<Plans />} />
             <Route path="/Edit" element={<AddPlans />} />
             <Route path="/Edit/:id" element={<EditPlans />} />
