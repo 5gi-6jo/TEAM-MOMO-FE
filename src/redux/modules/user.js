@@ -42,8 +42,8 @@ export const logoutAxios = createAsyncThunk(
 );
 
 export const kakaoLogin = code => {
-  // return function (dispatch, getState, { history }) {
-  return function (dispatch, getState, history) {
+  return function (dispatch, getState, { history }) {
+    // return function (dispatch, getState, history) {
     axios({
       method: 'GET',
       url: `https://seoultaste.click/users/kakao/callback?code=${code}`,

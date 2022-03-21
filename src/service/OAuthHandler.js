@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 
-// import Spinner from './Spinner';
+import Spinner from '../elements/Spinner';
 
 const OAuthHandler = props => {
   const dispatch = useDispatch();
@@ -22,8 +22,7 @@ const OAuthHandler = props => {
   //   fetchData();
   // }, []);
 
-  // return <Spinner />;
-  return null;
+  return <Spinner />;
 };
 
 export default OAuthHandler;
