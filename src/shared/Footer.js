@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Grid from '../elements/Grid';
+import theme from '../Styles/theme';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { AiOutlineHome } from 'react-icons/ai';
 import { MdOutlinePlace } from 'react-icons/md';
@@ -17,7 +18,6 @@ import { BsPerson } from 'react-icons/bs';
 
 const Footer = props => {
   const navigate = useNavigate();
-
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
 
@@ -31,17 +31,18 @@ const Footer = props => {
       if (currentClick !== null) {
         let current = document.getElementById(currentClick);
         console.log(current);
-        current.style.color = 'F84914';
+        current.style.color = theme.color.orange;
       }
 
       if (prevClick !== null) {
         let prev = document.getElementById(prevClick);
-        prev.style.color = '8C8C8C';
+        prev.style.color = theme.color.gray5;
       }
       setPrevClick(currentClick);
     },
     [currentClick],
   );
+
   return (
     <>
       <NavBox>
