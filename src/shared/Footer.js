@@ -36,7 +36,7 @@ const Footer = props => {
 
       if (prevClick !== null) {
         const prev = document.getElementById(prevClick);
-        prev.style.color = theme.color.gray1;
+        prev.style.color = theme.color.gray2;
       }
       setPrevClick(currentClick);
     },
