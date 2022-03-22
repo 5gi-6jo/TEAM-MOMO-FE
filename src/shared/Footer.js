@@ -29,14 +29,14 @@ const Footer = props => {
   useEffect(
     e => {
       if (currentClick !== null) {
-        let current = document.getElementById(currentClick);
+        const current = document.getElementById(currentClick);
         console.log(current);
         current.style.color = theme.color.orange;
       }
 
       if (prevClick !== null) {
-        let prev = document.getElementById(prevClick);
-        prev.style.color = theme.color.gray5;
+        const prev = document.getElementById(prevClick);
+        prev.style.color = theme.color.gray1;
       }
       setPrevClick(currentClick);
     },
@@ -54,7 +54,9 @@ const Footer = props => {
               navigate('/', { replace: true });
             }}
           >
-            <AiOutlineHome id="case1" size="20px" onClick={GetClick} />
+            <div id="case1" onClick={GetClick}>
+              <AiOutlineHome id="case1" size="20px" />
+            </div>
           </Grid>
           <Grid
             is_cursor
@@ -63,7 +65,9 @@ const Footer = props => {
               navigate('/main', { replace: true });
             }}
           >
-            <AiOutlineCalendar id="case2" size="20px" onClick={GetClick} />
+            <div id="case2" onClick={GetClick}>
+              <AiOutlineCalendar id="case2" size="20px" />
+            </div>
           </Grid>
           <Grid
             is_cursor
@@ -72,7 +76,9 @@ const Footer = props => {
               navigate('/plansdetail', { replace: true });
             }}
           >
-            <MdOutlinePlace id="case3" size="20px" onClick={GetClick} />
+            <div id="case3" onClick={GetClick}>
+              <MdOutlinePlace id="case3" size="20px" />
+            </div>
           </Grid>
           <Grid
             is_cursor
@@ -81,7 +87,9 @@ const Footer = props => {
               navigate('/plans', { replace: true });
             }}
           >
-            <FiBookOpen id="case4" size="20px" onClick={GetClick} />
+            <div id="case4" onClick={GetClick}>
+              <FiBookOpen id="case4" size="20px" />
+            </div>
           </Grid>
           <Grid
             is_cursor
@@ -90,7 +98,9 @@ const Footer = props => {
               navigate('/mypage', { replace: true });
             }}
           >
-            <BsPerson id="case5" size="20px" onClick={GetClick} />
+            <div id="case5" onClick={GetClick}>
+              <BsPerson id="case5" size="20px" />
+            </div>
           </Grid>
           <ButtonWrap
             onClick={() => {
