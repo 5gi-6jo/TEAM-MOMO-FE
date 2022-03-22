@@ -18,15 +18,15 @@ import { BsPerson } from 'react-icons/bs';
 const Footer = props => {
   const navigate = useNavigate();
 
-  const [currentClick, setCurrentClick] = React.useState(null);
-  const [prevClick, setPrevClick] = React.useState(null);
+  const [currentClick, setCurrentClick] = useState(null);
+  const [prevClick, setPrevClick] = useState(null);
 
   const GetClick = e => {
     setCurrentClick(e.target.id);
     console.log(e.target.id);
   };
 
-  React.useEffect(
+  useEffect(
     e => {
       if (currentClick !== null) {
         let current = document.getElementById(currentClick);
