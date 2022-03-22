@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Grid from '../elements/Grid';
@@ -17,6 +17,31 @@ import { BsPerson } from 'react-icons/bs';
 
 const Footer = props => {
   const navigate = useNavigate();
+
+  const [currentClick, setCurrentClick] = React.useState(null);
+  const [prevClick, setPrevClick] = React.useState(null);
+
+  const GetClick = e => {
+    setCurrentClick(e.target.id);
+    console.log(e.target.id);
+  };
+
+  React.useEffect(
+    e => {
+      if (currentClick !== null) {
+        let current = document.getElementById(currentClick);
+        console.log(current);
+        current.style.color = 'F84914';
+      }
+
+      if (prevClick !== null) {
+        let prev = document.getElementById(prevClick);
+        prev.style.color = '8C8C8C';
+      }
+      setPrevClick(currentClick);
+    },
+    [currentClick],
+  );
   return (
     <>
       <NavBox>
@@ -28,7 +53,7 @@ const Footer = props => {
               navigate('/', { replace: true });
             }}
           >
-            <AiOutlineHome size="20px" />
+            <AiOutlineHome id="case1" size="20px" onClick={GetClick} />
           </Grid>
           <Grid
             is_cursor
@@ -37,7 +62,7 @@ const Footer = props => {
               navigate('/main', { replace: true });
             }}
           >
-            <AiOutlineCalendar size="20px" />
+            <AiOutlineCalendar id="case2" size="20px" onClick={GetClick} />
           </Grid>
           <Grid
             is_cursor
@@ -46,7 +71,7 @@ const Footer = props => {
               navigate('/plansdetail', { replace: true });
             }}
           >
-            <MdOutlinePlace size="20px" />
+            <MdOutlinePlace id="case3" size="20px" onClick={GetClick} />
           </Grid>
           <Grid
             is_cursor
@@ -55,7 +80,7 @@ const Footer = props => {
               navigate('/plans', { replace: true });
             }}
           >
-            <FiBookOpen size="20px" />
+            <FiBookOpen id="case4" size="20px" onClick={GetClick} />
           </Grid>
           <Grid
             is_cursor
@@ -64,7 +89,7 @@ const Footer = props => {
               navigate('/mypage', { replace: true });
             }}
           >
-            <BsPerson size="20px" />
+            <BsPerson id="case5" size="20px" onClick={GetClick} />
           </Grid>
           <ButtonWrap
             onClick={() => {
