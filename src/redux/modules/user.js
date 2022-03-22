@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import UserApi from '../../shared/apis/userApi';
 import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
+// import { useHistory } from 'react-router';
 
 const Userapi = new UserApi();
 
@@ -41,9 +43,9 @@ export const logoutAxios = createAsyncThunk(
   },
 );
 
-export const kakaoLogin = code => {
-  return function (dispatch, getState, { history }) {
-    // return function (dispatch, getState, history) {
+export const KakaoLogin = code => {
+  // const navigate = useNavigate();
+  return function ({ navigate }) {
     axios({
       method: 'GET',
       url: `https://seoultaste.click/users/kakao/callback?code=${code}`,
@@ -55,19 +57,17 @@ export const kakaoLogin = code => {
 
         localStorage.setItem('token', ACCESS_TOKEN); //예시로 로컬에 저장함
 
-        window.alert('로그인에 성공하였습니다.');
-
-        history.replace('/main'); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        navigate('/main', { replace: true }); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       })
       .catch(err => {
         console.log('소셜로그인 에러', err);
-        window.alert('로그인에 실패하였습니다.');
-        history.replace('/login'); // 로그인 실패하면 로그인화면으로 돌려보냄
+
+        navigate('/login', { replace: true }); // 로그인 실패하면 로그인화면으로 돌려보냄
       });
   };
 };
 
-const actionCreators = { kakaoLogin };
+const actionCreators = { KakaoLogin };
 export { actionCreators };
 
 export const userSlice = createSlice({
