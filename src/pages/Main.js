@@ -12,8 +12,6 @@ import { Grid, Input, Text } from '../elements';
 import { IoIosAddCircle } from 'react-icons/io';
 import theme from '../Styles/theme';
 
-const writeIcon = '/icons/review_write.png';
-
 /**
  * @param {*} props
  * @returns 리턴 설명 적어주기
@@ -70,11 +68,16 @@ const Main = props => {
               </>
             </div>
           ))}
-        <WriteButton
-          onClick={() => {
-            navigate('/edit');
-          }}
-        />
+        <WriteButton>
+          <IoIosAddCircle
+            className="WriteButton"
+            onClick={() => {
+              navigate('/edit');
+            }}
+            size="60"
+            color="F84914"
+          />
+        </WriteButton>
       </Grid>
     </React.Fragment>
   );
@@ -90,9 +93,10 @@ const WriteButton = styled.div`
   margin-left: 25%;
   width: 60px;
   height: 60px;
-  background-image: url(${writeIcon});
   background-size: cover;
   cursor: pointer;
+  // size: 50
+  // color: theme.color.orange
 `;
 
 const TextBox = styled.div``;
