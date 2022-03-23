@@ -192,14 +192,16 @@ const AddPlans = props => {
               _onClick={() => {
                 const data = {
                   planName: name,
-                  address: address,
+                  destination: address,
                   lat: parseFloat(lat),
                   lng: parseFloat(lng),
                   contents: contents,
                   planDate: selectTime.split('+09:00')[0],
                   noticeTime: abled,
                 };
-                dispatch(setPlans(data));
+                dispatch(setPlans(data)).then(res => {
+                  navigate('/main');
+                });
               }}
             >
               모임 추가하기

@@ -21,25 +21,7 @@ export const getPlans = createAsyncThunk(
     }
   },
 );
-// export const getPlansAxios = createAsyncThunk(
-//   'plan/getPlansAxios',
-//   async (_, { dispatch }) => {
-//     //로딩
-//     const resp = await Planapi.getPlans();
-//     // dispatch(getPlans(resp));
-//     return resp;
-//   },
-// );
 
-// export const getOnePlanAxios = createAsyncThunk(
-//   'plan/getOnePlanAxios',
-//   async (planId, { dispatch }) => {
-//     //로딩
-//     const res = await Planapi.getOnePlan({ planId, dispatch });
-//     console.log('plan_modules', res);
-//     return res;
-//   },
-// );
 export const getOnePlan = createAsyncThunk(
   'plan/getOnePlan',
   async (planId, { rejectWithValue }) => {
@@ -66,7 +48,9 @@ export const setPlans = createAsyncThunk(
           Authorization: sessionStorage.getItem('token'),
           'Content-Type': 'application/json',
         },
-      }).then(res => res.data);
+      }).then(res => {
+        return res.data;
+      });
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
