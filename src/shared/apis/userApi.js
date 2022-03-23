@@ -51,7 +51,7 @@ class UserApi {
         // axios.defaults.headers.common['Authorization'] =
         //   res.headers.authorization;
         sessionStorage.setItem('token', res.headers.authorization);
-        return res.headers.authorization;
+        return res;
       })
       .catch(err => {
         // alert(err.response.data.msg);
@@ -78,6 +78,25 @@ class UserApi {
       .catch(err => {
         console.log(err.response);
         alert(err.response.data.msg);
+        return false;
+      });
+  }
+
+  async getUserbyToken({ navigate }) {
+    const getUserbyTokenConfig = {
+      method: 'get',
+      url: `${this.base}/users/login`,
+      headers: {
+        Authorization: this.getToken(),
+      },
+    };
+
+    return axios(getUserbyTokenConfig)
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        console.log(err.response);
         return false;
       });
   }

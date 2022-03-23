@@ -1,5 +1,5 @@
 import { logger } from './shared/utils';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import styled, { ThemeProvider } from 'styled-components';
 import theme from './Styles/theme';
@@ -22,10 +22,12 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import EditPlans from './pages/EditPlans';
 import Map from './pages/Map';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PlanChating from './pages/PlanChating';
 import PlanMap from './pages/PlanMap';
 import PlanSelectMap from './pages/PlanSelectMap';
+import { useEffect } from 'react';
+import { getUserbyToken } from './redux/modules/user';
 
 function App() {
   const firebaseConfig = {
@@ -56,12 +58,27 @@ function App() {
   //   console.log(payload.notification.title);
   //   console.log(payload.notification.body);
   // });
-  logger('test');
+  const istoken = sessionStorage.getItem('token')
+    ? sessionStorage.getItem('token')
+    : false;
+  const islogin = useSelector(state => state.user.is_login);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  console.log(istoken);
+  useEffect(() => {
+    console.log('app.js::didmount');
+    if (istoken && !islogin) {
+      dispatch(getUserbyToken(navigate));
+    }
+    // if (islogin) dispatch(getUserbyToken(navigate));
+    return console.log('app.js::Undidmount');
+  }, []);
   return (
     <>
       <ThemeProvider theme={theme}>
         <WebVer />
+
         <Wrap>
           <Routes>
             <Route path="/" element={<Home />} />

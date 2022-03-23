@@ -41,18 +41,6 @@ const PlansDetailImage = () => {
   }, []);
 
   const downloadButton = () => {
-    fetch(props.image, { method: 'GET' })
-      .then(res => {
-        return res.blob();
-      })
-      .then(blob => {
-        saveAs(blob, 'image.jpg');
-      })
-      .catch(err => {
-        console.error('err: ', err);
-      });
-    console.log('log_in');
-
     saveAs(props.image, 'image.jpg');
   };
   return (
@@ -134,10 +122,8 @@ const PlansDetailImage = () => {
           }}
           _onClick={() => {
             console.log('trash_2');
-            const data = {
-              imageId: props.imageId,
-            };
-            dispatch(deleteImage(data));
+
+            dispatch(deleteImage(props.imageId));
             navigate(`/plansdetail/${props.planId}`, { state: props.planId });
           }}
         >
