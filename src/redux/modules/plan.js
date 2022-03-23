@@ -2,14 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { URL } from '../../shared/apis/API';
 import { MOCK } from '../../shared/apis/plans';
 
-const ismock = true;
+const ismock = false;
 export const getPlans = createAsyncThunk(
   'plan/getPlans',
-  async (_, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
       if (ismock) return MOCK.Plans.data;
       console.log(sessionStorage.getItem('token').split('Bearer ')[1]);
-      return await URL.get(`/plans/main`, {
+      return await URL.post(`/plans/main`, data, {
         headers: {
           Authorization: sessionStorage.getItem('token'),
           'Content-Type': 'application/json',
@@ -75,10 +75,16 @@ export const setPlans = createAsyncThunk(
 );
 export const editPlans = createAsyncThunk(
   'plan/editPlans',
-  async (data, planId, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
-      return await URL.put(`/plans/${planId}`, data).then(res => {
+      return await URL.put(`/plans/${data.id}`, data, {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+      }).then(res => {
         console.log(res);
+        // setOnePlan(data);
       });
     } catch (error) {
       console.log(error);
@@ -131,7 +137,12 @@ export const deleteImage = createAsyncThunk(
   async (imageId, { rejectWithValue }) => {
     try {
       console.log(imageId);
-      return await URL.delete(`/plans/images/${imageId}`).then(res => {
+      return await URL.delete(`/plans/images/${imageId}`, {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+      }).then(res => {
         console.log(res);
       });
     } catch (error) {
@@ -157,6 +168,9 @@ export const planSlice = createSlice({
     //   console.log(state, action.payload);
     //   state.plan.data.push(action.payload);
     // },
+    setOnePlan: (state, action) => {
+      state.showplan = { ...state.showplan, ...action.payload };
+    },
   },
   extraReducers: builder => {
     builder
@@ -186,5 +200,6 @@ export const planSlice = createSlice({
     // },
   },
 });
+export const { setOnePlan } = planSlice.actions;
 
 export default planSlice.reducer;

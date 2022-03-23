@@ -111,19 +111,31 @@
 
 import axios from 'axios';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { useDispatch } from 'react-redux';
+import { setCalendarDay } from '../redux/modules/mainsys';
 import theme from '../Styles/theme';
 
-function MyCalendar() {
-  const [value, onChange] = useState(new Date());
+function MyCalendar(props) {
+  const [value, SetValue] = useState(new Date());
   const [mark, setMark] = useState([]);
+  const dispatch = useDispatch();
 
+  const SearchTime = moment(value).format().split('+')[0];
+  useEffect(() => {
+    console.log('Calendar:::useEffect');
+    // console.log(value);
+  }, [SearchTime]);
   return (
     <div>
       <Calendar
-        onChange={onChange}
+        onChange={e => {
+          SetValue(e);
+          console.log(e);
+          dispatch(setCalendarDay(moment(e).format().split('+')[0]));
+        }}
         value={value}
         formatDay={(locale, date) => moment(date).format('DD')}
         showNeighboringMonth={false}

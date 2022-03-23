@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Text } from '../elements';
+import FCMtoken from '../shared/FCMtoken';
+// import { testcol } from '../shared/apis/Socket';
 import theme from '../Styles/theme';
 
 // const writeIcon = '../img/review_write.png';
@@ -24,6 +26,7 @@ const Plans = props => {
     document.execCommand('copy');
     setSuccess(true);
   };
+  // testcol();
 
   return (
     <>
@@ -35,6 +38,7 @@ const Plans = props => {
       <Text size="17px" bold color={theme.color.gray3}>
         test
       </Text>
+      <FCMtoken />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -7,6 +7,7 @@ import Headerbar from '../shared/Headerbar';
 import { getPlans } from '../redux/modules/plan';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Input, Text } from '../elements';
+import moment from 'moment';
 
 // import moment from 'moment';import theme from '../Styles/theme';
 import { IoIosAddCircle } from 'react-icons/io';
@@ -23,14 +24,26 @@ const Main = props => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const Plans = useSelector(state => state.plan.plans);
-  useEffect(
-    () => {
-      dispatch(getPlans());
-    },
-    [dispatch],
-    Plans,
-  );
+  const time = useSelector(state => state.main.calendarDay);
+  console.log(time);
+  const [checktime, setChecktime] = useState();
+  useEffect(() => {
+    if (moment(time).format('YYYY-MM') !== checktime) {
+      dispatch(getPlans(data));
+      console.log('main::useEffect');
 
+      setChecktime(moment(time).format('YYYY-MM'));
+    }
+    return console.log('main::return');
+  }, [time]);
+  console.log(moment(time).format('YYYY-MM'));
+  console.log(checktime);
+  console.log(checktime === moment(time).format('YYYY-MM'));
+  console.log(Plans);
+  const data = {
+    date: time,
+  };
+  //-01T00:00:00
   const textInput = useRef();
 
   const copy = () => {

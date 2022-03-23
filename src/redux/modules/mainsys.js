@@ -1,10 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import moment from 'moment';
 
 export const mainSlice = createSlice({
   name: 'main',
   initialState: {
     marker: '',
     is_footer: true,
+    publicChats: [],
+    des: '',
+    calendarDay: moment().format().split('+')[0],
   },
   reducers: {
     setMarkerRedux: (state, action) => {
@@ -13,17 +17,24 @@ export const mainSlice = createSlice({
     setFooterView: (state, action) => {
       if (state.is_footer !== action.payload) state.is_footer = action.payload;
     },
-    // getPlans: (state, action) => {
-    //   const planlist = action.payload;
-    //   state.data = planlist;
-    // },
-    // getOnePlan: (state, action) => {
-    //   console.log(state, action.payload);
-    //   state.plan.data.push(action.payload);
-    // },
+    setPublicChats: (state, action) => {
+      state.publicChats.push(action.payload);
+    },
+    setDestination: (state, action) => {
+      state.des = action.payload;
+    },
+    setCalendarDay: (state, action) => {
+      state.calendarDay = action.payload;
+    },
   },
   extraReducers: builder => {},
 });
-export const { setMarkerRedux, setFooterView } = mainSlice.actions;
+export const {
+  setMarkerRedux,
+  setFooterView,
+  setPublicChats,
+  setDestination,
+  setCalendarDay,
+} = mainSlice.actions;
 
 export default mainSlice.reducer;

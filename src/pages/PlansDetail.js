@@ -38,6 +38,7 @@ const PlansDetail = props => {
   const planId = useLocation().state;
   console.log(Plan);
   useEffect(() => {
+    console.log('Detail::useEffect');
     dispatch(getOnePlan(planId));
   }, []);
   const handleFileInput = e => {
@@ -59,7 +60,7 @@ const PlansDetail = props => {
         is_Edit
         text="나의 모임"
         _onClickClose={() => {
-          navigate('/');
+          navigate('/main');
         }}
         _onClickEdit={() => {
           setShowModal(true);
@@ -70,9 +71,11 @@ const PlansDetail = props => {
         <Text color={theme.color.black} bold>
           {Plan.planName}
         </Text>
-        <Text color={theme.color.gray4} size="9px">
-          {Plan.destination}
-        </Text>
+        {Plan.destination && (
+          <Text color={theme.color.gray4} size="9px">
+            {Plan.destination.address}
+          </Text>
+        )}
       </Grid>
       <Grid is_Grid>
         {img &&
@@ -124,7 +127,9 @@ const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 const Img = styled.img`
   display: block;
   width: 100%;
-  height: auto;
+  min-height: 175px;
+  max-height: 175px;
+  object-fit: cover;
 `;
 
 // default props 작성 위치
