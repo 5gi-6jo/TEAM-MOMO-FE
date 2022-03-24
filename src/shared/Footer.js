@@ -8,6 +8,7 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { MdOutlinePlace } from 'react-icons/md';
 import { FiBookOpen } from 'react-icons/fi';
 import { BsPerson } from 'react-icons/bs';
+import { NavLink } from 'react-router-dom';
 
 /**
  * @param {*} props
@@ -18,89 +19,70 @@ import { BsPerson } from 'react-icons/bs';
 
 const Footer = props => {
   const navigate = useNavigate();
-  const [currentClick, setCurrentClick] = useState(null);
-  const [prevClick, setPrevClick] = useState(null);
-
-  const GetClick = e => {
-    setCurrentClick(e.target.id);
-    console.log(e.target.id);
-  };
-
-  useEffect(
-    e => {
-      if (currentClick !== null) {
-        const current = document.getElementById(currentClick);
-        console.log(current);
-        current.style.color = theme.color.orange;
-      }
-
-      if (prevClick !== null) {
-        const prev = document.getElementById(prevClick);
-        prev.style.color = theme.color.gray2;
-      }
-      setPrevClick(currentClick);
-    },
-    [currentClick],
-  );
 
   return (
     <>
       <NavBox>
         <Grid is_flex center>
-          <Grid
-            is_cursor
-            center
-            _onClick={() => {
-              navigate('/', { replace: true });
-            }}
-          >
-            <div id="case1" onClick={GetClick}>
-              <AiOutlineHome id="case1" size="20px" />
-            </div>
+          <Grid>
+            <NavLink
+              to="/"
+              style={({ isActive }) => ({
+                textDecoration: 'none',
+                color: isActive ? '#F84914' : '#999999',
+                fontWeight: isActive ? '800' : '400',
+              })}
+            >
+              <AiOutlineHome size="20px" />
+            </NavLink>
           </Grid>
-          <Grid
-            is_cursor
-            center
-            _onClick={() => {
-              navigate('/main', { replace: true });
-            }}
-          >
-            <div id="case2" onClick={GetClick}>
-              <AiOutlineCalendar id="case2" size="20px" />
-            </div>
+          <Grid>
+            <NavLink
+              to="/main"
+              style={({ isActive }) => ({
+                textDecoration: 'none',
+                color: isActive ? '#F84914' : '#999999',
+                fontWeight: isActive ? '800' : '400',
+              })}
+            >
+              <AiOutlineCalendar size="20px" />
+            </NavLink>
           </Grid>
-          <Grid
-            is_cursor
-            center
-            _onClick={() => {
-              navigate('/plansdetail', { replace: true });
-            }}
-          >
-            <div id="case3" onClick={GetClick}>
-              <MdOutlinePlace id="case3" size="20px" />
-            </div>
+          <Grid>
+            <NavLink
+              to="/plansdetail"
+              style={({ isActive }) => ({
+                textDecoration: 'none',
+                color: isActive ? '#F84914' : '#999999',
+                fontWeight: isActive ? '800' : '400',
+              })}
+            >
+              <MdOutlinePlace size="20px" />
+            </NavLink>
           </Grid>
-          <Grid
-            is_cursor
-            center
-            _onClick={() => {
-              navigate('/plans', { replace: true });
-            }}
-          >
-            <div id="case4" onClick={GetClick}>
-              <FiBookOpen id="case4" size="20px" />
-            </div>
+          <Grid>
+            <NavLink
+              to="/plans"
+              style={({ isActive }) => ({
+                textDecoration: 'none',
+                color: isActive ? '#F84914' : '#999999',
+                fontWeight: isActive ? '800' : '400',
+              })}
+            >
+              <FiBookOpen size="20px" />
+            </NavLink>
           </Grid>
-          <Grid
-            is_cursor
-            center
-            _onClick={() => {
-              navigate('/mypage', { replace: true });
-            }}
-          >
-            <div id="case5" onClick={GetClick}>
-              <BsPerson id="case5" size="20px" />
-            </div>
+          <Grid>
+            <NavLink
+              to="/mypage"
+              style={({ isActive }) => ({
+                textDecoration: 'none',
+                color: isActive ? '#F84914' : '#999999',
+                fontWeight: isActive ? '800' : '400',
+              })}
+            >
+              <BsPerson size="20px" />
+            </NavLink>
           </Grid>
           <ButtonWrap
             onClick={() => {
