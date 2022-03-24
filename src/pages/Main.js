@@ -1,18 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Calendar from '../components/Calendar';
-import Headerbar from '../shared/Headerbar';
 import { getPlans } from '../redux/modules/plan';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Input, Text } from '../elements';
+import moment from 'moment';
 
 // import moment from 'moment';import theme from '../Styles/theme';
 import { IoIosAddCircle } from 'react-icons/io';
 import theme from '../Styles/theme';
-
-const writeIcon = '/icons/review_write.png';
+import ModalInput from '../components/Modal/ModalInput';
 
 /**
  * @param {*} props
@@ -25,14 +24,26 @@ const Main = props => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const Plans = useSelector(state => state.plan.plans);
-  useEffect(
-    () => {
-      dispatch(getPlans());
-    },
-    [dispatch],
-    Plans,
-  );
+  const time = useSelector(state => state.main.calendarDay);
+  console.log(time);
+  const [checktime, setChecktime] = useState();
+  useEffect(() => {
+    if (moment(time).format('YYYY-MM') !== checktime) {
+      dispatch(getPlans(data));
+      console.log('main::useEffect');
 
+      setChecktime(moment(time).format('YYYY-MM'));
+    }
+    return console.log('main::return');
+  }, [time]);
+  console.log(moment(time).format('YYYY-MM'));
+  console.log(checktime);
+  console.log(checktime === moment(time).format('YYYY-MM'));
+  console.log(Plans);
+  const data = {
+    date: time,
+  };
+  //-01T00:00:00
   const textInput = useRef();
 
   const copy = () => {
@@ -40,13 +51,32 @@ const Main = props => {
     el.select();
     document.execCommand('copy');
   };
+
+  //modal
+  // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <React.Fragment>
+      <button onClick={openModal}>모달팝업버튼</button>
+
+      <ModalInput
+        open={modalOpen}
+        close={closeModal}
+        title="팝업창제목"
+        contents="팝업창내용"
+        // _onChange={실행시킬함수}
+      ></ModalInput>
       <Grid padding="20px">
-        <Headerbar />
         <TextBox>
           <Text color={theme.color.black} size="20px">
-            모여라님(icon)
             <br />
             약속 늦지않게
             <br />
@@ -70,11 +100,16 @@ const Main = props => {
               </>
             </div>
           ))}
-        <WriteButton
-          onClick={() => {
-            navigate('/edit');
-          }}
-        />
+        <WriteButton>
+          <IoIosAddCircle
+            className="WriteButton"
+            onClick={() => {
+              navigate('/edit');
+            }}
+            size="60"
+            color="F84914"
+          />
+        </WriteButton>
       </Grid>
     </React.Fragment>
   );
@@ -90,9 +125,10 @@ const WriteButton = styled.div`
   margin-left: 25%;
   width: 60px;
   height: 60px;
-  background-image: url(${writeIcon});
   background-size: cover;
   cursor: pointer;
+  // size: 50
+  // color: theme.color.orange
 `;
 
 const TextBox = styled.div``;

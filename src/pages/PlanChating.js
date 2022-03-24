@@ -101,7 +101,7 @@ const PlanChating = props => {
         is_Edit
         text="모임이름{} 채팅방"
         _onClickClose={() => {
-          Navigate('/');
+          Navigate('/main');
         }}
         _onClickEdit={() => {}}
       ></Headerbar>

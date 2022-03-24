@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Text } from '../elements';
+import FCMtoken from '../shared/FCMtoken';
 // import { testcol } from '../shared/apis/Socket';
 import theme from '../Styles/theme';
 
@@ -37,6 +38,7 @@ const Plans = props => {
       <Text size="17px" bold color={theme.color.gray3}>
         test
       </Text>
+      <FCMtoken />
     </>
   );
 };

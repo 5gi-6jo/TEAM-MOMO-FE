@@ -2,12 +2,9 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Grid } from '../elements';
 import Button from '../elements/Button';
 import { signinAxios } from '../redux/modules/user';
 import { checkEmail } from '../shared/functions';
-
-import theme from '../Styles/theme';
 
 const LoginForm = props => {
   const navigate = useNavigate();
