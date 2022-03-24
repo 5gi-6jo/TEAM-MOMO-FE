@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button, Grid, Text } from '../elements';
-import theme from '../Styles/theme';
 import { GrClose } from 'react-icons/gr';
 import { FiSettings } from 'react-icons/fi';
+// import theme from '../Styles/theme';
 
 /**
  * @param {*} props _onClickClose : Close아이콘 클릭이벤트

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Grid from '../elements/Grid';
@@ -7,6 +7,9 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { MdOutlinePlace } from 'react-icons/md';
 import { FiBookOpen } from 'react-icons/fi';
 import { BsPerson } from 'react-icons/bs';
+import { NavLink } from 'react-router-dom';
+// import theme from '../Styles/theme';
+// theme 색상 적용하기
 
 /**
  * @param {*} props
@@ -17,82 +20,74 @@ import { BsPerson } from 'react-icons/bs';
 
 const Footer = props => {
   const navigate = useNavigate();
+
   return (
     <>
       <NavBox>
         <Grid is_flex center>
-          <Grid
-            is_cursor
-            center
-            _onClick={() => {
+          <Grid>
+            <NavLink
+              to="/main"
+              style={({ isActive }) => ({
+                textDecoration: 'none',
+                color: isActive ? '#F84914' : '#999999',
+                fontWeight: isActive ? '800' : '400',
+              })}
+            >
+              <AiOutlineCalendar size="20px" />
+            </NavLink>
+          </Grid>
+          <Grid>
+            <NavLink
+              to="/Map"
+              style={({ isActive }) => ({
+                textDecoration: 'none',
+                color: isActive ? '#F84914' : '#999999',
+                fontWeight: isActive ? '800' : '400',
+              })}
+            >
+              <MdOutlinePlace size="20px" />
+            </NavLink>
+          </Grid>
+          <Grid>
+            <NavLink
+              to="/plans"
+              style={({ isActive }) => ({
+                textDecoration: 'none',
+                color: isActive ? '#F84914' : '#999999',
+                fontWeight: isActive ? '800' : '400',
+              })}
+            >
+              <FiBookOpen size="20px" />
+            </NavLink>
+          </Grid>
+          <Grid>
+            <NavLink
+              to="/mypage"
+              style={({ isActive }) => ({
+                textDecoration: 'none',
+                color: isActive ? '#F84914' : '#999999',
+                fontWeight: isActive ? '800' : '400',
+              })}
+            >
+              <BsPerson size="20px" />
+            </NavLink>
+          </Grid>
+
+          <ButtonWrap
+            onClick={() => {
               navigate('/', { replace: true });
             }}
           >
-            <AiOutlineHome size="20px" />
-          </Grid>
-          <Grid
-            is_cursor
-            center
-            _onClick={() => {
-              navigate('/main', { replace: true });
-            }}
-          >
-            <AiOutlineCalendar size="20px" />
-          </Grid>
-          <Grid
-            is_cursor
-            center
-            _onClick={() => {
-              navigate('/plansdetail', { replace: true });
-            }}
-          >
-            <MdOutlinePlace size="20px" />
-          </Grid>
-          <Grid
-            is_cursor
-            center
-            _onClick={() => {
-              navigate('/plans', { replace: true });
-            }}
-          >
-            <FiBookOpen size="20px" />
-          </Grid>
-          <Grid
-            is_cursor
-            center
-            _onClick={() => {
-              navigate('/mypage', { replace: true });
-            }}
-          >
-            <BsPerson size="20px" />
-          </Grid>
-          <ButtonWrap
-            onClick={() => {
-              navigate('/Login', { replace: true });
-            }}
-          >
-            로그인
+            첫화면(임시)
           </ButtonWrap>
-          <ButtonWrap
-            onClick={() => {
-              navigate('/Register', { replace: true });
-            }}
-          >
-            회원가입
-          </ButtonWrap>
-          <ButtonWrap
-            onClick={() => {
-              navigate('/Map', { replace: true });
-            }}
-          >
-            지도(임시메뉴창)
-          </ButtonWrap>
+
           <ButtonWrap
             onClick={() => {
               navigate('/planmap', { replace: true });
             }}
           >
-            chating
+            chating(임시)
           </ButtonWrap>
         </Grid>
       </NavBox>

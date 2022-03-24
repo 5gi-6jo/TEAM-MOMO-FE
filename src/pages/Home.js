@@ -1,9 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../elements/Button';
-import { Text } from '../elements';
+import { Grid, Text } from '../elements';
 import theme from '../Styles/theme';
 import { KAKAO_AUTH_URL } from '../service/OAuth';
+import { useNavigate } from 'react-router-dom';
+import logo_01 from '../img/icon/logo_01.webp';
+import logo_02 from '../img/icon/logo_02.webp';
+import GlobalStyle from '../Styles/GlobalStyle';
 
 /**
  * @param {*} props
@@ -13,24 +17,56 @@ import { KAKAO_AUTH_URL } from '../service/OAuth';
  */
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <React.Fragment>
-      <TextBox>
-        <Text color={theme.color.black} size="20px">
-          모두모여에
+      <GlobalStyle />
+      <Grid padding="120px 10px 40px 20px">
+        <Text color={theme.color.black} size="24px">
+          <Logo01 src={logo_01} alt="logo_01" />에
+          <br />
           <br />
           오신 것을 환영합니다.
           <br />
         </Text>
-      </TextBox>
+      </Grid>
+      <Grid padding="80px 10px 50px 20px">
+        <Text color={theme.color.black} size="14px">
+          <Logo02 src={logo_02} />
+          에서
+          <br />
+          여러분의 모임을 정리하고
+          <br />
+          추억하세요.
+        </Text>
+      </Grid>
       <a href={KAKAO_AUTH_URL}>카카오톡으로 시작하기</a>
-      <Button name={'이메일 로그인·회원가입하기'} />
+      <Grid padding="">
+        <Button
+          name={'이메일 로그인·회원가입하기'}
+          _onClick={() => {
+            navigate('/Login', { replace: true });
+          }}
+        />
+      </Grid>
+      <br />
+      <div>둘러보기</div>
     </React.Fragment>
   );
 };
 
 // 스타일 컴포넌트 작성 위치
 const TextBox = styled.div``;
+
+const Logo01 = styled.img`
+  background-image: url(${logo_01});
+  height: 100vh,
+  width: 100vw,
+`;
+
+const Logo02 = styled.img`
+  background-image: url(${logo_02});
+`;
 
 // default props 작성 위치
 Home.defaultProps = {};

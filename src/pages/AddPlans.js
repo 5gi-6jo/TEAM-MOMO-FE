@@ -41,7 +41,7 @@ const AddPlans = props => {
     time.split('시')[0] + minute.split('분')[0],
     'h:mm',
   ).format();
-
+  console.log(selectTime);
   const timerButton = e => {
     let minutestr = parseInt(e.target.value);
     setabled(minutestr);
