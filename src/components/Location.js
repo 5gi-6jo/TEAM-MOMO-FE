@@ -1,7 +1,6 @@
 /*global kakao*/
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import Marker from './Marker';
 import MyTest from './MyTest';
 import { MyUseInterval } from './useHook';
 const Location = () => {

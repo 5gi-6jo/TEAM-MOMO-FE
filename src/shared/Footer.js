@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Grid from '../elements/Grid';
-import theme from '../Styles/theme';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { AiOutlineHome } from 'react-icons/ai';
 import { MdOutlinePlace } from 'react-icons/md';
 import { FiBookOpen } from 'react-icons/fi';
 import { BsPerson } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
+// import theme from '../Styles/theme';
+// theme 색상 적용하기
 
 /**
  * @param {*} props
