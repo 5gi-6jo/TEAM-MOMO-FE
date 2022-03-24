@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ModalConfirm = props => {
+const ModalInput = props => {
   const { open, close, title, contents, _onChange, setNickname } = props;
   return (
     <>
@@ -95,7 +95,7 @@ const ModalButtonCancel = styled.div`
 `;
 
 // default props 작성 위치
-ModalConfirm.defaultProps = {
+ModalInput.defaultProps = {
   open: false,
   close: false,
   title: '',
@@ -104,4 +104,4 @@ ModalConfirm.defaultProps = {
   setNickname: '',
 };
 
-export default ModalConfirm;
+export default ModalInput;

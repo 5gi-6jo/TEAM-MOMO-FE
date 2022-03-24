@@ -27,18 +27,6 @@ const Footer = props => {
         <Grid is_flex center>
           <Grid>
             <NavLink
-              to="/"
-              style={({ isActive }) => ({
-                textDecoration: 'none',
-                color: isActive ? '#F84914' : '#999999',
-                fontWeight: isActive ? '800' : '400',
-              })}
-            >
-              <AiOutlineHome size="20px" />
-            </NavLink>
-          </Grid>
-          <Grid>
-            <NavLink
               to="/main"
               style={({ isActive }) => ({
                 textDecoration: 'none',
@@ -51,7 +39,7 @@ const Footer = props => {
           </Grid>
           <Grid>
             <NavLink
-              to="/plansdetail"
+              to="/Map"
               style={({ isActive }) => ({
                 textDecoration: 'none',
                 color: isActive ? '#F84914' : '#999999',
@@ -85,33 +73,21 @@ const Footer = props => {
               <BsPerson size="20px" />
             </NavLink>
           </Grid>
+
           <ButtonWrap
             onClick={() => {
-              navigate('/Login', { replace: true });
+              navigate('/', { replace: true });
             }}
           >
-            로그인
+            첫화면(임시)
           </ButtonWrap>
-          <ButtonWrap
-            onClick={() => {
-              navigate('/Register', { replace: true });
-            }}
-          >
-            회원가입
-          </ButtonWrap>
-          <ButtonWrap
-            onClick={() => {
-              navigate('/Map', { replace: true });
-            }}
-          >
-            지도(임시메뉴창)
-          </ButtonWrap>
+
           <ButtonWrap
             onClick={() => {
               navigate('/planmap', { replace: true });
             }}
           >
-            chating
+            chating(임시)
           </ButtonWrap>
         </Grid>
       </NavBox>

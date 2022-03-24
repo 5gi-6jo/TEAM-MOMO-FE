@@ -4,6 +4,7 @@ import Button from '../elements/Button';
 import { Text } from '../elements';
 import theme from '../Styles/theme';
 import { KAKAO_AUTH_URL } from '../service/OAuth';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * @param {*} props
@@ -13,6 +14,7 @@ import { KAKAO_AUTH_URL } from '../service/OAuth';
  */
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <React.Fragment>
       <TextBox>
@@ -23,8 +25,15 @@ const Home = () => {
           <br />
         </Text>
       </TextBox>
+      <Button
+        name={'이메일 로그인·회원가입하기'}
+        _onClick={() => {
+          navigate('/Login', { replace: true });
+        }}
+      />
       <a href={KAKAO_AUTH_URL}>카카오톡으로 시작하기</a>
-      <Button name={'이메일 로그인·회원가입하기'} />
+      <br />
+      <>둘러보기</>
     </React.Fragment>
   );
 };

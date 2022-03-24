@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Calendar from '../components/Calendar';
-import Headerbar from '../shared/Headerbar';
 import { getPlans } from '../redux/modules/plan';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Input, Text } from '../elements';
@@ -75,7 +74,6 @@ const Main = props => {
         // _onChange={실행시킬함수}
       ></ModalInput>
       <Grid padding="20px">
-        <Headerbar />
         <TextBox>
           <Text color={theme.color.black} size="20px">
             모여라님(icon)

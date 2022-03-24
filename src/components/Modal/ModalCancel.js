@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ModalConfirm = props => {
+const ModalCancel = props => {
   const { open, close, title, contents, _onChange } = props;
   return (
     <>
@@ -90,7 +90,7 @@ const ModalButtonCancel = styled.div`
 `;
 
 // default props 작성 위치
-ModalConfirm.defaultProps = {
+ModalCancel.defaultProps = {
   open: false,
   close: false,
   title: '',
@@ -98,4 +98,4 @@ ModalConfirm.defaultProps = {
   _onChange: () => {},
 };
 
-export default ModalConfirm;
+export default ModalCancel;
