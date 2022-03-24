@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ModalCancel = props => {
-  const { open, close, title, contents, _onChange } = props;
+  const { open, close, title, contents, _onChange, is_Cancel } = props;
   return (
     <>
       <div className={open ? 'openModal modal' : 'modal'}>

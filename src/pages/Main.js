@@ -66,6 +66,7 @@ const Main = props => {
   return (
     <React.Fragment>
       <button onClick={openModal}>모달팝업버튼</button>
+
       <ModalInput
         open={modalOpen}
         close={closeModal}
@@ -76,7 +77,6 @@ const Main = props => {
       <Grid padding="20px">
         <TextBox>
           <Text color={theme.color.black} size="20px">
-            모여라님(icon)
             <br />
             약속 늦지않게
             <br />
