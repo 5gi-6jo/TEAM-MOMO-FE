@@ -10,6 +10,7 @@ const Button = props => {
     children,
     margin,
     width,
+    height,
     padding,
     is_disabled,
     is_edit,
@@ -39,6 +40,7 @@ const Button = props => {
   const styles = {
     margin: margin,
     width: width,
+    height: height,
     padding: padding,
     is_edit: is_edit,
     abled: abled,
@@ -65,6 +67,7 @@ Button.defaultProps = {
   is_float: false,
   margin: false,
   width: '100%',
+  height: '100%',
   padding: '12px',
   is_disabled: false,
   is_edit: false,

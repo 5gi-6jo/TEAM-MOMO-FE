@@ -66,13 +66,4 @@ const theme = {
   device,
 };
 
-const dot = {
-  height: '8px',
-  width: '8px',
-  background: '#f87171',
-  border: '50%',
-  display: 'flex',
-  margin: '1px',
-};
-
 export default theme;
