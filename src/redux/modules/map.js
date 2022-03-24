@@ -1,15 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { URL } from '../../shared/apis/API';
-export const getPlans = createAsyncThunk(
-  'plan/getPlans',
+export const getPlanId = createAsyncThunk(
+  'map/getPlanId',
   async (data, { rejectWithValue }) => {
     try {
-      return await URL.post(`/plans/main`, data, {
+      return await URL.get(`/meets/${data}`, {
         headers: {
           Authorization: sessionStorage.getItem('token'),
           'Content-Type': 'application/json',
         },
-      }).then(response => response.data.data);
+      }).then(response => response.data.data.planId);
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -17,18 +17,31 @@ export const getPlans = createAsyncThunk(
   },
 );
 
-export const planSlice = createSlice({
+export const mapSlice = createSlice({
   name: 'map',
   initialState: {
-    plans: [],
+    planId: '',
     showplan: [],
     images: [],
+    publicMaps: [],
   },
   reducers: {
-    // getPlans: (state, action) => {
-    //   const planlist = action.payload;
-    //   state.data = planlist;
-    // },
+    setPublicMaps: (state, action) => {
+      let index = state.publicMaps.findIndex(
+        e =>
+          e.sender === action.payload.sender && e.type === action.payload.type,
+      );
+      if (index !== -1) {
+        state.publicMaps[index] = action.payload;
+      } else {
+        state.publicMaps.push(action.payload);
+      }
+      console.log('index', index);
+
+      // if (index !== -1) {
+      //   state.publicChats.push(action.payload);
+      // } else state.publicMaps[index] = action.payload;
+    },
     // getOnePlan: (state, action) => {
     //   console.log(state, action.payload);
     //   state.plan.data.push(action.payload);
@@ -38,11 +51,11 @@ export const planSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(getPlans.fulfilled, (state, action) => {
-      state.plans = action.payload;
+    builder.addCase(getPlanId.fulfilled, (state, action) => {
+      state.planId = action.payload;
     });
   },
 });
-export const {} = planSlice.actions;
+export const { setPublicMaps } = mapSlice.actions;
 
-export default planSlice.reducer;
+export default mapSlice.reducer;

@@ -100,6 +100,30 @@ class UserApi {
         return false;
       });
   }
+  async setFCMToken({ FCMToken, navigate }) {
+    const data = {
+      token: sessionStorage.getItem('FCMtoken'),
+    };
+    const setFCMTokenConfig = {
+      method: 'post',
+      url: `${this.base}/users/device`,
+      headers: {
+        Authorization: this.getToken(),
+      },
+      data: JSON.stringify(data),
+    };
+    console.log(FCMToken);
+
+    return axios(setFCMTokenConfig)
+      .then(res => {
+        console.log(res);
+        return res;
+      })
+      .catch(err => {
+        console.log(err.response);
+        return false;
+      });
+  }
 }
 
 export default UserApi;

@@ -8,7 +8,7 @@ export const getPlans = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       if (ismock) return MOCK.Plans.data;
-      console.log(sessionStorage.getItem('token').split('Bearer ')[1]);
+      // console.log(sessionStorage.getItem('token').split('Bearer ')[1]);
       return await URL.post(`/plans/main`, data, {
         headers: {
           Authorization: sessionStorage.getItem('token'),
@@ -136,6 +136,22 @@ export const deleteImage = createAsyncThunk(
   },
 );
 
+export const setFCMTokenplan = createAsyncThunk(
+  'plan/setFCMTokenplan',
+  async (data, { rejectWithValue }) => {
+    try {
+      return await URL.post(`/users/device`, data, {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+      }).then(response => response.data.data);
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 export const planSlice = createSlice({
   name: 'plan',
   initialState: {
@@ -170,7 +186,8 @@ export const planSlice = createSlice({
           action.payload,
         );
         state.images = action.payload;
-      });
+      })
+      .addCase(setFCMTokenplan.fulfilled, (state, action) => {});
 
     // [getPlansAxios.fulfiled]: (state, action) => {
     //   //

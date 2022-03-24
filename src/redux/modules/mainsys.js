@@ -27,17 +27,7 @@ export const mainSlice = createSlice({
         state.is_public_send = false;
       }
     },
-    setPublicMaps: (state, action) => {
-      let index = state.publicMaps.findIndex(e => {
-        // if(e.sender === action.payload.sender)
-        console.log(e);
-      });
-      console.log('index', index);
 
-      if (index !== -1) {
-        state.publicChats.push(action.payload);
-      } else state.publicMaps[index] = action.payload;
-    },
     setDestination: (state, action) => {
       state.des = action.payload;
     },
@@ -51,7 +41,7 @@ export const {
   setMarkerRedux,
   setFooterView,
   setPublicChats,
-  setPublicMaps,
+
   setDestination,
   setCalendarDay,
 } = mainSlice.actions;

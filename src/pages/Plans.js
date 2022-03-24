@@ -38,7 +38,7 @@ const Plans = props => {
       <Text size="17px" bold color={theme.color.gray3}>
         test
       </Text>
-      <FCMtoken />
+      {/* <FCMtoken /> */}
     </>
   );
 };

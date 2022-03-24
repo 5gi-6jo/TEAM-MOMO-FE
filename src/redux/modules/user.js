@@ -1,10 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import UserApi from '../../shared/apis/userApi';
 import axios from 'axios';
+import { URL } from '../../shared/apis/API';
 // import { useNavigate } from 'react-router-dom';
 // import { useHistory } from 'react-router';
 
 const Userapi = new UserApi();
+export const setFCMTokenAxios = createAsyncThunk(
+  'plan/setFCMTokenAxios',
+  async ({ registerData, navigate }) => {
+    console.log(registerData);
+    await Userapi.setFCMToken({ registerData, navigate });
+  },
+);
 
 export const sighupAxios = createAsyncThunk(
   'user/sighupAxios',
@@ -62,12 +70,12 @@ export const KakaoLogin = code => {
 
         localStorage.setItem('token', ACCESS_TOKEN); //예시로 로컬에 저장함
 
-        navigate('/main', { replace: true }); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        // navigate('/main', { replace: true }); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       })
       .catch(err => {
         console.log('소셜로그인 에러', err);
 
-        navigate('/login', { replace: true }); // 로그인 실패하면 로그인화면으로 돌려보냄
+        // navigate('/login', { replace: true }); // 로그인 실패하면 로그인화면으로 돌려보냄
       });
   };
 };
@@ -118,10 +126,18 @@ export const userSlice = createSlice({
       state.is_login = true;
       state.user_info = action.payload;
     },
+    [setFCMTokenAxios.fulfilled]: (state, action) => {
+      // state = state;
+    },
   },
 });
 
-export const { setUserToSession, setUserName, getUser, deleteUserFromSession } =
-  userSlice.actions;
+export const {
+  setUserToSession,
+  setMyFCMToken,
+  setUserName,
+  getUser,
+  deleteUserFromSession,
+} = userSlice.actions;
 
 export default userSlice.reducer;

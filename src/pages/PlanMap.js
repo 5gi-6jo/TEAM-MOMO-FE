@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import theme from '../Styles/theme';
 import Headerbar from '../shared/Headerbar';
@@ -10,14 +10,15 @@ import { over } from 'stompjs';
 
 import PlanChating from './PlanChating';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPublicChats, setPublicMaps } from '../redux/modules/mainsys.js';
+import { setPublicChats } from '../redux/modules/mainsys.js';
 import { setUserName } from '../redux/modules/user.js';
 //카카오 맵
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { Grid } from '../elements/index';
+import { Ellipse32, trash_3 } from '../img';
 
 //테스트
 import axios from 'axios';
+import { getPlanId, setPublicMaps } from '../redux/modules/map';
 
 /**
  * @param {*} props
@@ -29,28 +30,33 @@ let stompClient = null;
 
 const PlanMap = props => {
   const dispatch = useDispatch();
-  const [guestNick, setGuestNick] = useState(undefined);
+  const userNick = props.userNick;
+  // const [guestNick, setGuestNick] = useState(userNick);
+  console.log(userNick, props.guestNick);
   const [modal, setModal] = useState(false);
   const path = useParams(); //path주소 받아오기 랜덤URL
-  console.log(path);
   const islogin = useSelector(state => state.user.is_login);
-  console.log(islogin);
-  const userNick = useSelector(state => state.user.user_info.username);
+
   useEffect(() => {
+    dispatch(getPlanId(path.url));
     console.log('PlanMap::didmount');
-    console.log('userNick', userNick, 'guestNick', guestNick);
-    if (userNick === null || guestNick === null) {
+    console.log('userNick', userNick, 'guestNick', props.guestNick);
+    if (userNick === null || userNick === undefined) {
+      console.log('if');
       setModal(true);
     } else {
-      setGuestNick(userNick);
+      console.log('else');
+
+      props.setGuestNick(userNick);
       connect();
     }
-    console.log('userNick', userNick, 'guestNick', guestNick);
+    console.log('userNick', userNick, 'guestNick', props.guestNick);
 
     return () => {
       console.log('PlanMap::Undidmount');
     };
   }, []);
+  const planId = useSelector(state => state.map.planId);
   const useInterval = (callback, delay) => {
     const savedCallback = useRef();
 
@@ -74,7 +80,8 @@ const PlanMap = props => {
   //소켓관련
   let sock = useRef({});
   const publicChats = useSelector(state => state.main.publicChats);
-  const publicMaps = useSelector(state => state.main.publicMaps);
+  const publicMaps = useSelector(state => state.map.publicMaps);
+
   // const [publicChats, setPublicChats] = useState([]);
   const [isChating, setIsChating] = useState(false);
   const [userData, setUserData] = useState({
@@ -91,23 +98,22 @@ const PlanMap = props => {
       'userNick',
       userNick,
       'guestNick',
-      guestNick,
+      props.guestNick,
       'userData',
       userData,
     );
-
+    handleUsername();
     return () => {
       console.log('PlanMap::Undidmount222');
     };
-  }, [publicChats]);
+  }, [publicChats, publicMaps]);
   const sockUrl = process.env.REACT_APP_BE_IP_LYW + '/ws';
-
+  console.log(userData);
   //처음연결
   const connect = () => {
     console.log('connect');
     if (userData.sender === undefined) return;
     sock = new SockJS(sockUrl);
-
     stompClient = over(sock);
     stompClient.connect({}, onConnected, onError);
     // sock.addEventListener('open', () => {
@@ -124,8 +130,8 @@ const PlanMap = props => {
   const userJoin = () => {
     let chatMessage = {
       // sender: userData.sender,
-      sender: guestNick,
-      planId: 1,
+      sender: props.guestNick,
+      planId: planId,
       lat: myLocation.center.lat,
       lng: myLocation.center.lng,
       type: 'ENTER',
@@ -141,9 +147,9 @@ const PlanMap = props => {
   const onConnected = () => {
     setUserData({ ...userData, connected: true });
     //구독
-    stompClient.subscribe(`/topic/chat/1`, onMessageReceived, onError);
+    stompClient.subscribe(`/topic/chat/${planId}`, onMessageReceived, onError);
 
-    stompClient.subscribe(`/topic/map/1`, onMessageReceived, onError);
+    stompClient.subscribe(`/topic/map/${planId}`, onMessageReceived, onError);
     userJoin();
   };
   //연결해제
@@ -156,14 +162,29 @@ const PlanMap = props => {
   const onMessageReceived = payload => {
     let payloadData = JSON.parse(payload.body);
     console.log('payloadData=', payloadData);
-    // if (payloadData.type === ('ENTER' || 'CHAT'))
-    dispatch(setPublicChats(payloadData));
-    // if (payloadData.type === ('ENTER' || 'MAP'))
-    //   dispatch(setPublicMaps(payloadData));
+    if (payloadData.type === 'ENTER' || payloadData.type === 'CHAT')
+      dispatch(setPublicChats(payloadData));
+    if (payloadData.type === 'MAP' || payloadData.type === 'DEST') {
+      dispatch(setPublicMaps(payloadData));
+      if (payloadData.type === 'MAP') {
+        const data = {
+          lat: payloadData.lat,
+          lng: payloadData.lng,
+        };
+        setPoints(payloade => [...payloade, data]);
+      }
+      if (payloadData.type === 'DEST') {
+        const data = {
+          lat: payloadData.destLat,
+          lng: payloadData.destLng,
+        };
+        setPoints(payloade => [...payloade, data]);
+      }
+    }
+    console.log(payloadData.type === 'MAP' || payloadData.type === 'DEST');
 
     if (payloadData.type === 'ENTER') {
-      // payloadData.destlat
-      // payloadData.destlat
+      sendMyLocation();
     }
 
     //마지막 배열의 타입이 ENTER일때 내위치 전송
@@ -185,9 +206,9 @@ const PlanMap = props => {
     console.log(' 메시지 보내기 클릭!');
     if (stompClient) {
       let chatMessage = {
-        sender: guestNick,
+        sender: props.guestNick,
         content: userData.content,
-        planId: 1,
+        planId: planId,
         type: 'CHAT',
       };
       console.log(' 내가 보낸 메시지 ==', chatMessage);
@@ -204,7 +225,7 @@ const PlanMap = props => {
   const handleUsername = event => {
     // const { value } = event.target;
     console.log('setUSer');
-    setUserData({ ...userData, sender: guestNick });
+    setUserData({ ...userData, sender: props.guestNick });
   };
   //메시지 내용 추가함수
   const handleMessage = event => {
@@ -218,6 +239,7 @@ const PlanMap = props => {
   //소켓관련 끝
 
   //지도 관련
+  const [map, setMap] = useState();
   const [myLocation, setSetMyLocation] = useState({
     center: {
       lat: 33.450701,
@@ -226,15 +248,20 @@ const PlanMap = props => {
     errMsg: null,
     isLoading: true,
   });
+  const [points, setPoints] = useState([
+    { lat: myLocation.lat, lng: myLocation.lng },
+  ]);
+  console.log(points);
   //위치보내기
   const sendMyLocation = () => {
     console.log('위치보내기!');
     if (stompClient) {
       let chatMessage = {
-        sender: guestNick,
+        sender: props.guestNick,
         lat: myLocation.center.lat,
         lng: myLocation.center.lng,
         type: 'MAP',
+        planId: planId,
       };
       console.log(' 위치보내기 ==', chatMessage);
 
@@ -245,7 +272,14 @@ const PlanMap = props => {
   // useInterval(() => {
   //   sendMyLocation();
   // }, 3000);
+  const bounds = useMemo(() => {
+    const bounds = new window.kakao.maps.LatLngBounds();
 
+    points.forEach(point => {
+      bounds.extend(new window.kakao.maps.LatLng(point.lat, point.lng));
+    });
+    return bounds;
+  }, [points]);
   useEffect(() => {
     //현재 내위치 얻기
     if (navigator.geolocation) {
@@ -279,7 +313,7 @@ const PlanMap = props => {
     }
 
     console.log('PlanMap::didmount2');
-    console.log('userNick2', userNick, 'guestNick2', guestNick);
+    console.log('userNick2', userNick, 'guestNick2', props.guestNick);
 
     return () => {
       console.log('PlanMap::Undidmount2');
@@ -307,7 +341,7 @@ const PlanMap = props => {
                   <div>닉네임을 입력해주세요.</div>
                   <input
                     onChange={e => {
-                      setGuestNick(e.target.value);
+                      props.setGuestNick(e.target.value);
                     }}
                   ></input>
                 </div>
@@ -316,9 +350,9 @@ const PlanMap = props => {
                 <ModalButtonCencel>취소</ModalButtonCencel>
                 <ModalButtonOk
                   onClick={() => {
-                    if (guestNick !== '') setModal(false);
+                    if (props.guestNick !== '') setModal(false);
                     handleUsername();
-                    dispatch(setUserName(guestNick));
+                    dispatch(setUserName(props.guestNick));
 
                     connect();
                   }}
@@ -374,12 +408,13 @@ const PlanMap = props => {
           height: '200px',
         }}
         level={3} // 지도의 확대 레벨
+        onCreate={setMap}
       >
         {!myLocation.isLoading && <MapMarker position={myLocation.center} />}
         {/* <MapMarker position={{ lat: 37.49732678, lng: 127.13505 }}></MapMarker> */}
-        {publicChats &&
-          publicChats.map((chat, index) => (
-            // console.log('chat', chat),
+        {publicMaps &&
+          publicMaps.map((chat, index) => (
+            // console.log('MAP', chat),
             <>
               {chat.type === 'MAP' && (
                 <MapMarker
@@ -387,10 +422,30 @@ const PlanMap = props => {
                   position={{ lat: chat.lat, lng: chat.lng }}
                 />
               )}
+              {chat.type === 'DEST' && (
+                <MapMarker
+                  key={'DEST' + index}
+                  position={{
+                    lat: parseFloat(chat.destLat).toFixed(5),
+                    lng: parseFloat(chat.destLng).toFixed(5),
+                  }}
+                  image={{
+                    src: Ellipse32,
+                    size: { width: 21, height: 21 },
+                  }}
+                ></MapMarker>
+              )}
             </>
           ))}
       </Map>
-      {userData.connected ? (
+      {/* <button
+        onClick={() => {
+          if (map) map.setBounds(bounds);
+        }}
+      >
+        지도 범위 재설정 하기
+      </button> */}
+      {/* {userData.connected ? (
         <div>
           {publicChats &&
             publicChats.map((chat, index) => (
@@ -437,13 +492,16 @@ const PlanMap = props => {
             disconnect
           </button>
         </div>
-      )}
+      )} */}
       <hr></hr>
       {isChating && (
         <PlanChating
           stompClient={stompClient}
           userData={userData}
           setUserData={setUserData}
+          publicChats={publicChats}
+          handleMessage={handleMessage}
+          sendMessage={sendMessage}
         />
       )}
     </>

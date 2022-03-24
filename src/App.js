@@ -27,8 +27,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import PlanChating from './pages/PlanChating';
 import PlanMap from './pages/PlanMap';
 import PlanSelectMap from './pages/PlanSelectMap';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getUserbyToken } from './redux/modules/user';
+import FCMtoken from './shared/FCMtoken';
 
 function App() {
   const firebaseConfig = {
@@ -43,30 +44,18 @@ function App() {
   firebase.initializeApp(firebaseConfig);
   const is_footer = useSelector(state => state.main.is_footer);
 
-  // messages
-  //   .requestPermission()
-  //   .then(function () {
-  //     return messages.getToken();
-  //   })
-  //   .then(function (token) {
-  //     console.log(token);
-  //   })
-  //   .catch(function (err) {
-  //     console.log('fcm error : ', err);
-  //   });
-
-  // messages.onMessage(function (payload) {
-  //   console.log(payload.notification.title);
-  //   console.log(payload.notification.body);
-  // });
   const istoken = sessionStorage.getItem('token')
     ? sessionStorage.getItem('token')
     : false;
   const islogin = useSelector(state => state.user.is_login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(istoken);
+
+  const userNick = useSelector(state => state.user.user_info).nickname;
+  const [guestNick, setGuestNick] = useState(userNick);
+  console.log(userNick, guestNick, '::::app.js');
   useEffect(() => {
+    setGuestNick(userNick);
     console.log('app.js::didmount');
     if (istoken && !islogin) {
       dispatch(getUserbyToken(navigate));
@@ -81,6 +70,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <WebVer />
         <Phone>
+          <FCMtoken />
           <Wrap>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -103,7 +93,16 @@ function App() {
               <Route path="/Login" element={<Login />} />
               <Route path="/Map" element={<Map />} />
               <Route path="/chating" element={<PlanChating />} />
-              <Route path="/planmap/:url" element={<PlanMap />} />
+              <Route
+                path="/planmap/:url"
+                element={
+                  <PlanMap
+                    userNick={userNick}
+                    guestNick={guestNick}
+                    setGuestNick={setGuestNick}
+                  />
+                }
+              />
             </Routes>
             {is_footer && <Footer />}
           </Wrap>
