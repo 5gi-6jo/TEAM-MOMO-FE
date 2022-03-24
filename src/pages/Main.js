@@ -83,7 +83,8 @@ const Main = props => {
             조심하세요!
           </Text>
         </TextBox>
-
+      </Grid>
+      <Grid padding="20px">
         <Calendar />
         {Plans &&
           Plans.map(plan => (
@@ -100,17 +101,17 @@ const Main = props => {
               </>
             </div>
           ))}
-        <WriteButton>
-          <IoIosAddCircle
-            className="WriteButton"
-            onClick={() => {
-              navigate('/edit');
-            }}
-            size="60"
-            color="F84914"
-          />
-        </WriteButton>
       </Grid>
+      <WriteButton>
+        <IoIosAddCircle
+          className="WriteButton"
+          onClick={() => {
+            navigate('/edit', { state: { time } });
+          }}
+          size="60"
+          color="F84914"
+        />
+      </WriteButton>
     </React.Fragment>
   );
 };

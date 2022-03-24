@@ -9,8 +9,8 @@ function MyCalendar(props) {
   const [value, SetValue] = useState(new Date());
   const [mark, setMark] = useState([]);
   const dispatch = useDispatch();
-
   const SearchTime = moment(value).format().split('+')[0];
+
   useEffect(() => {
     console.log('Calendar:::useEffect');
     // console.log(value);
@@ -33,11 +33,6 @@ function MyCalendar(props) {
           }
         }}
       />
-      <div className="text-gray-500 mt-4">
-        {/* 클릭한 날짜 가져오기 */}
-        {/* moment타입으로 보내면 시간값 입력가능 */}
-        {moment(value).format('YYYY년 MM월 DD일')}
-      </div>
     </div>
   );
 }
