@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPlans } from '../redux/modules/plan';
 import { setDestination } from '../redux/modules/mainsys';
 import PlanSelectMap from './PlanSelectMap';
+import { useLocation } from 'react-router';
 
 /**
  * @param {*} props
@@ -20,6 +21,9 @@ import PlanSelectMap from './PlanSelectMap';
 const AddPlans = props => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const selectDate = useLocation();
+  console.log(selectDate.state.time.split('T')[0]);
 
   //서버로 보낼 데이터들
   const [abled, setabled] = useState('');
@@ -37,9 +41,10 @@ const AddPlans = props => {
     setAddress(reduxdes);
     dispatch(setDestination(''));
   }
+  const date = selectDate.state.time.split('T')[0];
   let selectTime = moment(
-    time.split('시')[0] + minute.split('분')[0],
-    'h:mm',
+    date + time.split('시')[0] + minute.split('분')[0],
+    'YYYY MM DD hh:mm',
   ).format();
   console.log(selectTime);
   const timerButton = e => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { Grid } from '../elements';
+import { Button, Grid } from '../elements';
 import styled from 'styled-components';
 
 import Headerbar from '../shared/Headerbar';
@@ -20,6 +20,8 @@ const PlanSelectMap = props => {
       lng: 126.9889,
     },
     content: '',
+    address_name: '',
+    road_address_name: '',
   });
 
   useEffect(() => {
@@ -41,6 +43,8 @@ const PlanSelectMap = props => {
               lng: data[i].x,
             },
             content: data[i].place_name,
+            address_name: data[i].address_name,
+            road_address_name: data[i].road_address_name,
           });
           // @ts-ignore
           bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
@@ -59,6 +63,7 @@ const PlanSelectMap = props => {
   };
 
   console.log(datas);
+  console.log(info);
   // console.log(markers);
   console.log(selectlist);
 
@@ -72,24 +77,41 @@ const PlanSelectMap = props => {
             }}
             text="장소검색"
           ></Headerbar>
-          <button
-            onClick={() => {
-              setIsInput(false);
-            }}
-          >
-            x
-          </button>
-          <input
-            ref={inputref}
-            onChange={e => {
-              console.log(e.target.value);
-              setKeyword(e.target.value);
-            }}
-            onClick={() => {
-              setIsInput(true);
-            }}
-          ></input>
-          <button onClick={inputdatabutton}>test</button>
+          <Grid padding="15px">
+            <button
+              onClick={() => {
+                setIsInput(false);
+              }}
+            >
+              x
+            </button>
+            <input
+              ref={inputref}
+              onChange={e => {
+                console.log(e.target.value);
+                setKeyword(e.target.value);
+              }}
+              onClick={() => {
+                setIsInput(true);
+              }}
+            ></input>
+            <button onClick={inputdatabutton}>test</button>
+          </Grid>
+          <Grid padding="0px 0px 100px 0px">
+            <div>
+              {selectlist.content}
+              <br />
+              {selectlist.road_address_name}
+            </div>
+            <MyButton>
+              <Button
+                name="도착"
+                height="100px"
+                width="100px"
+                _onClick={() => props.setShowMap(false)}
+              />
+            </MyButton>
+          </Grid>
           {isInput && (
             <Grid padding="12px">
               {datas &&
@@ -103,6 +125,8 @@ const PlanSelectMap = props => {
                             lng: point.x,
                           },
                           content: point.place_name,
+                          address_name: point.address_name,
+                          road_address_name: point.road_address_name,
                         };
                         setSelectlist(markerdata);
                         setIsInput(false);
@@ -110,7 +134,7 @@ const PlanSelectMap = props => {
                         props.setLat(point.y);
                         props.setLng(point.x);
 
-                        props.setShowMap(false);
+                        props.setShowMap(true);
                         // const bounds = new window.kakao.maps.LatLngBounds();
                         // bounds.extend(
                         //   new window.kakao.maps.LatLng(point.y, point.x),
@@ -118,10 +142,12 @@ const PlanSelectMap = props => {
                         // map.setBounds(bounds);
                       }}
                     >
-                      {point.place_name}
+                      <p style={{ color: 'black' }}>{point.place_name}</p>
+                      {/* <p style={{ color: 'green' }}>{point.address_name}</p> */}
+                      <p style={{ color: 'black' }}>
+                        {point.road_address_name}
+                      </p>
                     </Grid>
-                    <p style={{ color: 'green' }}>{point.address_name}</p>
-                    <p style={{ color: 'blue' }}>{point.road_address_name}</p>
                   </div>
                 ))}
             </Grid>
@@ -144,7 +170,7 @@ const PlanSelectMap = props => {
                 onClick={() => setInfo(selectlist)}
               >
                 {info && info.content === selectlist.content && (
-                  <div style={{ color: '#000' }}>{selectlist.content}</div>
+                  <div style={{ color: 'black' }}>{selectlist.content}</div>
                 )}
               </MapMarker>
             </Map>
@@ -171,6 +197,10 @@ const MainModal = styled.div`
   height: 100%;
   bottom: 0;
   background-color: white;
+`;
+
+const MyButton = styled.div`
+  float: right;
 `;
 
 export default PlanSelectMap;
