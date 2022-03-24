@@ -12,6 +12,7 @@ import moment from 'moment';
 // import moment from 'moment';import theme from '../Styles/theme';
 import { IoIosAddCircle } from 'react-icons/io';
 import theme from '../Styles/theme';
+import ModalInput from '../components/Modal/ModalInput';
 
 /**
  * @param {*} props
@@ -51,8 +52,28 @@ const Main = props => {
     el.select();
     document.execCommand('copy');
   };
+
+  //modal
+  // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <React.Fragment>
+      <button onClick={openModal}>모달팝업버튼</button>
+      <ModalInput
+        open={modalOpen}
+        close={closeModal}
+        title="팝업창제목"
+        contents="팝업창내용"
+        // _onChange={실행시킬함수}
+      ></ModalInput>
       <Grid padding="20px">
         <Headerbar />
         <TextBox>
