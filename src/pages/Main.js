@@ -63,6 +63,19 @@ const Main = props => {
     setModalOpen(false);
   };
 
+  const modalEl = useRef();
+
+  const handleModalEl = ({ target }) => {
+    if (modalOpen && !modalEl.current.contains(target)) setModalOpen(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleModalEl);
+    return () => {
+      window.removeEventListener('click', handleModalEl);
+    };
+  }, []);
+
   return (
     <React.Fragment>
       <button onClick={openModal}>모달팝업버튼</button>
@@ -72,6 +85,7 @@ const Main = props => {
         close={closeModal}
         title="팝업창제목"
         contents="팝업창내용"
+        ref={modalEl}
         // _onChange={실행시킬함수}
       ></ModalInput>
       <Grid padding="20px">

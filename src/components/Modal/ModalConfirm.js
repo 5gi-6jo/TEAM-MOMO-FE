@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ModalConfirm = props => {
-  const { open, close, title, contents } = props;
+  const { open, close, title, contents, ref } = props;
+  //ref
   return (
     <>
       <div className={open ? 'openModal modal' : 'modal'}>
