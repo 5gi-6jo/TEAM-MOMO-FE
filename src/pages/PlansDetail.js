@@ -73,7 +73,7 @@ const PlansDetail = props => {
         </Text>
         {Plan.destination && (
           <Text color={theme.color.gray4} size="9px">
-            {Plan.destination.address}
+            {Plan.destination}
           </Text>
         )}
       </Grid>
