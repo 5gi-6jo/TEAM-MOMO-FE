@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/CalendarDot.css';
+import './CalendarDot.css';
 import { useDispatch } from 'react-redux';
 import { setCalendarDay } from '../redux/modules/mainsys';
 

@@ -8,7 +8,12 @@ import Headerbar from '../shared/Headerbar';
 import theme from '../Styles/theme';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { editPlans, setOnePlan, setPlans } from '../redux/modules/plan';
+import {
+  deletePlans,
+  editPlans,
+  setOnePlan,
+  setPlans,
+} from '../redux/modules/plan';
 
 import { GrClose } from 'react-icons/gr';
 import { FiSettings } from 'react-icons/fi';
@@ -77,7 +82,18 @@ const AddPlans = props => {
                 style={{ display: 'flex', width: '40%', justifyContent: 'end' }}
               >
                 <Icon src={edit}></Icon>
-                <Icon src={trash_3}></Icon>
+
+                <Icon
+                  onClick={() => {
+                    console.log('deleteicon');
+                    const data = {
+                      id: props.id,
+                    };
+                    dispatch(deletePlans(data));
+                    navigate('/main');
+                  }}
+                  src={trash_3}
+                ></Icon>
               </div>
             </div>
             <Grid padding="10px">
