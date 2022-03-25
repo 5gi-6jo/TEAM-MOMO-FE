@@ -8,7 +8,7 @@ export const mainSlice = createSlice({
     is_footer: true,
     publicChats: [],
     publicMaps: [],
-
+    isChating: false,
     is_public_send: false,
     des: '',
     calendarDay: moment().format().split('+')[0],
@@ -27,7 +27,9 @@ export const mainSlice = createSlice({
         state.is_public_send = false;
       }
     },
-
+    setIsChating: (state, action) => {
+      state.isChating = action.payload;
+    },
     setDestination: (state, action) => {
       state.des = action.payload;
     },
@@ -41,7 +43,7 @@ export const {
   setMarkerRedux,
   setFooterView,
   setPublicChats,
-
+  setIsChating,
   setDestination,
   setCalendarDay,
 } = mainSlice.actions;

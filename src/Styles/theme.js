@@ -35,6 +35,7 @@ const color = {
   black: '#292929',
   realblack: '#000000',
   white: '#fff',
+  BackGround: '#363F4E',
   mainBlue: '#5327ff',
   mainMint: '#83ffca',
   mainGray: '#dedfe0',

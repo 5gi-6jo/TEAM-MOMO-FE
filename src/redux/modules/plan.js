@@ -76,6 +76,24 @@ export const editPlans = createAsyncThunk(
     }
   },
 );
+export const deletePlans = createAsyncThunk(
+  'plan/deletePlans',
+  async (data, { rejectWithValue }) => {
+    try {
+      return await URL.delete(`/plans/${data.id}`, {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+      }).then(res => {
+        return data.id;
+      });
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 export const setUploadImage = createAsyncThunk(
   'plan/setUploadImage',
@@ -180,8 +198,16 @@ export const planSlice = createSlice({
       .addCase(getOnePlan.fulfilled, (state, action) => {
         state.showplan = action.payload;
       })
+      .addCase(deletePlans.fulfilled, (state, action) => {
+        state.showplan = null;
+        console.log(state.plans[1].planId);
+        console.log(action.payload);
+        console.log(state.plans.filter(e => e.planId !== action.payload));
+        state.plans = state.plans.filter(e => e.planId !== action.payload);
+      })
       .addCase(setUploadImage.fulfilled, (state, action) => {
         console.log(state, action.payload);
+
         state.showplan.imageList = state.showplan.imageList.concat(
           action.payload,
         );

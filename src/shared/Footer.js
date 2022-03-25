@@ -76,14 +76,6 @@ const Footer = props => {
 
           <ButtonWrap
             onClick={() => {
-              navigate('/', { replace: true });
-            }}
-          >
-            첫화면(임시)
-          </ButtonWrap>
-
-          <ButtonWrap
-            onClick={() => {
               navigate('/planmap/32032375-2238-4765-b03d-b006ba31c1c3', {
                 replace: true,
               });
@@ -105,22 +97,23 @@ Footer.defaultProps = {};
 
 // 하단바 스타일링
 const NavBox = styled.div`
+  width: 100%;
   max-width: 422px;
-  height: 71px;
+  height: 44px;
   z-index: 10;
   background-color: white;
   display: flex;
-  position: fixed;
+  position: absolute;
   border-top: 0.2px solid #f7f7f7;
   justify-content: space-around;
-  bottom: 0;
   margin: 0 auto;
-
+  bottom: 0;
   left: 0;
   right: 0;
   @media ${({ theme }) => theme.device.laptop} {
-    margin: 0 0 0 calc(50vw - 1px);
+    bottom: -6%;
     border: 1px solid #e4e4e4;
+    border-radius: 0px 0px 40px 40px;
     max-width: 422px;
   }
 `;
