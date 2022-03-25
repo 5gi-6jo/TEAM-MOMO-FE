@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import MobileInstall from '../pages/MobileInstall';
-import PwaInstall from '../components/PwaInstall';
-
 import { isMobile } from './DeviceDetector';
-import { web_phone, web_back, web_logo } from '../static/images';
+// import { web_phone, web_back, web_logo } from '../static/images';
+import { backImg2, frame } from '../img/index';
+import theme from '../Styles/theme';
 
 const Device = ({ children }) => {
   const [isSupported, setIsSupported] = React.useState(null);
@@ -13,11 +12,7 @@ const Device = ({ children }) => {
 
   React.useEffect(() => {}, []);
 
-  return isMobile ? (
-    <>
-      <Mobile>{children}</Mobile>
-    </>
-  ) : (
+  return (
     <Web>
       <Phone>
         <WebViewLayout>{children}</WebViewLayout>
@@ -35,14 +30,14 @@ const Mobile = styled.div`
   max-width: 640px;
   min-width: 280px;
   overflow: hidden;
-  background-color: ${({ theme }) => theme.colors.bg};
+  background-color: ${theme.color.orange};
 `;
 
 //웹 브라우저
 const Web = styled.div`
   width: 100vw;
   height: 100vh;
-  background: url(${web_logo}), url(${web_back});
+  background: url(${backImg2});
   background-size: 300px 144px, cover;
   background-position: 326px 230px, 0% 100%;
   background-repeat: no-repeat;
@@ -55,7 +50,7 @@ const Phone = styled.div`
   right: 50%;
   top: 50%;
   transform: translate(50%, -50%);
-  background: url(${web_phone}) no-repeat;
+  background: url(${frame}) no-repeat;
   background-size: 100% 100%;
 
   @media screen and (min-width: 1120px) {

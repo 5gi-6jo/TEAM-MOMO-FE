@@ -447,6 +447,7 @@ const Section = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 40px 40px 0px 0px;
 `;
 
 const MainModal = styled.div`
