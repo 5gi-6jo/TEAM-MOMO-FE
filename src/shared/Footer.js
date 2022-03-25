@@ -76,14 +76,6 @@ const Footer = props => {
 
           <ButtonWrap
             onClick={() => {
-              navigate('/', { replace: true });
-            }}
-          >
-            첫화면(임시)
-          </ButtonWrap>
-
-          <ButtonWrap
-            onClick={() => {
               navigate('/planmap/32032375-2238-4765-b03d-b006ba31c1c3', {
                 replace: true,
               });

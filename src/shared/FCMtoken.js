@@ -24,6 +24,24 @@ const FCMtoken = () => {
       swRegist = messaging.swRegistration;
     });
 
+  function unsubscribe() {
+    swRegist.pushManager
+      .getSubscription()
+      .then(subscription => {
+        if (subscription) {
+          return subscription // 토글 시 메세지 안날라오게 하는 방법
+            .unsubscribe()
+            .then(res => {})
+            .catch(err => {
+              console.log(err);
+            });
+        }
+      })
+      .then(() => {})
+      .catch(error => {
+        console.log('Error unsubscribing', error);
+      });
+  }
   return (
     <>
       {/* <div>fcm</div> */}
@@ -31,5 +49,4 @@ const FCMtoken = () => {
     </>
   );
 };
-
 export default FCMtoken;

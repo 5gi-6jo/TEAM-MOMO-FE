@@ -5,7 +5,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import theme from './Styles/theme';
 
 //백그라운드 이미지
-import webImg from './img/backImg.png';
+import webImg from './img/backImg2.webp';
 import { frame } from './img';
 
 import Main from './pages/Main';
@@ -76,46 +76,42 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
+        <Phone></Phone>
         <WebVer />
-        <Phone>
-          <FCMtoken />
-          <Wrap>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route
-                path="/login/oauth2/code/kakao"
-                element={<OAuthHandler />}
-              />
-              <Route path="/main" element={<Main />} />
-              <Route path="/plans" element={<Plans />} />
-              <Route path="/Edit" element={<AddPlans />} />
-              <Route path="/Edit/:id" element={<EditPlans />} />
-              <Route path="/mypage" element={<Mypage />} />
-              <Route path="/plansdetail/:id" element={<PlansDetail />} />
-              <Route
-                path="/plansdetail/:id/images"
-                element={<PlansDetailImage />}
-              />
-              <Route path="/plans" element={<Plans />} />
-              <Route path="/Register" element={<Register />} />
-              <Route path="/Login" element={<Login />} />
-              <Route path="/Map" element={<Map />} />
-              <Route path="/chating" element={<PlanChating />} />
-              <Route
-                path="/planmap/:url"
-                element={
-                  <PlanMap
-                    userNick={userNick}
-                    guestNick={guestNick}
-                    setGuestNick={setGuestNick}
-                    isChating={isChating}
-                  />
-                }
-              />
-            </Routes>
-            {is_footer && <Footer />}
-          </Wrap>
-        </Phone>
+        <FCMtoken />
+        <Wrap>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login/oauth2/code/kakao" element={<OAuthHandler />} />
+            <Route path="/main" element={<Main />} />
+            <Route path="/plans" element={<Plans />} />
+            <Route path="/Edit" element={<AddPlans />} />
+            <Route path="/Edit/:id" element={<EditPlans />} />
+            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/plansdetail/:id" element={<PlansDetail />} />
+            <Route
+              path="/plansdetail/:id/images"
+              element={<PlansDetailImage />}
+            />
+            <Route path="/plans" element={<Plans />} />
+            <Route path="/Register" element={<Register />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/Map" element={<Map />} />
+            <Route path="/chating" element={<PlanChating />} />
+            <Route
+              path="/planmap/:url"
+              element={
+                <PlanMap
+                  userNick={userNick}
+                  guestNick={guestNick}
+                  setGuestNick={setGuestNick}
+                  isChating={isChating}
+                />
+              }
+            />
+          </Routes>
+          {is_footer && <Footer />}
+        </Wrap>
       </ThemeProvider>
     </>
   );
@@ -167,12 +163,12 @@ const Wrap = styled.div`
 `;
 
 const Phone = styled.div`
-  /* width: 426px;
+  width: 426px;
   height: 92%;
   min-height: 750px;
   position: fixed;
-  right: 10%;
-  top: 50%;
+  right: 20%;
+  top: 0%;
   transform: translate(0%, -50%);
 
   background: url(${frame}) no-repeat;
@@ -191,7 +187,7 @@ const Phone = styled.div`
   background: #ffe899;
   opacity: 0.18;
 
-  @media ${({ theme }) => theme.device.laptop} {
+  /* @media ${({ theme }) => theme.device.laptop} {
     opacity: 1;
     background-size: cover;
     background-position: 50% 50%;

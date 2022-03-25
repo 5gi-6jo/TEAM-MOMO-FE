@@ -28,11 +28,15 @@ const Plans = props => {
   };
   // testcol();
 
+  const planunsubscribe = () => {
+    // const unsub = unsubscribe();
+    console.log('unsub');
+  };
   return (
     <>
       <input type="text" ref={textInput}></input>
       <button onClick={copy}>copy</button>
-
+      <button onClick={planunsubscribe}>구독취소</button>
       {success ? <div style={{ color: 'green' }}>Success!</div> : null}
       <div>plans</div>
       <Text size="17px" bold color={theme.color.gray3}>
