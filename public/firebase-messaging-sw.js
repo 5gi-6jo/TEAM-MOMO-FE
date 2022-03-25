@@ -30,6 +30,7 @@ self.addEventListener('push', function (event) {
   };
   console.log(options.body);
 
+  // event.waitUntil(self.registration.showNotification(title, options)); // showNotification을 통해 푸시 알림을 생성, Promise가 반환되며 waitUntil을 통해 이벤트를 연장 시켜야함
   event.waitUntil(self.registration.showNotification(title, options)); // showNotification을 통해 푸시 알림을 생성, Promise가 반환되며 waitUntil을 통해 이벤트를 연장 시켜야함
 });
 
@@ -38,7 +39,10 @@ self.addEventListener('notificationclick', function (event) {
 
   event.notification.close();
   event.waitUntil(
-    self.clients.openWindow(event.notification.data.url), // 예시로 일단 로컬호스트로 링크 누르면 가지는걸로 해놨다.
+    self.clients.openWindow(
+      'https://momo-cbc21.web.app/planmap/32032375-2238-4765-b03d-b006ba31c1c3',
+    ), // 예시로 일단 로컬호스트로 링크 누르면 가지는걸로 해놨다.
+    // self.clients.openWindow(event.notification.data.url), // 예시로 일단 로컬호스트로 링크 누르면 가지는걸로 해놨다.
   );
 });
 

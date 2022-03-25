@@ -34,15 +34,18 @@ const PlanChating = props => {
   let userData = props.userData;
   let setUserData = props.setUserData;
   const publicChats = props.publicChats;
-
+  const guestNick = props.guestNick;
+  console.log(guestNick);
+  // props.setUserData({ ...userData, sender: guestNick });
   useEffect(() => {
+    props.handleUsername();
     //didmount
     // console.log("ChatRoomEffect");
     // sendMessage();
     return () => {
       // undidMount
     };
-  }, [userData]);
+  }, []);
 
   // const userJoin = () => {
   //   let chatMessage = {
@@ -74,23 +77,21 @@ const PlanChating = props => {
     const { value } = event.target;
     setUserData({ ...userData, content: value });
   };
-  // const sendMessage = () => {
-  //   console.log(' 메시지 보내기 클릭!');
-  //   if (stompClient) {
-  //     let chatMessage = {
-  //       sender: userData.sender,
-  //       content: userData.content,
-  //       type: 'CHAT',
-  //     };
-  //     console.log(' 내가 보낸 메시지 ==', chatMessage);
-  //     stompClient.send(
-  //       '/chat/chat.sendMessage',
-  //       {},
-  //       JSON.stringify(chatMessage),
-  //     );
-  //     setUserData({ ...userData, content: '' });
-  //   }
-  // };
+  const sendMessage = () => {
+    console.log(' 메시지 보내기 클릭!');
+    if (stompClient) {
+      let chatMessage = {
+        sender: props.guestNick,
+        content: userData.content,
+        planId: props.planId,
+        type: 'CHAT',
+      };
+      console.log(' 내가 보낸 메시지 ==', chatMessage);
+
+      stompClient.send('/maps/chat.send', {}, JSON.stringify(chatMessage));
+      setUserData({ ...userData, content: '' });
+    }
+  };
   // const handleUsername = event => {
   //   const { value } = event.target;
   //   setUserData({ ...userData, sender: value });
@@ -111,10 +112,9 @@ const PlanChating = props => {
         _onClickEdit={() => {}}
       ></Headerbar> */}
       <h1>ChatRoom</h1>
-      <div>{userData.connected}</div>
-      {userData.connected ? (
-        <div>
-          <div>sdfasdf</div>
+      {/* <div>{userData.connected}</div> */}
+      {true ? (
+        <div style={{ overflow: 'auto' }}>
           {publicChats.map((chat, index) => (
             <>
               {chat.type === 'JOIN' && <div>{chat.sender}입장</div>}
@@ -145,10 +145,10 @@ const PlanChating = props => {
             <input
               type="text"
               placeholder="enter the message"
-              value={userData.message}
+              value={props.userData.message}
               onChange={handleMessage}
             />
-            <button onClick={props.sendMessage}>send</button>
+            <button onClick={sendMessage}>send</button>
           </div>
         </div>
       ) : (

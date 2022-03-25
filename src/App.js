@@ -55,7 +55,8 @@ function App() {
   }
 
   const userNick = useSelector(state => state.user.user_info).nickname;
-  const [guestNick, setGuestNick] = useState(userNick);
+  const isChating = useSelector(state => state.main.isChating);
+  const [guestNick, setGuestNick] = useState();
   console.log(userNick, guestNick, '::::app.js');
   // setGuestNick(userNick);
 
@@ -107,6 +108,7 @@ function App() {
                     userNick={userNick}
                     guestNick={guestNick}
                     setGuestNick={setGuestNick}
+                    isChating={isChating}
                   />
                 }
               />
