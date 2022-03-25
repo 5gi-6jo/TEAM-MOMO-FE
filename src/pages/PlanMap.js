@@ -30,24 +30,28 @@ let stompClient = null;
 
 const PlanMap = props => {
   const dispatch = useDispatch();
-  const userNick = props.userNick;
+  const userNick = props.userNick; //selector
+  props.setGuestNick(userNick); //guestNick 초기화
   // const [guestNick, setGuestNick] = useState(userNick);
   console.log(userNick, props.guestNick);
   const [modal, setModal] = useState(false);
   const path = useParams(); //path주소 받아오기 랜덤URL
   const islogin = useSelector(state => state.user.is_login);
-
+  const inputRef = useRef();
   useEffect(() => {
     dispatch(getPlanId(path.url));
     console.log('PlanMap::didmount');
     console.log('userNick', userNick, 'guestNick', props.guestNick);
+    if (userNick) setModal(true);
+
     if (userNick === null || userNick === undefined) {
       console.log('if');
       setModal(true);
     } else {
       console.log('else');
 
-      props.setGuestNick(userNick);
+      // props.setGuestNick(userNick);
+      console.log('connect');
       connect();
     }
     console.log('userNick', userNick, 'guestNick', props.guestNick);
@@ -102,7 +106,8 @@ const PlanMap = props => {
       'userData',
       userData,
     );
-    handleUsername();
+    // console.log
+    // handleUsername();
     return () => {
       console.log('PlanMap::Undidmount222');
     };
@@ -111,8 +116,10 @@ const PlanMap = props => {
   console.log(userData);
   //처음연결
   const connect = () => {
-    console.log('connect');
+    console.log('connectconnect');
     if (userData.sender === undefined) return;
+    console.log('connectconnect2');
+
     sock = new SockJS(sockUrl);
     stompClient = over(sock);
     stompClient.connect({}, onConnected, onError);
@@ -147,7 +154,11 @@ const PlanMap = props => {
   const onConnected = () => {
     setUserData({ ...userData, connected: true });
     //구독
-    stompClient.subscribe(`/topic/chat/${planId}`, onMessageReceived, onError);
+    stompClient.subscribe(
+      `/topic/chat/${planId}`,
+      onMessageReceivedChat,
+      onError,
+    );
 
     stompClient.subscribe(`/topic/map/${planId}`, onMessageReceived, onError);
     userJoin();
@@ -162,8 +173,7 @@ const PlanMap = props => {
   const onMessageReceived = payload => {
     let payloadData = JSON.parse(payload.body);
     console.log('payloadData=', payloadData);
-    if (payloadData.type === 'ENTER' || payloadData.type === 'CHAT')
-      dispatch(setPublicChats(payloadData));
+
     if (payloadData.type === 'MAP' || payloadData.type === 'DEST') {
       dispatch(setPublicMaps(payloadData));
       if (payloadData.type === 'MAP') {
@@ -189,13 +199,14 @@ const PlanMap = props => {
 
     //마지막 배열의 타입이 ENTER일때 내위치 전송
   };
-  // const onMessageReceived2 = payload => {
-  //   let payloadData = JSON.parse(payload.body);
-  //   console.log('payloadData=', payloadData);
-  //   dispatch(setPublicChats(payloadData));
+  const onMessageReceivedChat = payload => {
+    let payloadData = JSON.parse(payload.body);
+    console.log('payloadData=', payloadData);
+    if (payloadData.type === 'ENTER' || payloadData.type === 'CHAT')
+      dispatch(setPublicChats(payloadData));
 
-  //   //마지막 배열의 타입이 ENTER일때 내위치 전송
-  // };
+    //마지막 배열의 타입이 ENTER일때 내위치 전송
+  };
   //에러
   const onError = err => {
     console.log('Error', err);
@@ -225,6 +236,7 @@ const PlanMap = props => {
   const handleUsername = event => {
     // const { value } = event.target;
     console.log('setUSer');
+    console.log('props.guestNick', props.guestNick);
     setUserData({ ...userData, sender: props.guestNick });
   };
   //메시지 내용 추가함수
@@ -251,7 +263,7 @@ const PlanMap = props => {
   const [points, setPoints] = useState([
     { lat: myLocation.lat, lng: myLocation.lng },
   ]);
-  console.log(points);
+  // console.log(points);
   //위치보내기
   const sendMyLocation = () => {
     console.log('위치보내기!');
@@ -331,7 +343,7 @@ const PlanMap = props => {
         _onClickEdit={() => {}}
       ></Headerbar>
 
-      {modal && (userNick ? false : true) && (
+      {modal && (props.guestNick ? false : true) && (
         <Section>
           <MainModal>
             <ModalPopup>
@@ -340,8 +352,10 @@ const PlanMap = props => {
                   <div>닉네임</div>
                   <div>닉네임을 입력해주세요.</div>
                   <input
+                    ref={inputRef}
                     onChange={e => {
-                      props.setGuestNick(e.target.value);
+                      // console.log(inputRef.current.value);
+                      // props.setGuestNick(e.target.value);
                     }}
                   ></input>
                 </div>
@@ -351,8 +365,10 @@ const PlanMap = props => {
                 <ModalButtonOk
                   onClick={() => {
                     if (props.guestNick !== '') setModal(false);
+                    props.setGuestNick(inputRef.current.value);
+
+                    dispatch(setUserName(inputRef.current.value));
                     handleUsername();
-                    dispatch(setUserName(props.guestNick));
 
                     connect();
                   }}
@@ -384,22 +400,7 @@ const PlanMap = props => {
       >
         디스커넥트
       </Button>
-      <Button
-        _onClick={() => {
-          console.log(process.env.REACT_APP_BE_IP_LYW + '/meets/' + path.url);
-          axios
-            .get(process.env.REACT_APP_BE_IP_LYW + '/meets/' + path.url)
-            .then(res => {
-              console.log(res);
-              return res.data.data.planId;
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        }}
-      >
-        유저데이터
-      </Button>
+
       <Map // 지도를 표시할 Container
         center={myLocation.center}
         style={{

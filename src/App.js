@@ -50,21 +50,28 @@ function App() {
   const islogin = useSelector(state => state.user.is_login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  if (istoken && !islogin) {
+    dispatch(getUserbyToken(navigate));
+  }
 
   const userNick = useSelector(state => state.user.user_info).nickname;
   const [guestNick, setGuestNick] = useState(userNick);
   console.log(userNick, guestNick, '::::app.js');
+  // setGuestNick(userNick);
+
   useEffect(() => {
-    setGuestNick(userNick);
     console.log('app.js::didmount');
-    if (istoken && !islogin) {
-      dispatch(getUserbyToken(navigate));
-    }
+    // if (istoken && !islogin) {
+    //   dispatch(getUserbyToken(navigate));
+    // }
+    // setGuestNick(userNick);
+
     // if (islogin) dispatch(getUserbyToken(navigate));
-    return () => {
-      console.log('app.js::Undidmount');
-    };
+    // return () => {
+    //   console.log('app.js::Undidmount');
+    // };
   }, []);
+
   return (
     <>
       <ThemeProvider theme={theme}>

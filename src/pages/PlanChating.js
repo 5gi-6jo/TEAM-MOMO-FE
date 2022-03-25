@@ -36,8 +36,12 @@ const PlanChating = props => {
   const publicChats = props.publicChats;
 
   useEffect(() => {
+    //didmount
     // console.log("ChatRoomEffect");
     // sendMessage();
+    return () => {
+      // undidMount
+    };
   }, [userData]);
 
   // const userJoin = () => {
@@ -107,6 +111,7 @@ const PlanChating = props => {
         _onClickEdit={() => {}}
       ></Headerbar> */}
       <h1>ChatRoom</h1>
+      <div>{userData.connected}</div>
       {userData.connected ? (
         <div>
           <div>sdfasdf</div>
