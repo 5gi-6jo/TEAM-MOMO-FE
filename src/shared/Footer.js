@@ -84,7 +84,9 @@ const Footer = props => {
 
           <ButtonWrap
             onClick={() => {
-              navigate('/planmap', { replace: true });
+              navigate('/planmap/32032375-2238-4765-b03d-b006ba31c1c3', {
+                replace: true,
+              });
             }}
           >
             chating(임시)

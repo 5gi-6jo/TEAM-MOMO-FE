@@ -31,10 +31,10 @@ const color = {
   gray4: '#9E9E9E',
   gray5: '#E9E9E9',
   orange: '#F84914',
+  green: '#2DBEB1',
   black: '#292929',
   realblack: '#000000',
   white: '#fff',
-
   mainBlue: '#5327ff',
   mainMint: '#83ffca',
   mainGray: '#dedfe0',

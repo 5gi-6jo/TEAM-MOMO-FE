@@ -197,7 +197,7 @@ const AddPlans = props => {
                     id: props.id,
                     planName: name,
                     contents: contenst,
-                    address: props.des.address,
+                    destination: props.des.address,
                     lat: props.des.lat,
                     lng: props.des.lng,
                     planDate: selectTime.split('+')[0],

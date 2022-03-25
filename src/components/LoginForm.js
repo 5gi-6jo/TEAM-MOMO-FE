@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../elements/Button';
+import { setFCMTokenplan } from '../redux/modules/plan';
 import { signinAxios } from '../redux/modules/user';
 import { checkEmail } from '../shared/functions';
 
@@ -35,6 +36,10 @@ const LoginForm = props => {
     };
 
     dispatch(signinAxios({ loginData, navigate }));
+    const data = {
+      token: sessionStorage.getItem('FCMtoken'),
+    };
+    dispatch(setFCMTokenplan(data));
   };
 
   return (

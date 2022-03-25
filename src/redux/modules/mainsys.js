@@ -7,6 +7,9 @@ export const mainSlice = createSlice({
     marker: '',
     is_footer: true,
     publicChats: [],
+    publicMaps: [],
+
+    is_public_send: false,
     des: '',
     calendarDay: moment().format().split('+')[0],
   },
@@ -18,8 +21,13 @@ export const mainSlice = createSlice({
       if (state.is_footer !== action.payload) state.is_footer = action.payload;
     },
     setPublicChats: (state, action) => {
-      state.publicChats.push(action.payload);
+      if (!state.is_public_send) {
+        state.is_public_send = true;
+        state.publicChats.push(action.payload);
+        state.is_public_send = false;
+      }
     },
+
     setDestination: (state, action) => {
       state.des = action.payload;
     },
@@ -33,6 +41,7 @@ export const {
   setMarkerRedux,
   setFooterView,
   setPublicChats,
+
   setDestination,
   setCalendarDay,
 } = mainSlice.actions;

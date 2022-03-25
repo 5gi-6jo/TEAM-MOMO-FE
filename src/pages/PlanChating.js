@@ -9,9 +9,9 @@ import { over } from 'stompjs';
 import {
   disConneted,
   handleMessage,
-  handleUsername,
+  // handleUsername,
   publicChats,
-  registerUser,
+  // registerUser,
   sendMessage,
   settestvalue,
   testcol,
@@ -33,98 +33,109 @@ const PlanChating = props => {
   let stompClient = props.stompClient;
   let userData = props.userData;
   let setUserData = props.setUserData;
-  const publicChats = useSelector(state => state.main.publicChats);
+  const publicChats = props.publicChats;
 
   useEffect(() => {
+    //didmount
     // console.log("ChatRoomEffect");
     // sendMessage();
+    return () => {
+      // undidMount
+    };
   }, [userData]);
 
-  const userJoin = () => {
-    let chatMessage = {
-      sender: userData.sender,
-      type: 'ENTER',
-    };
-    stompClient.send('/chat/chat.sendMessage', {}, JSON.stringify(chatMessage));
-  };
-  const onConnected = () => {
-    setUserData({ ...userData, connected: true });
-    stompClient.subscribe(`/topic/public`, onMessageReceived, onError);
-    userJoin();
-  };
-  const disConneted = () => {
-    stompClient.disconneted(() => {
-      console.log('disconnect');
-    });
-  };
-  const onMessageReceived = payload => {
-    console.log(payload);
-    let payloadData = JSON.parse(payload.body);
-    console.log('payloadData=', payloadData);
-    dispatch(setPublicChats(payloadData));
-  };
-  const onError = err => {
-    console.log('Error', err);
-  };
+  // const userJoin = () => {
+  //   let chatMessage = {
+  //     sender: userData.sender,
+  //     type: 'ENTER',
+  //   };
+  //   stompClient.send('/chat/chat.sendMessage', {}, JSON.stringify(chatMessage));
+  // };
+  // const onConnected = () => {
+  //   setUserData({ ...userData, connected: true });
+  //   stompClient.subscribe(`/topic/public`, onMessageReceived, onError);
+  //   userJoin();
+  // };
+  // const disConneted = () => {
+  //   stompClient.disconneted(() => {
+  //     console.log('disconnect');
+  //   });
+  // };
+  // const onMessageReceived = payload => {
+  //   console.log(payload);
+  //   let payloadData = JSON.parse(payload.body);
+  //   console.log('payloadData=', payloadData);
+  //   dispatch(setPublicChats(payloadData));
+  // };
+  // const onError = err => {
+  //   console.log('Error', err);
+  // };
   const handleMessage = event => {
     const { value } = event.target;
     setUserData({ ...userData, content: value });
   };
-  const sendMessage = () => {
-    console.log(' 메시지 보내기 클릭!');
-    if (stompClient) {
-      let chatMessage = {
-        sender: userData.sender,
-        content: userData.content,
-        type: 'CHAT',
-      };
-      console.log(' 내가 보낸 메시지 ==', chatMessage);
-      stompClient.send(
-        '/chat/chat.sendMessage',
-        {},
-        JSON.stringify(chatMessage),
-      );
-      setUserData({ ...userData, content: '' });
-    }
-  };
-  const handleUsername = event => {
-    const { value } = event.target;
-    setUserData({ ...userData, sender: value });
-  };
+  // const sendMessage = () => {
+  //   console.log(' 메시지 보내기 클릭!');
+  //   if (stompClient) {
+  //     let chatMessage = {
+  //       sender: userData.sender,
+  //       content: userData.content,
+  //       type: 'CHAT',
+  //     };
+  //     console.log(' 내가 보낸 메시지 ==', chatMessage);
+  //     stompClient.send(
+  //       '/chat/chat.sendMessage',
+  //       {},
+  //       JSON.stringify(chatMessage),
+  //     );
+  //     setUserData({ ...userData, content: '' });
+  //   }
+  // };
+  // const handleUsername = event => {
+  //   const { value } = event.target;
+  //   setUserData({ ...userData, sender: value });
+  // };
 
   // const registerUser = () => {
   //   connect();
   // };
+  console.log(userData);
   return (
     <>
-      <Headerbar
+      {/* <Headerbar
         is_Edit
         text="모임이름{} 채팅방"
         _onClickClose={() => {
           Navigate('/main');
         }}
         _onClickEdit={() => {}}
-      ></Headerbar>
-      <div>ChatRoom</div>
+      ></Headerbar> */}
+      <h1>ChatRoom</h1>
+      <div>{userData.connected}</div>
       {userData.connected ? (
         <div>
+          <div>sdfasdf</div>
           {publicChats.map((chat, index) => (
             <>
               {chat.type === 'JOIN' && <div>{chat.sender}입장</div>}
               {chat.type === 'CHAT' && chat.sender !== userData.sender && (
-                <div key={index}>
-                  <div>
-                    <div>{chat.sender}</div>
-                    <div>{chat.content}</div>
-                  </div>
+                <div key={index} style={{ display: 'flex' }}>
+                  <NotMyChatmessageContainer>
+                    <NotMySender>{chat.sender}</NotMySender>
+                    <NotmessageBoxBackLight>
+                      <MYmessageText>{chat.content}</MYmessageText>
+                    </NotmessageBoxBackLight>
+                  </NotMyChatmessageContainer>
                 </div>
               )}
               {chat.type === 'CHAT' && chat.sender === userData.sender && (
                 <div key={index}>
-                  <div>
-                    <div>{chat.sender}</div>
-                    <div>{chat.content}</div>
-                  </div>
+                  <MYChatmessageContainer>
+                    <MySender>{chat.sender}</MySender>
+                    <MymessageBoxBackBlue>
+                      <MYmessageText>{chat.content}</MYmessageText>
+                    </MymessageBoxBackBlue>
+                  </MYChatmessageContainer>
                 </div>
               )}
               {chat.type === 'LEAVE' && <div>{chat.sender} 나가셨습니다</div>}
@@ -137,32 +148,33 @@ const PlanChating = props => {
               value={userData.message}
               onChange={handleMessage}
             />
-            <button onClick={sendMessage}>send</button>
+            <button onClick={props.sendMessage}>send</button>
           </div>
         </div>
       ) : (
-        <div className="register">
-          <input
-            id="user-name"
-            placeholder="Enter your name"
-            name="userName"
-            // value={userData.sender}
-            onChange={e => {
-              handleUsername(e);
-            }}
-          />
-          <button
-            type="button"
-            onClick={() => {
-              registerUser();
-            }}
-          >
-            connect
-          </button>
-          <button type="button" onClick={disConneted}>
-            disconnect
-          </button>
-        </div>
+        // <div className="register">
+        //   <input
+        //     id="user-name"
+        //     placeholder="Enter your name"
+        //     name="userName"
+        //     // value={userData.sender}
+        //     onChange={e => {
+        //       handleUsername(e);
+        //     }}
+        //   />
+        //   <button
+        //     type="button"
+        //     onClick={() => {
+        //       registerUser();
+        //     }}
+        //   >
+        //     connect
+        //   </button>
+        //   <button type="button" onClick={disConneted}>
+        //     disconnect
+        //   </button>
+        // </div>
+        <div></div>
       )}
     </>
   );
@@ -170,5 +182,61 @@ const PlanChating = props => {
 
 // 스타일 컴포넌트 작성 위치
 const StyleComponent = styled.div``;
+
+const MYChatmessageContainer = styled.div`
+  display: flex;
+  padding: 0 5%;
+  margin-top: 3px;
+  justify-content: flex-end;
+`;
+const MySender = styled.p`
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+  font-family: Helvetica;
+  color: #828282;
+  letter-spacing: 0.3px;
+`;
+const MymessageBoxBackBlue = styled.div`
+  background: #f3f3f3;
+  border-radius: 20px;
+  padding: 5px 20px;
+  color: white;
+  display: inline-block;
+  max-width: 80%;
+  background: ${theme.color.gray5};
+`;
+
+const MYmessageText = styled.p`
+  width: 100%;
+  letter-spacing: 0;
+  float: left;
+  font-size: 1.1em;
+  word-wrap: break-word;
+`;
+
+const NotMyChatmessageContainer = styled.div`
+  display: flex;
+  padding: 0 5%;
+  margin-top: 3px;
+  justify-content: flex-start;
+`;
+const NotMySender = styled.p`
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  font-family: Helvetica;
+  color: #828282;
+  letter-spacing: 0.3px;
+`;
+const NotmessageBoxBackLight = styled.div`
+  background: #f3f3f3;
+  border-radius: 20px;
+  padding: 5px 20px;
+  color: white;
+  display: inline-block;
+  max-width: 80%;
+  background: ${theme.color.green};
+`;
 
 export default PlanChating;

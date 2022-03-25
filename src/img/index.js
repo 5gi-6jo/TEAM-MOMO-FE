@@ -4,7 +4,9 @@ import trash_2 from './icon/trash_2.webp';
 import trash_3 from './icon/trash_3.webp';
 import edit from './icon/edit.webp';
 import logo_01 from './icon/logo_01.webp';
+import Ellipse32 from './map/Ellipse32.png';
 
+import frame from './frame.webp';
 export {
   //--icons---
   log_in,
@@ -12,5 +14,8 @@ export {
   trash_2,
   trash_3,
   edit,
+  //틀
+  frame,
   logo_01,
+  Ellipse32,
 };
