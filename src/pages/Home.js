@@ -21,7 +21,7 @@ const Home = () => {
   return (
     <React.Fragment>
       <GlobalStyle />
-      <Grid padding="120px 10px 40px 20px">
+      <Grid padding="108px 0px 50px 22px">
         <Text color={theme.color.black} size="24px">
           <Logo01 src={logo_01} alt="logo_01" />에
           <br />
@@ -60,8 +60,6 @@ const TextBox = styled.div``;
 
 const Logo01 = styled.img`
   background-image: url(${logo_01});
-  height: 100vh,
-  width: 100vw,
 `;
 
 const Logo02 = styled.img`
