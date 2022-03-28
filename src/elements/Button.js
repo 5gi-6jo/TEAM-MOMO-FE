@@ -19,6 +19,8 @@ const Button = props => {
     _type,
     abled,
     value,
+    color,
+    background_color,
   } = props;
 
   if (is_float) {
@@ -44,6 +46,8 @@ const Button = props => {
     padding: padding,
     is_edit: is_edit,
     abled: abled,
+    color: color,
+    background_color: background_color,
   };
 
   return (
@@ -72,6 +76,9 @@ Button.defaultProps = {
   is_disabled: false,
   is_edit: false,
   abled: false,
+  register: false,
+  color: null,
+  background: null,
 };
 // background-color : ${theme.color.gray3}
 // props =>

@@ -20,6 +20,8 @@ const Input = props => {
     ref,
     _onChlick,
     value,
+    width,
+    height,
   } = props;
 
   if (is_float) {
@@ -70,6 +72,8 @@ const Input = props => {
           ref={ref}
           placeholder={placeholder}
           onChange={_onChange}
+          width={width}
+          heignt={height}
         />
       </Grid>
     </React.Fragment>
@@ -84,6 +88,8 @@ Input.defaultProps = {
   placeholder: '텍스트를 입력해주세요.',
   type: 'text',
   is_float: false,
+  width: '320px',
+  height: '42px',
   _onChange: () => {},
   _onChlick: () => {},
 };
