@@ -134,7 +134,7 @@ const Web = styled.div`
   }
 `;
 const FramePhone = styled.div`
-  width: 500px;
+  width: 545px;
   height: 100%;
   min-height: 750px;
   position: fixed;
