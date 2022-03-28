@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../elements/Button';
-import { sighupAxios } from '../redux/modules/user';
+import { register } from '../redux/modules/user';
 import { checkEmail, checkNickname, checkPW } from '../shared/functions';
 
 const RegisterForm = props => {
@@ -44,14 +44,14 @@ const RegisterForm = props => {
       return;
     }
 
-    const registerData = {
+    const data = {
       email: email,
       nickname: nickname,
       password: pw,
       checkPassword: pwCheck,
     };
 
-    dispatch(sighupAxios({ registerData, navigate }));
+    dispatch(register({ data }));
   };
 
   return (
