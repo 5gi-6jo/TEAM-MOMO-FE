@@ -64,7 +64,11 @@ const Home = () => {
           abled
         />
       </Grid>
-      <Grid padding="20px 0px 0px 150px">둘러보기</Grid>
+      <Grid padding="20px 0px 0px 160px">
+        <Text color={theme.color.gray4} size="12px">
+          둘러보기
+        </Text>
+      </Grid>
     </React.Fragment>
   );
 };
