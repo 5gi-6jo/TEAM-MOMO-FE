@@ -71,7 +71,7 @@ class UserApi {
   async getUserbyToken() {
     const getUserbyTokenConfig = {
       method: 'get',
-      url: `${this.base}/users/login`,
+      url: `${this.base}/users`,
       headers: {
         Authorization: this.getToken(),
       },

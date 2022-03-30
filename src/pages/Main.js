@@ -43,6 +43,7 @@ const Main = props => {
   const data = {
     date: time,
   };
+  // console.log(data);
   //-01T00:00:00
   const textInput = useRef();
 

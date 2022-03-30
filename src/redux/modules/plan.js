@@ -8,8 +8,9 @@ export const getPlans = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       if (ismock) return MOCK.Plans.data;
+
       // console.log(sessionStorage.getItem('token').split('Bearer ')[1]);
-      return await URL.post(`/plans/main`, data, {
+      return await URL.get(`/plans?date=${data.date}`, {
         headers: {
           Authorization: sessionStorage.getItem('token'),
           'Content-Type': 'application/json',

@@ -23,12 +23,8 @@ export const login = createAsyncThunk(
     try {
       return await URL.post(`/users/login`, data).then(response => {
         console.log(response);
-        if (response.status === 201) {
-          sessionStorage.setItem('token', response.data.token);
-          sessionStorage.setItem('nickname', response.data.data.nickname);
-          window.location.replace('/');
-        }
-        sessionStorage.setItem('nickname', response.data.nickname);
+        sessionStorage.setItem('token', response.headers.authorization);
+        return response.data.data;
       });
     } catch (error) {
       console.log(error);
