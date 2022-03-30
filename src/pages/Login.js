@@ -23,9 +23,8 @@ const Login = ({ isLogin }) => {
         <Grid padding="127px 123px 0px 123px">
           <Home01 src={home_01} />
         </Grid>
-
         <LoginForm />
-        <Grid is_flex padding="20px 0px 30px 0px">
+        <Grid is_flex padding="20px 0px 20px 0px">
           <Text color={theme.color.gray4} size="12px">
             아이디 찾기
           </Text>
@@ -34,7 +33,6 @@ const Login = ({ isLogin }) => {
             비밀번호 찾기
           </Text>
         </Grid>
-        <Grid></Grid>
         <Line05 src={Line5} />
         <Grid padding="20px 100px 0px 100px">
           <Text color={theme.color.gray4} size="12px">
