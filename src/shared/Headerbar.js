@@ -17,7 +17,6 @@ const Headerbar = props => {
 
   return (
     <>
-      <hr style={{ width: '100%' }} />
       <Grid is_flex padding="12px" center>
         <GrClose size="22px" cursor="pointer" onClick={_onClickClose} />
         <Text bold>{text}</Text>

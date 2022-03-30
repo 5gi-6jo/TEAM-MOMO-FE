@@ -123,11 +123,16 @@ export { actionCreators };
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    user: {},
+    user_info: {},
+    is_login: false,
     loginError: '',
     registerError: '',
   },
-  reducer: {},
+  reducer: {
+      setUserName: (state, action) => {
+      state.user_info.nickname = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       //회원가입
@@ -147,7 +152,7 @@ export const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user_info = action.payload;
         state.isLoading = false;
         state.isLoggedin = true;
       })
@@ -158,16 +163,22 @@ export const userSlice = createSlice({
       // 로그아웃
       .addCase(logout.fulfilled, state => {
         state.isLoggedin = false;
+      })
+      .addCase(getUserbyToken.fulfilled,(state, action) => {
+            state.is_login = true;
+      state.user_info = action.payload;
       });
+     
   },
 });
 
-// export const {
-//   setUserToSession,
-//   setMyFCMToken,
-//   setUserName,
-//   getUser,
-//   deleteUserFromSession,
-// } = userSlice.actions;
+ export const {
+
+   setUserToSession,
+   setMyFCMToken,
+   setUserName,
+   getUser,
+   deleteUserFromSession,
+} = userSlice.actions;
 
 export default userSlice.reducer;

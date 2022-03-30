@@ -25,10 +25,11 @@ import Map from './pages/Map';
 import { useDispatch, useSelector } from 'react-redux';
 import PlanChating from './pages/PlanChating';
 import PlanMap from './pages/PlanMap';
-import PlanSelectMap from './pages/PlanSelectMap';
+import Plansocket from './pages/Plansocket';
 import { useEffect, useState } from 'react';
 import { getUserbyToken } from './redux/modules/user';
 import FCMtoken from './shared/FCMtoken';
+import PlanSetName from './pages/PlanSetName';
 
 function App() {
   const firebaseConfig = {
@@ -53,9 +54,9 @@ function App() {
     dispatch(getUserbyToken(navigate));
   }
 
-  // const userNick = useSelector(state => state.user.user_info).nickname;
-  const isChating = useSelector(state => state.main.isChating);
-  const [guestNick, setGuestNick] = useState();
+
+  const userNick = useSelector(state => state.user.user_info).nickname;
+
   // console.log(userNick, guestNick, '::::app.js');
   // setGuestNick(userNick);
 
@@ -102,6 +103,12 @@ function App() {
                   <Route path="/Map" element={<Map />} />
                   <Route path="/chating" element={<PlanChating />} />
                   <Route
+                    path="/plan/:url"
+                    element={
+                      <PlanSetName islogin={islogin} userNick={userNick} />
+                    }
+                  />
+                  {/* <Route
                     path="/planmap/:url"
                     element={
                       <PlanMap
@@ -111,7 +118,7 @@ function App() {
                         isChating={isChating}
                       />
                     }
-                  />
+                  /> */}
                 </Routes>
                 {is_footer && <Footer />}
               </ThemeProvider>
@@ -134,7 +141,7 @@ const Web = styled.div`
   }
 `;
 const FramePhone = styled.div`
-  width: 545px;
+  width: 27vw;
   height: 100%;
   min-height: 750px;
   position: fixed;

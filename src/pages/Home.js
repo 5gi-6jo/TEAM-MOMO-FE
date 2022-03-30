@@ -38,6 +38,7 @@ const Home = () => {
           추억하세요.
         </Text>
       </Grid>
+
       <Grid padding="">
         <a href={KAKAO_AUTH_URL}>
           <Button
@@ -52,6 +53,7 @@ const Home = () => {
           </Button>
         </a>
       </Grid>
+
       <Grid padding="">
         <Button
           name={'이메일 로그인·회원가입하기'}
