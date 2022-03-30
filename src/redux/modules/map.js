@@ -22,8 +22,10 @@ export const mapSlice = createSlice({
   initialState: {
     planId: '',
     showplan: [],
-    images: [],
     publicMaps: [],
+    publicChats: [],
+
+    loading: false,
   },
   reducers: {
     setPublicMaps: (state, action) => {
@@ -42,6 +44,13 @@ export const mapSlice = createSlice({
       //   state.publicChats.push(action.payload);
       // } else state.publicMaps[index] = action.payload;
     },
+    setPublicChats: (state, action) => {
+      if (!state.is_public_send) {
+        state.is_public_send = true;
+        state.publicChats.push(action.payload);
+        state.is_public_send = false;
+      }
+    },
     // getOnePlan: (state, action) => {
     //   console.log(state, action.payload);
     //   state.plan.data.push(action.payload);
@@ -51,11 +60,17 @@ export const mapSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(getPlanId.fulfilled, (state, action) => {
-      state.planId = action.payload;
-    });
+    builder
+      .addCase(getPlanId.pending, (state, action) => {
+        state.loading = true;
+      })
+
+      .addCase(getPlanId.fulfilled, (state, action) => {
+        state.planId = action.payload;
+        state.loading = false;
+      });
   },
 });
-export const { setPublicMaps } = mapSlice.actions;
+export const { setPublicMaps, setPublicChats } = mapSlice.actions;
 
 export default mapSlice.reducer;

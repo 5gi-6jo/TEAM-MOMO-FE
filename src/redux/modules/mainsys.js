@@ -6,7 +6,6 @@ export const mainSlice = createSlice({
   initialState: {
     marker: '',
     is_footer: true,
-    publicChats: [],
     publicMaps: [],
     isChating: false,
     is_public_send: false,
@@ -20,13 +19,7 @@ export const mainSlice = createSlice({
     setFooterView: (state, action) => {
       if (state.is_footer !== action.payload) state.is_footer = action.payload;
     },
-    setPublicChats: (state, action) => {
-      if (!state.is_public_send) {
-        state.is_public_send = true;
-        state.publicChats.push(action.payload);
-        state.is_public_send = false;
-      }
-    },
+
     setIsChating: (state, action) => {
       state.isChating = action.payload;
     },

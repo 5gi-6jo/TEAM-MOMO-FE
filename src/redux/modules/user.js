@@ -87,8 +87,8 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
     user_info: {
-      username: null,
-      userid: null,
+      nickname: null,
+      email: null,
     },
     is_login: false,
   },
@@ -98,7 +98,7 @@ export const userSlice = createSlice({
       state.user_info = action.payload;
     },
     setUserName: (state, action) => {
-      state.user_info.username = action.payload;
+      state.user_info.nickname = action.payload;
     },
     getUser: (state, action) => {
       state.is_login = true;

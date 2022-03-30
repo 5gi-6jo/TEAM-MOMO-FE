@@ -40,6 +40,10 @@ const Home = () => {
           추억하세요.
         </Text>
       </Grid>
+      <button onClick={() => window.location.href(KAKAO_AUTH_URL)}>
+        {' '}
+        카카오테스트
+      </button>
       <a href={KAKAO_AUTH_URL}>카카오톡으로 시작하기</a>
       <Grid padding="">
         <Button

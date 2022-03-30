@@ -83,6 +83,15 @@ const Footer = props => {
           >
             chating(임시)
           </ButtonWrap>
+          <ButtonWrap
+            onClick={() => {
+              navigate('/plan/32032375-2238-4765-b03d-b006ba31c1c3', {
+                replace: true,
+              });
+            }}
+          >
+            sock(임시)
+          </ButtonWrap>
         </Grid>
       </NavBox>
     </>

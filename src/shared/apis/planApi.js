@@ -49,20 +49,4 @@ class PlanApi {
 }
 export default PlanApi;
 
-// export const userApi = {
-//   //회원가입
-//   signup: data => {
-//     instance.post('user/signup', {
-//       userEmail: data.id,
-//       password: data.pwd,
-//       nickname: data.user_name,
-//     });
-//   },
-//   login: data =>
-//     instance.post('user/login', {
-//       username: data.id,
-//       password: data.pwd,
-//     }),
-// };
-
 // export { instance, token, settoken };

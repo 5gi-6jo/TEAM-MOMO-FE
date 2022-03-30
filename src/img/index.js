@@ -5,6 +5,9 @@ import trash_3 from './icon/trash_3.webp';
 import edit from './icon/edit.webp';
 import logo_01 from './icon/logo_01.webp';
 import Ellipse32 from './map/Ellipse32.png';
+import chatingicon from './icon/chatingicon.webp';
+import plusbutton from './icon/plusbutton.webp';
+import sendbutton from './icon/sendbutton.webp';
 
 import frame from './frame.webp';
 import backImg2 from './backImg2.webp';
@@ -17,6 +20,9 @@ export {
   edit,
   logo_01,
   Ellipse32,
+  chatingicon,
+  plusbutton,
+  sendbutton,
   //틀
   frame,
   backImg2,

@@ -1,23 +1,25 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import theme from '../Styles/theme';
 import Headerbar from '../shared/Headerbar';
 import { Button } from '../elements';
 
 import { Navigate, useParams } from 'react-router-dom';
-import SockJS from 'sockjs-client';
-import { over } from 'stompjs';
 
 import PlanChating from './PlanChating';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsChating, setPublicChats } from '../redux/modules/mainsys.js';
 import { setUserName } from '../redux/modules/user.js';
 //카카오 맵
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { Ellipse32, trash_3 } from '../img';
 
-//테스트
-import axios from 'axios';
 import { getPlanId, setPublicMaps } from '../redux/modules/map';
 
 /**
@@ -26,36 +28,18 @@ import { getPlanId, setPublicMaps } from '../redux/modules/map';
  * @역할 무엇을 위한 컴포넌트인지 적어주기
  * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
  */
-let stompClient = null;
 
-const PlanMap = props => {
+const PlanMap = forwardRef((props, ref) => {
+  useImperativeHandle(ref, () => ({
+    sendMyLocationfun() {
+      console.log('testchild');
+      sendMyLocation();
+      console.log('location', myLocation);
+    },
+  }));
   const dispatch = useDispatch();
-  // const userNick = props.userNick; //selector
-  // props.setGuestNick(userNick); //guestNick 초기화
-  // const [guestNick, setGuestNick] = useState(userNick);
-  const [modal, setModal] = useState(false);
-  const path = useParams(); //path주소 받아오기 랜덤URL
-  const islogin = useSelector(state => state.user.is_login);
-  const inputRef = useRef();
-  console.log('props.guestNick', props.guestNick, 'modal', modal);
-  useEffect(() => {
-    dispatch(getPlanId(path.url));
-    console.log('PlanMap::didmount');
-
-    if (userData.sender === undefined || userData.sender === '') setModal(true);
-
-    // if (userNick === null || userNick === undefined) {
-    //   console.log('if');
-    //   setModal(true);
-    // } else {
-    //   console.log('else');
-
-    //   // props.setGuestNick(userNick);
-    //   console.log('connect');
-    //   connect();
-    // }
-  }, []);
-  const planId = useSelector(state => state.map.planId);
+  const planId = props.planId;
+  const stompClient = props.client;
   const useInterval = (callback, delay) => {
     const savedCallback = useRef();
 
@@ -78,10 +62,8 @@ const PlanMap = props => {
 
   //소켓관련
   let sock = useRef({});
-  const publicChats = useSelector(state => state.main.publicChats);
-  const publicMaps = useSelector(state => state.map.publicMaps);
+  const publicMaps = props.publicMaps;
 
-  // const [publicChats, setPublicChats] = useState([]);
   // const [isChating, setIsChating] = useState(false);
   const isChating = props.isChating;
   const [userData, setUserData] = useState({
@@ -89,153 +71,10 @@ const PlanMap = props => {
     connected: false,
     content: '',
   });
-  console.log(publicChats);
   console.log(publicMaps);
   useEffect(() => {
-    console.log('PlanMap::didmount12312');
-
-    // console.log
-    // handleUsername();
-    return () => {
-      console.log('PlanMap::Undidmount222');
-    };
-  }, [publicChats, publicMaps]);
-  const sockUrl = process.env.REACT_APP_BE_IP_LYW + '/ws';
-  //처음연결
-  const connect = () => {
-    console.log('connectconnect');
-    // if (props.guestNick === undefined) return;
-    console.log('connectconnect2');
-
-    sock = new SockJS(sockUrl);
-    stompClient = over(sock);
-    stompClient.connect({}, onConnected, onError);
-    // sock.addEventListener('open', () => {
-    //   console.log('Connected to Browser!!!😀');
-    // });
-    // sock.addEventListener('message', message => {
-    //   console.log('Got this:', message, '😀');
-    // });
-    sock.addEventListener('close', () => {
-      console.log('Disconnected to Server😀');
-    });
-  };
-  //유저입장체크
-  const userJoin = () => {
-    let chatMessage = {
-      // sender: userData.sender,
-      sender: props.guestNick,
-      planId: planId,
-      lat: myLocation.center.lat,
-      lng: myLocation.center.lng,
-      type: 'ENTER',
-    };
-    // stompClient.send('/chat/chat.sendMessage', {}, JSON.stringify(chatMessage));
-    stompClient.send('/maps/enter', {}, JSON.stringify(chatMessage));
-
-    // setTimeout(() => {
-    //   sendMyLocation();
-    // }, 1000);
-  };
-  //연결
-  const onConnected = () => {
-    setUserData({ ...userData, connected: true });
-    //구독
-    stompClient.subscribe(
-      `/topic/chat/${planId}`,
-      onMessageReceivedChat,
-      onError,
-    );
-
-    stompClient.subscribe(`/topic/map/${planId}`, onMessageReceived, onError);
-    userJoin();
-  };
-  //연결해제
-  const disConneted = () => {
-    // stompClient.disconneted(() => {
-    //   console.log('disconnect');
-    // });
-  };
-  //메시지 받기
-  const onMessageReceived = payload => {
-    let payloadData = JSON.parse(payload.body);
-    console.log('payloadData=', payloadData);
-    if (payloadData.type === 'ENTER' || payloadData.type === 'CHAT') {
-      dispatch(setPublicChats(payloadData));
-      sendMyLocation();
-    }
-
-    if (payloadData.type === 'MAP' || payloadData.type === 'DEST') {
-      dispatch(setPublicMaps(payloadData));
-      if (payloadData.type === 'MAP') {
-        const data = {
-          lat: payloadData.lat,
-          lng: payloadData.lng,
-        };
-        setPoints(payloade => [...payloade, data]);
-      }
-      if (payloadData.type === 'DEST') {
-        const data = {
-          lat: payloadData.destLat,
-          lng: payloadData.destLng,
-        };
-        setPoints(payloade => [...payloade, data]);
-      }
-    }
-    // console.log(payloadData.type === 'MAP' || payloadData.type === 'DEST');
-
-    if (payloadData.type === 'ENTER') {
-      sendMyLocation();
-    }
-
-    //마지막 배열의 타입이 ENTER일때 내위치 전송
-  };
-  const onMessageReceivedChat = payload => {
-    let payloadData = JSON.parse(payload.body);
-    console.log('payloadData=', payloadData);
-    if (payloadData.type === 'ENTER' || payloadData.type === 'CHAT')
-      dispatch(setPublicChats(payloadData));
-
-    //마지막 배열의 타입이 ENTER일때 내위치 전송
-  };
-  //에러
-  const onError = err => {
-    console.log('Error', err);
-  };
-
-  //보내기 버튼
-  const sendMessage = () => {
-    console.log(' 메시지 보내기 클릭!');
-    if (stompClient) {
-      let chatMessage = {
-        sender: props.guestNick,
-        content: userData.content,
-        planId: planId,
-        type: 'CHAT',
-      };
-      console.log(' 내가 보낸 메시지 ==', chatMessage);
-
-      stompClient.send('/maps/chat.send', {}, JSON.stringify(chatMessage));
-      setUserData({ ...userData, content: '' });
-    }
-  };
-  //유저 추가 //게스트 커넥트
-  const handleUsername = event => {
-    // const { value } = event.target;
-    console.log('setUSer');
-    console.log('props.guestNick', props.guestNick);
-    setUserData({ ...userData, sender: props.guestNick, connected: true });
-  };
-  //메시지 내용 추가함수
-  const handleMessage = event => {
-    const { value } = event.target;
-    setUserData({ ...userData, content: value });
-  };
-  const registerUser = () => {
-    connect();
-  };
-
-  //소켓관련 끝
+    return () => {};
+  }, [publicMaps]);
 
   //지도 관련
   const [map, setMap] = useState();
@@ -256,7 +95,7 @@ const PlanMap = props => {
     console.log('위치보내기!');
     if (stompClient) {
       let chatMessage = {
-        sender: props.guestNick,
+        sender: props.usernick,
         lat: myLocation.center.lat,
         lng: myLocation.center.lng,
         type: 'MAP',
@@ -270,7 +109,7 @@ const PlanMap = props => {
   };
   // useInterval(() => {
   //   sendMyLocation();
-  // }, 3000);
+  // }, 10000);
   const bounds = useMemo(() => {
     const bounds = new window.kakao.maps.LatLngBounds();
 
@@ -311,11 +150,7 @@ const PlanMap = props => {
       }));
     }
 
-    console.log('PlanMap::didmount2');
-
-    return () => {
-      console.log('PlanMap::Undidmount2');
-    };
+    return () => {};
   }, []);
 
   return (
@@ -329,38 +164,7 @@ const PlanMap = props => {
         _onClickEdit={() => {}}
       ></Headerbar>
 
-      {modal && (
-        <Section>
-          <MainModal>
-            <ModalPopup>
-              <ModalText>
-                <div>
-                  <div>닉네임</div>
-                  <div>닉네임을 입력해주세요.</div>
-                  <input ref={inputRef}></input>
-                </div>
-              </ModalText>
-              <ModalButton>
-                <ModalButtonCencel>취소</ModalButtonCencel>
-                <ModalButtonOk
-                  onClick={() => {
-                    if (props.guestNick !== '') setModal(false);
-                    props.setGuestNick(inputRef.current.value);
-
-                    // dispatch(setUserName(inputRef.current.value));
-                    handleUsername();
-
-                    connect();
-                  }}
-                >
-                  확인
-                </ModalButtonOk>
-              </ModalButton>
-            </ModalPopup>
-          </MainModal>
-        </Section>
-      )}
-      <Button
+      {/* <Button
         _onClick={() => {
           if (isChating) dispatch(setIsChating(false));
           else dispatch(setIsChating(true));
@@ -368,14 +172,14 @@ const PlanMap = props => {
       >
         Chating
       </Button>
-      <Button _onClick={sendMyLocation}>내 위치 보내기</Button>
+      <Button _onClick={sendMyLocation}>내 위치 보내기</Button> */}
 
       <Map // 지도를 표시할 Container
         center={myLocation.center}
         style={{
           // 지도의 크기
           width: '100%',
-          height: '200px',
+          height: '100%',
         }}
         level={3} // 지도의 확대 레벨
         onCreate={setMap}
@@ -408,31 +212,9 @@ const PlanMap = props => {
             </>
           ))}
       </Map>
-      {/* <button
-        onClick={() => {
-          if (map) map.setBounds(bounds);
-        }}
-      >
-        지도 범위 재설정 하기
-      </button> */}
-
-      <hr></hr>
-      {isChating && (
-        <PlanChating
-          stompClient={stompClient}
-          userData={userData}
-          setUserData={setUserData}
-          publicChats={publicChats}
-          handleMessage={handleMessage}
-          sendMessage={sendMessage}
-          guestNick={props.guestNick}
-          handleUsername={handleUsername}
-          planId={planId}
-        />
-      )}
     </>
   );
-};
+});
 
 // 스타일 컴포넌트 작성 위치
 const StyleComponent = styled.div``;
