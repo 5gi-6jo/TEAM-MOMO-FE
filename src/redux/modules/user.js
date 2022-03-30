@@ -117,9 +117,6 @@ export const getUserbyToken = createAsyncThunk(
   },
 );
 
-const actionCreators = { KakaoLogin };
-export { actionCreators };
-
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -128,8 +125,8 @@ export const userSlice = createSlice({
     loginError: '',
     registerError: '',
   },
-  reducer: {
-      setUserName: (state, action) => {
+  reducers: {
+    setUserName: (state, action) => {
       state.user_info.nickname = action.payload;
     },
   },
@@ -164,21 +161,15 @@ export const userSlice = createSlice({
       .addCase(logout.fulfilled, state => {
         state.isLoggedin = false;
       })
-      .addCase(getUserbyToken.fulfilled,(state, action) => {
-            state.is_login = true;
-      state.user_info = action.payload;
+      .addCase(getUserbyToken.fulfilled, (state, action) => {
+        state.is_login = true;
+        state.user_info = action.payload;
       });
-     
   },
 });
 
- export const {
-
-   setUserToSession,
-   setMyFCMToken,
-   setUserName,
-   getUser,
-   deleteUserFromSession,
-} = userSlice.actions;
+const actionCreators = { KakaoLogin };
+export { actionCreators };
+export const { setUserName } = userSlice.actions;
 
 export default userSlice.reducer;
