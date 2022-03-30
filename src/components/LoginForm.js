@@ -52,6 +52,7 @@ const LoginForm = props => {
           type="text"
           labelText="이메일"
           placeholder="이메일 주소 (아이디)"
+          width="10px"
         />
       </Grid>
       <Grid padding="0px 20px 0px 20px">

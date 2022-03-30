@@ -21,7 +21,6 @@ const Input = props => {
     _onChlick,
     value,
     width,
-    height,
   } = props;
 
   if (is_float) {
@@ -73,7 +72,6 @@ const Input = props => {
           placeholder={placeholder}
           onChange={_onChange}
           width={width}
-          heignt={height}
         />
       </Grid>
     </React.Fragment>
@@ -88,8 +86,8 @@ Input.defaultProps = {
   placeholder: '텍스트를 입력해주세요.',
   type: 'text',
   is_float: false,
-  width: '320px',
-  height: '42px',
+  width: '',
+  height: '',
   _onChange: () => {},
   _onChlick: () => {},
 };
@@ -103,7 +101,7 @@ const ElTextarea = styled.textarea`
 
 const ElInput = styled.input`
   border: 1px solid #c4c4c4;
-  width: 100%;
+  width: 320px;
   padding: 12px 12px;
   margin-top: 14px;
   box-sizing: border-box;

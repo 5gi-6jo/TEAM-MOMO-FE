@@ -25,19 +25,23 @@ const Login = ({ isLogin }) => {
         </Grid>
 
         <LoginForm />
-        <Grid is_flex is_padding="0px 0px 30px 0px">
-          {/* //text로하고 onclick넣기 */}
-          <Button name={'아이디 찾기'} _onClick width="91px" height="17px" />
+        <Grid is_flex padding="20px 0px 30px 0px">
+          <Text color={theme.color.gray4} size="12px">
+            아이디 찾기
+          </Text>
           <Line04 src={Line4} />
-          <Button name={'비밀번호 찾기'} _onClick width="91px" height="17px" />
+          <Text color={theme.color.gray4} size="12px">
+            비밀번호 찾기
+          </Text>
         </Grid>
+        <Grid></Grid>
         <Line05 src={Line5} />
-        <Grid padding="30px 96px 0px 96px">
+        <Grid padding="20px 100px 0px 100px">
           <Text color={theme.color.gray4} size="12px">
             '모두모여'가 처음이신가요?
           </Text>
         </Grid>
-        <Grid padding="30px 0px 0px 0px">
+        <Grid padding="20px 0px 0px 20px">
           <Button
             width="320px"
             name={'회원가입하기'}
