@@ -6,6 +6,8 @@ import Button from '../elements/Button';
 import { register } from '../redux/modules/user';
 import { checkEmail, checkNickname, checkPW } from '../shared/functions';
 import { Grid, Input } from '../elements';
+import Agreement from './Agreement';
+import theme from '../Styles/theme';
 
 const RegisterForm = props => {
   const navigate = useNavigate();
@@ -57,42 +59,43 @@ const RegisterForm = props => {
 
   return (
     <Form onSubmit={onRegist}>
-      <Grid>
-        <Label htmlFor="닉네임">닉네임</Label>
+      <Grid padding="20px 0px 0px 20px">
+        <Label htmlFor="닉네임">닉네임*</Label>
         <Input
           ref={nicknameRef}
           type="text"
           placeholder="닉네임을 입력하세요"
         />
       </Grid>
-      <Grid>
+      <Grid padding="20px 0px 0px 20px">
         <Label htmlFor="이메일">이메일 주소 (아이디)*</Label>
         <Input ref={emailRef} type="text" placeholder="이메일을 입력하세요" />
       </Grid>
 
-      <Box>
-        <Label htmlFor="비밀번호">
-          비밀번호
-          <LabelDesc>
-            닉네임과 연관되지 않게 최소 4자 이상으로 입력해주세요
-          </LabelDesc>
-        </Label>
+      <Grid padding="20px 0px 0px 20px">
+        <Label htmlFor="비밀번호">비밀번호*</Label>
         <Input
           ref={pwRef}
           type="password"
           placeholder="비밀번호를 입력하세요"
         />
-      </Box>
-      <Box>
-        <Label htmlFor="비밀번호 확인">비밀번호 확인</Label>
+      </Grid>
+      <Grid padding="20px 0px 0px 20px">
+        <Label htmlFor="비밀번호 확인">비밀번호 확인*</Label>
         <Input
           ref={pwCheckRef}
           type="password"
           placeholder="비밀번호를 다시 입력하세요"
         />
-      </Box>
-      <Info>* 이메일, 닉네임은 필수기입사항입니다.</Info>
-      <Button name={'회원가입하기'} />
+      </Grid>
+      <Agreement />
+      <Button
+        name={'회원가입하기'}
+        width="320px"
+        heignt="42px"
+        margin="20px 0px 0px 20px"
+        is_green
+      />
     </Form>
   );
 };
@@ -102,28 +105,9 @@ const Form = styled.form`
   flex-direction: column;
 `;
 
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0.5em 0;
-`;
-
 const Label = styled.label`
   font-size: 14px;
   font-weight: bold;
-  margin-bottom: 0.2em;
-`;
-
-const LabelDesc = styled.span`
-  margin-left: 1em;
-  font-size: 0.5rem;
-  font-weight: 300;
-  color: blue;
-`;
-
-const Info = styled.p`
-  font-size: 0.5rem;
-  color: blue;
 `;
 
 export default RegisterForm;
