@@ -25,7 +25,8 @@ const Login = ({ isLogin }) => {
         </Grid>
 
         <LoginForm />
-        <Grid is_Grid padding="0px 0px 30px 0px">
+        <Grid is_flex is_padding="0px 0px 30px 0px">
+          {/* //text로하고 onclick넣기 */}
           <Button name={'아이디 찾기'} _onClick width="91px" height="17px" />
           <Line04 src={Line4} />
           <Button name={'비밀번호 찾기'} _onClick width="91px" height="17px" />
@@ -44,7 +45,7 @@ const Login = ({ isLogin }) => {
               navigate('/Register', { replace: true });
             }}
             value
-            color={theme.color.orange}
+            is_green
           />
         </Grid>
       </React.Fragment>

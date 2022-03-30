@@ -19,9 +19,18 @@ const Button = props => {
     _type,
     abled,
     value,
-    color,
-    background_color,
+    is_green,
   } = props;
+
+  const styles = {
+    margin: margin,
+    width: width,
+    height: height,
+    padding: padding,
+    is_edit: is_edit,
+    abled: abled,
+    is_green: is_green,
+  };
 
   if (is_float) {
     return (
@@ -39,16 +48,21 @@ const Button = props => {
       </React.Fragment>
     );
   }
-  const styles = {
-    margin: margin,
-    width: width,
-    height: height,
-    padding: padding,
-    is_edit: is_edit,
-    abled: abled,
-    color: color,
-    background_color: background_color,
-  };
+
+  if (is_green) {
+    return (
+      <React.Fragment>
+        <GreenButton
+          disabled={is_disabled}
+          value={value}
+          {...styles}
+          onClick={_onClick}
+        >
+          {name ? name : children}
+        </GreenButton>
+      </React.Fragment>
+    );
+  }
 
   return (
     <React.Fragment>
@@ -77,8 +91,7 @@ Button.defaultProps = {
   is_edit: false,
   abled: false,
   register: false,
-  color: null,
-  background: null,
+  is_green: false,
 };
 // background-color : ${theme.color.gray3}
 // props =>
@@ -112,6 +125,17 @@ const ElButton = styled.button`
             color: ${theme.color.white};`
             : `background-color:${theme.color.gray5};
             color: ${theme.color.gray1};`}
+  ${props => (props.margin ? `margin: ${props.margin};` : '')}
+`;
+
+const GreenButton = styled.button`
+  width: ${props => props.width};
+  padding: ${props => props.padding};
+  box-sizing: border-box;
+  border: none;
+  border-radius: 10px;
+  background-color: ${theme.color.green};
+  color: #ffffff;
   ${props => (props.margin ? `margin: ${props.margin};` : '')}
 `;
 
