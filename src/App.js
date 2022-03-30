@@ -54,8 +54,9 @@ function App() {
     dispatch(getUserbyToken(navigate));
   }
 
+
   const userNick = useSelector(state => state.user.user_info).nickname;
-  // const [guestNick, setGuestNick] = useState();
+
   // console.log(userNick, guestNick, '::::app.js');
   // setGuestNick(userNick);
 
@@ -111,7 +112,7 @@ function App() {
                     path="/planmap/:url"
                     element={
                       <PlanMap
-                        userNick={userNick}
+                        // userNick={userNick}
                         guestNick={guestNick}
                         setGuestNick={setGuestNick}
                         isChating={isChating}

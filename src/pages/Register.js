@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import RegisterForm from '../components/RegisterForm';
+import Headerbar from '../shared/Headerbar';
 
 const Register = ({ isLogin }) => {
   const navigate = useNavigate();
@@ -14,10 +15,15 @@ const Register = ({ isLogin }) => {
   });
 
   return (
-    <>
-      <Title>회원가입</Title>
+    <React.Fragment>
+      <Headerbar
+        text="회원가입"
+        _onClickClose={() => {
+          navigate();
+        }}
+      />
       <RegisterForm />
-    </>
+    </React.Fragment>
   );
 };
 

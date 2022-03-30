@@ -5,56 +5,42 @@ import { URL } from '../../shared/apis/API';
 // import { useNavigate } from 'react-router-dom';
 // import { useHistory } from 'react-router';
 
-const Userapi = new UserApi();
-export const setFCMTokenAxios = createAsyncThunk(
-  'plan/setFCMTokenAxios',
-  async ({ registerData, navigate }) => {
-    console.log(registerData);
-    await Userapi.setFCMToken({ registerData, navigate });
+export const register = createAsyncThunk(
+  'user/register',
+  async (data, { rejectWithValue }) => {
+    try {
+      return await URL.post(`/users/signup`, data).then(response => response);
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response);
+    }
   },
 );
 
-export const sighupAxios = createAsyncThunk(
-  'user/sighupAxios',
-  async ({ registerData, navigate }) => {
-    await Userapi.signUp({ registerData, navigate });
+export const login = createAsyncThunk(
+  'user/login',
+  async (data, { rejectWithValue }) => {
+    try {
+      return await URL.post(`/users/login`, data).then(response => {
+        console.log(response);
+        if (response.status === 201) {
+          sessionStorage.setItem('token', response.data.token);
+          sessionStorage.setItem('nickname', response.data.data.nickname);
+          window.location.replace('/');
+        }
+        sessionStorage.setItem('nickname', response.data.nickname);
+      });
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response);
+    }
   },
 );
 
-export const signinAxios = createAsyncThunk(
-  'user/sighinAxios',
-  async ({ loginData, navigate }, { dispatch }) => {
-    const userData = await Userapi.signIn({ loginData, navigate });
-    console.log(loginData);
-    console.log(userData.data.data);
-    const data = {
-      email: loginData.email,
-      nickname: userData.data.data.nickname,
-    };
-    console.log(data);
-    dispatch(setUserToSession(data));
-    // navigate('/', { replace: true });
-
-    return data;
-  },
-);
-
-export const getUserbyToken = createAsyncThunk(
-  'user/getUserbyToken',
-  async ({ navigate }, { dispatch }) => {
-    const Data = await Userapi.getUserbyToken({ navigate });
-    return Data.data.data;
-  },
-);
-
-export const logoutAxios = createAsyncThunk(
-  'user/logoutAxios',
-  async ({ navigate }, { dispatch }) => {
-    dispatch(deleteUserFromSession());
-    navigate('/', { replace: true });
-    return true;
-  },
-);
+export const logout = createAsyncThunk('user/logout', async () => {
+  sessionStorage.removeItem('token');
+  sessionStorage.removeItem('nickname');
+});
 
 export const KakaoLogin = code => {
   // const navigate = useNavigate();
@@ -80,64 +66,119 @@ export const KakaoLogin = code => {
   };
 };
 
+// export const sighupAxios = createAsyncThunk(
+//   'user/sighupAxios',
+//   async ({ registerData, navigate }) => {
+//     await Userapi.signUp({ registerData, navigate });
+//   },
+// );
+
+// export const signinAxios = createAsyncThunk(
+//   'user/sighinAxios',
+//   async ({ loginData, navigate }, { dispatch }) => {
+//     const userData = await Userapi.signIn({ loginData, navigate });
+//     console.log(loginData);
+//     console.log(userData.data.data);
+//     const data = {
+//       email: loginData.email,
+//       nickname: userData.data.data.nickname,
+//     };
+//     console.log(data);
+//     dispatch(setUserToSession(data));
+//     // navigate('/', { replace: true });
+
+//     return data;
+//   },
+// );
+
+// export const logoutAxios = createAsyncThunk(
+//   'user/logoutAxios',
+//   async ({ navigate }, { dispatch }) => {
+//     dispatch(deleteUserFromSession());
+//     navigate('/', { replace: true });
+//     return true;
+//   },
+// );
+
+const Userapi = new UserApi();
+export const setFCMTokenAxios = createAsyncThunk(
+  'plan/setFCMTokenAxios',
+  async ({ registerData, navigate }) => {
+    console.log(registerData);
+    await Userapi.setFCMToken({ registerData, navigate });
+  },
+);
+
+export const getUserbyToken = createAsyncThunk(
+  'user/getUserbyToken',
+  async ({ navigate }, { dispatch }) => {
+    const Data = await Userapi.getUserbyToken({ navigate });
+    return Data.data.data;
+  },
+);
+
 const actionCreators = { KakaoLogin };
 export { actionCreators };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    user_info: {
-      nickname: null,
-      email: null,
-    },
+    user_info: {},
     is_login: false,
+    loginError: '',
+    registerError: '',
   },
-
-  reducers: {
-    setUserToSession: (state, action) => {
-      state.user_info = action.payload;
-    },
-    setUserName: (state, action) => {
+  reducer: {
+      setUserName: (state, action) => {
       state.user_info.nickname = action.payload;
     },
-    getUser: (state, action) => {
-      state.is_login = true;
-    },
-    deleteUserFromSession: (state, action) => {
-      sessionStorage.removeItem('token');
-      sessionStorage.removeItem('username');
-      sessionStorage.removeItem('userId');
-    },
   },
-  extraReducers: {
-    [sighupAxios.fulfilled]: (state, action) => {
-      // state = state;
-    },
-    [signinAxios.fulfilled]: (state, action) => {
-      state.is_login = true;
-    },
-    [logoutAxios.fulfilled]: (state, action) => {
-      if (action.payload) {
-        state.is_login = false;
-      }
-      alert('로그아웃 완료');
-    },
-    [getUserbyToken.fulfilled]: (state, action) => {
-      state.is_login = true;
+  extraReducers: builder => {
+    builder
+      //회원가입
+      .addCase(register.pending, state => {
+        state.registerDone = false;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.registerDone = true;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.registerDone = false;
+        state.registerError = action.payload;
+      })
+      //로그인
+      .addCase(login.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.user_info = action.payload;
+        state.isLoading = false;
+        state.isLoggedin = true;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = true;
+        state.loginError = action.payload;
+      })
+      // 로그아웃
+      .addCase(logout.fulfilled, state => {
+        state.isLoggedin = false;
+      })
+      .addCase(getUserbyToken.fulfilled,(state, action) => {
+            state.is_login = true;
       state.user_info = action.payload;
-    },
-    [setFCMTokenAxios.fulfilled]: (state, action) => {
-      // state = state;
-    },
+      });
+     
   },
 });
 
-export const {
-  setUserToSession,
-  setMyFCMToken,
-  setUserName,
-  getUser,
-  deleteUserFromSession,
+ export const {
+
+   setUserToSession,
+   setMyFCMToken,
+   setUserName,
+   getUser,
+   deleteUserFromSession,
 } = userSlice.actions;
 
 export default userSlice.reducer;

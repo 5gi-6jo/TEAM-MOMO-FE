@@ -5,8 +5,7 @@ import { Grid, Text } from '../elements';
 import theme from '../Styles/theme';
 import { KAKAO_AUTH_URL } from '../service/OAuth';
 import { useNavigate } from 'react-router-dom';
-import logo_01 from '../img/icon/logo_01.webp';
-import logo_02 from '../img/icon/logo_02.webp';
+import { home_01, home_02, home_03 } from '../img';
 import GlobalStyle from '../Styles/GlobalStyle';
 
 /**
@@ -21,40 +20,57 @@ const Home = () => {
   return (
     <React.Fragment>
       <GlobalStyle />
-      <Grid padding="108px 0px 50px 22px">
+      <Grid padding="108px 0px 50px 20px">
         <Text color={theme.color.black} size="24px">
-          <Logo01 src={logo_01} alt="logo_01" />에
+          <Home01 src={home_01} /> 에
           <br />
           <br />
           오신 것을 환영합니다.
           <br />
         </Text>
       </Grid>
-      <Grid padding="80px 10px 50px 20px">
-        <Text color={theme.color.black} size="14px">
-          <Logo02 src={logo_02} />
-          에서
+      <Grid padding="80px 0px 0px 20px">
+        <Text color={theme.color.gray4} size="14px">
+          <Home02 src={home_02} /> 에서
           <br />
           여러분의 모임을 정리하고
           <br />
           추억하세요.
         </Text>
       </Grid>
-      <button onClick={() => window.location.href(KAKAO_AUTH_URL)}>
-        {' '}
-        카카오테스트
-      </button>
-      <a href={KAKAO_AUTH_URL}>카카오톡으로 시작하기</a>
+
+      <Grid padding="">
+        <a href={KAKAO_AUTH_URL}>
+          <Button
+            position="relative"
+            name={'카카오톡으로 시작하기'}
+            width="320px"
+            heignt="42px"
+            margin="80px 0px 0px 20px"
+            abled
+          >
+            <Home03 src={home_03} />
+          </Button>
+        </a>
+      </Grid>
+
       <Grid padding="">
         <Button
           name={'이메일 로그인·회원가입하기'}
           _onClick={() => {
             navigate('/Login', { replace: true });
           }}
+          width="320px"
+          heignt="42px"
+          margin="20px 0px 0px 20px"
+          abled
         />
       </Grid>
-      <br />
-      <div>둘러보기</div>
+      <Grid padding="20px 0px 0px 160px">
+        <Text color={theme.color.gray4} size="12px">
+          둘러보기
+        </Text>
+      </Grid>
     </React.Fragment>
   );
 };
@@ -62,12 +78,10 @@ const Home = () => {
 // 스타일 컴포넌트 작성 위치
 const TextBox = styled.div``;
 
-const Logo01 = styled.img`
-  background-image: url(${logo_01});
-`;
-
-const Logo02 = styled.img`
-  background-image: url(${logo_02});
+const Home01 = styled.img``;
+const Home02 = styled.img``;
+const Home03 = styled.img`
+  z-index: 99;
 `;
 
 // default props 작성 위치
