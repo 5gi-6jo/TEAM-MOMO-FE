@@ -39,7 +39,7 @@ const Footer = props => {
           </Grid>
           <Grid>
             <NavLink
-              to="/Map"
+              to="/plan/32032375-2238-4765-b03d-b006ba31c1c3"
               style={({ isActive }) => ({
                 textDecoration: 'none',
                 color: isActive ? '#F84914' : '#999999',
@@ -73,25 +73,6 @@ const Footer = props => {
               <BsPerson size="20px" />
             </NavLink>
           </Grid>
-
-          <ButtonWrap
-            onClick={() => {
-              navigate('/planmap/32032375-2238-4765-b03d-b006ba31c1c3', {
-                replace: true,
-              });
-            }}
-          >
-            chating(임시)
-          </ButtonWrap>
-          <ButtonWrap
-            onClick={() => {
-              navigate('/plan/32032375-2238-4765-b03d-b006ba31c1c3', {
-                replace: true,
-              });
-            }}
-          >
-            sock(임시)
-          </ButtonWrap>
         </Grid>
       </NavBox>
     </>
@@ -107,23 +88,28 @@ Footer.defaultProps = {};
 // 하단바 스타일링
 const NavBox = styled.div`
   width: 100%;
-  max-width: 422px;
+  /* max-width: 422px; */
   height: 44px;
   z-index: 10;
   background-color: white;
   display: flex;
-  position: absolute;
+  position: fixed;
   border-top: 0.2px solid #f7f7f7;
   justify-content: space-around;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   bottom: 0;
   left: 0;
   right: 0;
   @media ${({ theme }) => theme.device.laptop} {
+    max-width: 35rem;
+    max-width: 768px;
+    min-width: 360px;
+    width: 64%;
     bottom: -5%;
     border: 1px solid #e4e4e4;
     border-radius: 0px 0px 40px 40px;
-    max-width: 422px;
+    /* max-width: 422px; */
+    transform: translate(27%, -253%);
   }
 `;
 
