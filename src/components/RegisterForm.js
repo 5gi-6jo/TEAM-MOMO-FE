@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Button from '../elements/Button';
 import { register } from '../redux/modules/user';
 import { checkEmail, checkNickname, checkPW } from '../shared/functions';
+import { Grid, Input } from '../elements';
 
 const RegisterForm = props => {
   const navigate = useNavigate();
@@ -56,23 +57,19 @@ const RegisterForm = props => {
 
   return (
     <Form onSubmit={onRegist}>
-      <Box>
-        <Label htmlFor="이메일">이메일</Label>
-        <Input ref={emailRef} type="text" placeholder="이메일을 입력하세요" />
-      </Box>
-      <Box>
-        <Label htmlFor="닉네임">
-          닉네임
-          <LabelDesc>
-            알파벳 대소문자, 숫자로 이루어진 최소 3자 이상으로 입력해주세요
-          </LabelDesc>
-        </Label>
+      <Grid>
+        <Label htmlFor="닉네임">닉네임</Label>
         <Input
           ref={nicknameRef}
           type="text"
           placeholder="닉네임을 입력하세요"
         />
-      </Box>
+      </Grid>
+      <Grid>
+        <Label htmlFor="이메일">이메일 주소 (아이디)*</Label>
+        <Input ref={emailRef} type="text" placeholder="이메일을 입력하세요" />
+      </Grid>
+
       <Box>
         <Label htmlFor="비밀번호">
           비밀번호
@@ -112,7 +109,7 @@ const Box = styled.div`
 `;
 
 const Label = styled.label`
-  font-size: 0.7rem;
+  font-size: 14px;
   font-weight: bold;
   margin-bottom: 0.2em;
 `;
@@ -122,11 +119,6 @@ const LabelDesc = styled.span`
   font-size: 0.5rem;
   font-weight: 300;
   color: blue;
-`;
-
-const Input = styled.input`
-  font-size: 1rem;
-  padding: 0.3em 0.1em;
 `;
 
 const Info = styled.p`
