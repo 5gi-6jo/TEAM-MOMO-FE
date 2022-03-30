@@ -17,7 +17,7 @@ const Input = props => {
     is_float,
     _type,
     _accept,
-    ref,
+    _ref,
     _onChlick,
     value,
     width,
@@ -53,7 +53,7 @@ const Input = props => {
         </Text>
         <ElInput
           type={type}
-          ref={ref}
+          ref={_ref}
           placeholder={placeholder}
           onChange={_onChange}
           onClick={_onChlick}
@@ -68,7 +68,7 @@ const Input = props => {
       <Grid>
         <ElInput
           type={type}
-          ref={ref}
+          ref={_ref}
           placeholder={placeholder}
           onChange={_onChange}
           width={width}

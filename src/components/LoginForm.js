@@ -15,11 +15,12 @@ const LoginForm = props => {
   const emailRef = useRef();
   const pwRef = useRef();
 
+  console.log(emailRef, pwRef);
   const onLogin = e => {
     e.preventDefault();
 
-    const email = emailRef.current.value;
-    const pw = pwRef.current.value;
+    let email = emailRef.current.value;
+    let pw = pwRef.current.value;
 
     if (!checkEmail(email).res) {
       emailRef.current.focus();
@@ -35,7 +36,7 @@ const LoginForm = props => {
       password: pw,
     };
 
-    dispatch(login({ loginData, navigate }));
+    dispatch(login(loginData)).then(res => navigate('/main'));
     const data = {
       token: sessionStorage.getItem('FCMtoken'),
     };
@@ -48,18 +49,19 @@ const LoginForm = props => {
         <Input
           labelBold
           labelColor={theme.color.gray1}
-          ref={emailRef}
+          _ref={emailRef}
           type="text"
           labelText="이메일"
           placeholder="이메일 주소 (아이디)"
           width="10px"
         />
+        {/* <input ref={emailRef}></input> */}
       </Grid>
       <Grid padding="0px 20px 0px 20px">
         <Input
           labelBold
           labelColor={theme.color.gray1}
-          ref={pwRef}
+          _ref={pwRef}
           type="password"
           labelText="비밀번호"
           placeholder="비밀번호"
