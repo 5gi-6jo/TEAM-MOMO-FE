@@ -8,7 +8,6 @@ import { login } from '../redux/modules/user';
 import { checkEmail } from '../shared/functions';
 import { Grid, Input } from '../elements';
 import theme from '../Styles/theme';
-import { Rect10 } from '../img';
 
 const LoginForm = props => {
   const navigate = useNavigate();

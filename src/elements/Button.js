@@ -134,8 +134,13 @@ const GreenButton = styled.button`
   box-sizing: border-box;
   border: none;
   border-radius: 10px;
-  background-color: ${theme.color.green};
-  color: #ffffff;
+  ${props =>
+    props.is_green
+      ? `background-color:${theme.color.green};
+            color: ${theme.color.white};`
+      : `background-color:${theme.color.gray5};
+            color: ${theme.color.gray1};
+            `}
   ${props => (props.margin ? `margin: ${props.margin};` : '')}
 `;
 

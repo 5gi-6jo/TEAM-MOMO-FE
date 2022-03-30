@@ -1,11 +1,19 @@
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Grid, Text } from '../elements';
 import { Rect10 } from '../img';
 import theme from '../Styles/theme';
 
-const Agreement = () => {
+const Agreement = forwardRef((props, ref) => {
+  useImperativeHandle(ref, () => ({
+    sendAllChecked() {
+      isAllChecked();
+    },
+  }));
   const [checkBox, setCheckBox] = useState([]);
+  const isAllChecked = checkBox.length === 3;
+  console.log(isAllChecked);
 
   const changeHandler = (checked, id) => {
     if (checked) {
@@ -17,16 +25,13 @@ const Agreement = () => {
     }
   };
 
-  const isAllChecked = checkBox.length === 3;
-  const disabled = !isAllChecked;
-
   return (
     <>
       <MainWrap>
         <Grid padding="20px 0px 0px 20px">
           <Rect src={Rect10} />
           <CheckWrap>
-            <Grid padding="20px 0px 0px 40px">
+            <Grid is_flex padding="20px 0px 0px 40px">
               <input
                 type="checkbox"
                 id="check1"
@@ -40,7 +45,7 @@ const Agreement = () => {
                 회원가입 및 운영약관 동의 (필수)
               </Text>
             </Grid>
-            <Grid padding="20px 0px 0px 40px">
+            <Grid is_flex padding="20px 0px 0px 40px">
               <input
                 type="checkbox"
                 id="check2"
@@ -54,7 +59,7 @@ const Agreement = () => {
                 개인정보 수집 및 이용 동의 (필수)
               </Text>
             </Grid>
-            <Grid padding="20px 0px 0px 40px">
+            <Grid is_flex padding="20px 0px 0px 40px">
               <input
                 type="checkbox"
                 id="check3"
@@ -73,14 +78,14 @@ const Agreement = () => {
       </MainWrap>
     </>
   );
-};
+});
 
 const MainWrap = styled.div`
   position: relative;
 `;
 const CheckWrap = styled.div`
   position: absolute;
-  top: 10%;
+  top: 15%;
   left: 0%;
 `;
 

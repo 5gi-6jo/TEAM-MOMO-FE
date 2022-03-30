@@ -24,14 +24,26 @@ const Login = ({ isLogin }) => {
           <Home01 src={home_01} />
         </Grid>
         <LoginForm />
-        <Grid is_flex padding="20px 0px 20px 0px">
-          <Text color={theme.color.gray4} size="12px">
-            아이디 찾기
-          </Text>
+        <Grid center padding="20px 0px 20px 0px">
+          <div
+            onClick={() => {
+              navigate('/', { replace: true });
+            }}
+          >
+            <Text color={theme.color.gray4} size="12px">
+              아이디 찾기
+            </Text>
+          </div>
           <Line04 src={Line4} />
-          <Text color={theme.color.gray4} size="12px">
-            비밀번호 찾기
-          </Text>
+          <div
+            onClick={() => {
+              navigate('/', { replace: true });
+            }}
+          >
+            <Text color={theme.color.gray4} size="12px">
+              비밀번호 찾기
+            </Text>
+          </div>
         </Grid>
         <Line05 src={Line5} />
         <Grid padding="20px 100px 0px 100px">

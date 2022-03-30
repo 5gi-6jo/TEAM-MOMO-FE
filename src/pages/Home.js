@@ -67,9 +67,15 @@ const Home = () => {
         />
       </Grid>
       <Grid padding="20px 0px 0px 160px">
-        <Text color={theme.color.gray4} size="12px">
-          둘러보기
-        </Text>
+        <RefWrap
+          onClick={() => {
+            navigate('/main', { replace: true });
+          }}
+        >
+          <Text color={theme.color.gray4} size="12px">
+            둘러보기
+          </Text>
+        </RefWrap>
       </Grid>
     </React.Fragment>
   );
@@ -82,6 +88,9 @@ const Home01 = styled.img``;
 const Home02 = styled.img``;
 const Home03 = styled.img`
   z-index: 99;
+`;
+const RefWrap = styled.div`
+  cursor: pointer;
 `;
 
 // default props 작성 위치
