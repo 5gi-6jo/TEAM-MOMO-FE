@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../elements/Button';
 import { setFCMTokenplan } from '../redux/modules/plan';
-import { signinAxios } from '../redux/modules/user';
+import { login } from '../redux/modules/user';
 import { checkEmail } from '../shared/functions';
+import { Grid, Input } from '../elements';
+import theme from '../Styles/theme';
 
 const LoginForm = props => {
   const navigate = useNavigate();
@@ -21,13 +23,11 @@ const LoginForm = props => {
 
     if (!checkEmail(email).res) {
       emailRef.current.focus();
-      alert(checkEmail(email).msg);
       return;
     }
 
     if (pw === '') {
       pwRef.current.focus();
-      alert('비밀번호를 입력해주세요');
     }
 
     const loginData = {
@@ -35,7 +35,7 @@ const LoginForm = props => {
       password: pw,
     };
 
-    dispatch(signinAxios({ loginData, navigate }));
+    dispatch(login({ loginData, navigate }));
     const data = {
       token: sessionStorage.getItem('FCMtoken'),
     };
@@ -44,27 +44,34 @@ const LoginForm = props => {
 
   return (
     <Form onSubmit={onLogin}>
-      {/* <Grid padding="10px">
+      <Grid padding="100px 20px 0px 20px">
         <Input
           labelBold
           labelColor={theme.color.gray1}
+          ref={emailRef}
+          type="text"
           labelText="이메일"
           placeholder="이메일 주소 (아이디)"
-        ></Input>
-      </Grid> */}
-      <Box>
-        <Label htmlFor="이메일">이메일</Label>
-        <Input ref={emailRef} type="text" placeholder="이메일을 입력하세요" />
-      </Box>
-      <Box>
-        <Label htmlFor="비밀번호">비밀번호</Label>
+          width="10px"
+        />
+      </Grid>
+      <Grid padding="0px 20px 0px 20px">
         <Input
+          labelBold
+          labelColor={theme.color.gray1}
           ref={pwRef}
           type="password"
-          placeholder="비밀번호를 입력하세요"
+          labelText="비밀번호"
+          placeholder="비밀번호"
         />
-      </Box>
-      <Button name={'로그인하기'} />
+      </Grid>
+      <Button
+        name={'로그인하기'}
+        width="320px"
+        heignt="42px"
+        margin="20px 0px 0px 20px"
+        abled
+      />
     </Form>
   );
 };
@@ -72,23 +79,6 @@ const LoginForm = props => {
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-`;
-
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0.5em 0;
-`;
-
-const Label = styled.label`
-  font-size: 0.7rem;
-  font-weight: bold;
-  margin-bottom: 0.2em;
-`;
-
-const Input = styled.input`
-  font-size: 1rem;
-  padding: 0.3em 0.1em;
 `;
 
 export default LoginForm;

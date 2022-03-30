@@ -2,87 +2,73 @@ import axios from 'axios';
 
 class UserApi {
   constructor() {
-    // this.base = process.env.REACT_APP_BE_IP_LYW;
-    this.base = 'https://www.seoultaste.click';
+    // this.base = 'https://www.seoultaste.click';
+    this.base = process.env.REACT_APP_BE_IP_LYW;
   }
 
   getToken = () => sessionStorage.getItem('token');
 
-  async signUp({ registerData, navigate }) {
-    const sighupConfig = {
+  async register(data) {
+    const registerConfig = {
       method: 'post',
       url: `${this.base}/users/signup`,
       headers: {
         'Content-Type': 'application/json',
       },
-      data: JSON.stringify(registerData),
+      data: JSON.stringify(data),
     };
 
-    return axios(sighupConfig)
+    return axios(registerConfig)
       .then(res => {
         console.log(res);
-        alert(res.data.msg);
-        navigate('/login', { replace: true });
         return res.data;
       })
       .catch(err => {
         console.log(err.response);
-        alert(err.response.data.msg);
       });
   }
 
-  async signIn({ loginData, navigate }) {
-    const signinConfig = {
+  async login(data) {
+    const loginConfig = {
       method: 'post',
       url: `${this.base}/users/login`,
       headers: {
         'Content-Type': 'application/json',
       },
-      data: JSON.stringify(loginData),
+      data: JSON.stringify(data),
     };
 
-    return axios(signinConfig)
+    return axios(loginConfig)
       .then(res => {
         console.log(res);
-
-        // alert(res.data.msg);
-        navigate('/main', { replace: true });
         console.log(res.headers.authorization);
-        // axios.defaults.headers.common['Authorization'] =
-        //   res.headers.authorization;
         sessionStorage.setItem('token', res.headers.authorization);
         return res;
       })
       .catch(err => {
-        // alert(err.response.data.msg);
         console.log(err.response);
       });
   }
 
-  async signOut({ navigate }) {
-    const signoutConfig = {
+  async logout() {
+    const logoutConfig = {
       method: 'post',
-      url: `${this.base}/api/logout`,
-      headers: {
-        'X-AUTH-TOKEN': this.getToken(),
-      },
+      url: `${this.base}/users/logout`,
+      headers: {},
     };
 
-    return axios(signoutConfig)
+    return axios(logoutConfig)
       .then(res => {
         console.log(res);
-        alert('로그아웃에 성공하셨습니다');
-        navigate('/', { replace: true });
         return true;
       })
       .catch(err => {
         console.log(err.response);
-        alert(err.response.data.msg);
         return false;
       });
   }
 
-  async getUserbyToken({ navigate }) {
+  async getUserbyToken() {
     const getUserbyTokenConfig = {
       method: 'get',
       url: `${this.base}/users/login`,
@@ -100,7 +86,7 @@ class UserApi {
         return false;
       });
   }
-  async setFCMToken({ FCMToken, navigate }) {
+  async setFCMToken({ FCMToken }) {
     const data = {
       token: sessionStorage.getItem('FCMtoken'),
     };
