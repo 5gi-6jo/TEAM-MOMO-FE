@@ -11,16 +11,13 @@ import theme from '../Styles/theme';
 import Headerbar from '../shared/Headerbar';
 import { Button } from '../elements';
 
-import { Navigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import PlanChating from './PlanChating';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserName } from '../redux/modules/user.js';
 //카카오 맵
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { Ellipse32, trash_3 } from '../img';
-
-import { getPlanId, setPublicMaps } from '../redux/modules/map';
 
 /**
  * @param {*} props
@@ -36,8 +33,22 @@ const PlanMap = forwardRef((props, ref) => {
       sendMyLocation();
       console.log('location', myLocation);
     },
+    setDestpoint(payload) {
+      console.log('payload', payload.lat, payload.lng);
+      // setPoints(prev => ({
+      //   ...prev,
+      //   lat: parseFloat(payload.lat),
+      //   lng: parseFloat(payload.lng),
+      // }));
+      const data = points.concat({
+        lat: parseFloat(payload.lat),
+        lng: parseFloat(payload.lng),
+      });
+      setPoints(data);
+    },
   }));
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const planId = props.planId;
   const stompClient = props.client;
   const useInterval = (callback, delay) => {
@@ -80,16 +91,16 @@ const PlanMap = forwardRef((props, ref) => {
   const [map, setMap] = useState();
   const [myLocation, setSetMyLocation] = useState({
     center: {
-      lat: 33.450701,
-      lng: 126.570667,
+      lat: 37.5172,
+      lng: 127.0473,
     },
     errMsg: null,
     isLoading: true,
   });
-  const [points, setPoints] = useState([
-    { lat: myLocation.lat, lng: myLocation.lng },
-  ]);
-  // console.log(points);
+  const [points, setPoints] = useState();
+
+  console.log('points', points);
+  console.log('publicMaps', publicMaps);
   //위치보내기
   const sendMyLocation = () => {
     console.log('위치보내기!');
@@ -112,10 +123,11 @@ const PlanMap = forwardRef((props, ref) => {
   // }, 10000);
   const bounds = useMemo(() => {
     const bounds = new window.kakao.maps.LatLngBounds();
-
-    points.forEach(point => {
-      bounds.extend(new window.kakao.maps.LatLng(point.lat, point.lng));
-    });
+    if (points) {
+      points.forEach(point => {
+        bounds.extend(new window.kakao.maps.LatLng(point.lat, point.lng));
+      });
+    }
     return bounds;
   }, [points]);
   useEffect(() => {
@@ -149,7 +161,7 @@ const PlanMap = forwardRef((props, ref) => {
         isLoading: false,
       }));
     }
-
+    setPoints([myLocation.center]);
     return () => {};
   }, []);
 
@@ -159,27 +171,26 @@ const PlanMap = forwardRef((props, ref) => {
         is_Edit
         text="모임이름{} 채팅방"
         _onClickClose={() => {
-          Navigate('/main');
+          navigate('/main');
         }}
         _onClickEdit={() => {}}
       ></Headerbar>
 
-      {/* <Button
+      <Button
         _onClick={() => {
-          if (isChating) dispatch(setIsChating(false));
-          else dispatch(setIsChating(true));
+          if (map) map.setBounds(bounds);
+          console.log('PointerButton');
         }}
       >
         Chating
       </Button>
-      <Button _onClick={sendMyLocation}>내 위치 보내기</Button> */}
 
       <Map // 지도를 표시할 Container
         center={myLocation.center}
         style={{
           // 지도의 크기
           width: '100%',
-          height: '100%',
+          height: 'calc(100% - 46px)',
         }}
         level={3} // 지도의 확대 레벨
         onCreate={setMap}

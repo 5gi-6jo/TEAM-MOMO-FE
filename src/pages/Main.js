@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Calendar from '../components/Calendar';
-import { getPlans } from '../redux/modules/plan';
+import { getPlans, setFCMTokenplan } from '../redux/modules/plan';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Input, Text } from '../elements';
 import moment from 'moment';
@@ -12,8 +12,6 @@ import moment from 'moment';
 import { IoIosAddCircle } from 'react-icons/io';
 import theme from '../Styles/theme';
 import ModalInput from '../components/Modal/ModalInput';
-import Header from '../shared/Header';
-import { main, face, sparkle } from '../img';
 
 /**
  * @param {*} props
@@ -27,8 +25,6 @@ const Main = props => {
   const navigate = useNavigate();
   const Plans = useSelector(state => state.plan.plans);
   const time = useSelector(state => state.main.calendarDay);
-  const user = useSelector(state => state.user.user_info);
-  console.log(user);
   console.log(time);
   const [checktime, setChecktime] = useState();
   useEffect(() => {
@@ -57,27 +53,62 @@ const Main = props => {
     document.execCommand('copy');
   };
 
+  //modal
+  // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const modalEl = useRef();
+
+  const handleModalEl = ({ target }) => {
+    if (modalOpen && !modalEl.current.contains(target)) setModalOpen(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleModalEl);
+    return () => {
+      window.removeEventListener('click', handleModalEl);
+    };
+  }, []);
+
   return (
     <React.Fragment>
-      <Header />
-      <Grid is_flex padding="20px 0px 0px 20px">
-        <Main04>
-          <Text color="black" size="20px">
-            {user.nickname}님
+      <button onClick={openModal}>모달팝업버튼</button>
+      <button
+        onClick={() => {
+          const data = {
+            token: sessionStorage.getItem('FCMtoken'),
+          };
+          dispatch(setFCMTokenplan(data));
+        }}
+      >
+        asdf
+      </button>
+      <ModalInput
+        open={modalOpen}
+        close={closeModal}
+        title="팝업창제목"
+        contents="팝업창내용"
+        ref={modalEl}
+        // _onChange={실행시킬함수}
+      ></ModalInput>
+      <Grid padding="20px">
+        <TextBox>
+          <Text color={theme.color.black} size="20px">
+            <br />
+            약속 늦지않게
+            <br />
+            조심하세요!
           </Text>
-        </Main04>
+        </TextBox>
       </Grid>
-      <Grid padding="0px 0px 0px 20px">
-        <Text color={theme.color.black} size="20px">
-          약속 늦지않게
-          <br />
-          조심하세요!
-          <Main02 src={face} />
-          <Main03 src={sparkle} />
-        </Text>
-      </Grid>
-
-      <Grid padding="0px 20px 0px 20px">
+      <Grid padding="20px">
         <Calendar />
         {Plans &&
           Plans.map(plan => (
@@ -125,14 +156,7 @@ const WriteButton = styled.div`
   // color: theme.color.orange
 `;
 
-const Main01 = styled.img``;
-const Main02 = styled.img``;
-const Main03 = styled.img``;
-const Main04 = styled.div`
-  background-color: ${theme.color.green};
-  width: auto;
-  display: flex;
-`;
+const TextBox = styled.div``;
 
 // default props 작성 위치
 Main.defaultProps = {};
