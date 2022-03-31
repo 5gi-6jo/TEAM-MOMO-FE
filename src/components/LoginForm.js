@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../elements/Button';
 import { setFCMTokenplan } from '../redux/modules/plan';
-import { login } from '../redux/modules/user';
+import { login, setFCMToken } from '../redux/modules/user';
 import { checkEmail } from '../shared/functions';
 import { Grid, Input } from '../elements';
 import theme from '../Styles/theme';
@@ -40,7 +40,8 @@ const LoginForm = props => {
     const data = {
       token: sessionStorage.getItem('FCMtoken'),
     };
-    dispatch(setFCMTokenplan(data));
+
+    dispatch(setFCMToken(data));
   };
 
   return (

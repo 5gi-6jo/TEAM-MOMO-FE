@@ -66,7 +66,7 @@ const PlansDetailImage = () => {
             size="46px"
             color={theme.color.white}
             onClick={() => {
-              navigate(`/plansdetail/${props.planId}/images`, {
+              navigate(`/plansdetail/images/${props.planId}`, {
                 state: {
                   Plan: props.Plan,
                   planId: props.planId,
@@ -87,7 +87,7 @@ const PlansDetailImage = () => {
             size="46px"
             color={theme.color.white}
             onClick={() => {
-              navigate(`/plansdetail/${props.planId}/images`, {
+              navigate(`/plansdetail/images/${props.planId}`, {
                 state: {
                   Plan: props.Plan,
                   planId: props.planId,
@@ -138,7 +138,7 @@ const PlansDetailImage = () => {
 const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 const ImageDiv = styled.div`
   width: 100%;
-  height: 80vh;
+  height: calc(100% - 90px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,14 +150,13 @@ const Icon = styled.div`
   min-height: 36px;
   background-image: url(${props => props.src});
   background-repeat: no-repeat;
-  margin-right: 12px;
 `;
 const Wrap = styled.div`
   width: 100%;
   height: 46px;
   position: absolute;
-  bottom: 2.6%;
-  left: 0;
+  bottom: 0%;
+  right: 0;
   display: flex;
   justify-content: space-evenly;
   background-color: ${theme.color.realblack};

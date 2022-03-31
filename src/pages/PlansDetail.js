@@ -85,7 +85,7 @@ const PlansDetail = props => {
               src={plan.image}
               onClick={() => {
                 // dispatch(setFooterView(false));
-                navigate(`/plansdetail/${planId}/images`, {
+                navigate(`/plansdetail/images/${planId}`, {
                   state: {
                     Plan: Plan,
                     planId: planId,
