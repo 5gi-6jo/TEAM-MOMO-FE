@@ -19,7 +19,7 @@ const Register = ({ isLogin }) => {
       <Headerbar
         text="회원가입"
         _onClickClose={() => {
-          navigate();
+          navigate('/Login', { replace: true });
         }}
       />
       <RegisterForm />
