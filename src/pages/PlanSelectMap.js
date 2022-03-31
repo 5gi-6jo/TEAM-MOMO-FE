@@ -58,14 +58,8 @@ const PlanSelectMap = props => {
     });
   }, [map, keyword]);
   const inputdatabutton = event => {
-    console.log(inputref.current.value);
     setKeyword(inputref.current.value);
   };
-
-  console.log(datas);
-  console.log(info);
-  // console.log(markers);
-  console.log(selectlist);
 
   return (
     <>

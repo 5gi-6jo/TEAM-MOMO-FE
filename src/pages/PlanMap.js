@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, {
   forwardRef,
   useEffect,
@@ -18,6 +19,7 @@ import { setUserName } from '../redux/modules/user.js';
 //카카오 맵
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { Ellipse32, trash_3 } from '../img';
+import PlanMapInfo from './PlanMapInfo';
 
 /**
  * @param {*} props
@@ -29,9 +31,7 @@ import { Ellipse32, trash_3 } from '../img';
 const PlanMap = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     sendMyLocationfun() {
-      console.log('testchild');
       sendMyLocation();
-      console.log('location', myLocation);
     },
     setDestpoint(payload) {
       console.log('payload', payload.lat, payload.lng);
@@ -75,8 +75,11 @@ const PlanMap = forwardRef((props, ref) => {
   let sock = useRef({});
   const publicMaps = props.publicMaps;
 
-  // const [isChating, setIsChating] = useState(false);
   const isChating = props.isChating;
+  const [info, setInfo] = useState();
+  const [position, setPosition] = useState();
+  console.log('info', info);
+  console.log('position', position);
   const [userData, setUserData] = useState({
     sender: '',
     connected: false,
@@ -108,7 +111,9 @@ const PlanMap = forwardRef((props, ref) => {
       let chatMessage = {
         sender: props.usernick,
         lat: myLocation.center.lat,
+        // lat: 37.52885,
         lng: myLocation.center.lng,
+        // lng: 127.02185,
         type: 'MAP',
         planId: planId,
       };
@@ -118,18 +123,28 @@ const PlanMap = forwardRef((props, ref) => {
       setUserData({ ...userData, lat: '', lng: '' });
     }
   };
+
+  //내위치 반복 보내기
   // useInterval(() => {
   //   sendMyLocation();
   // }, 10000);
   const bounds = useMemo(() => {
-    const bounds = new window.kakao.maps.LatLngBounds();
+    const bounds = new kakao.maps.LatLngBounds();
     if (points) {
       points.forEach(point => {
-        bounds.extend(new window.kakao.maps.LatLng(point.lat, point.lng));
+        bounds.extend(new kakao.maps.LatLng(point.lat, point.lng));
       });
     }
+
     return bounds;
   }, [points]);
+  // if (points) {
+  //   const center = {
+  //     lat: (points[0].lat + points[1].lat) / 2,
+  //     lng: (points[0].lng + points[1].lng) / 2,
+  //   };
+  //   setSetMyLocation(center);
+  // }
   useEffect(() => {
     //현재 내위치 얻기
     if (navigator.geolocation) {
@@ -169,21 +184,21 @@ const PlanMap = forwardRef((props, ref) => {
     <>
       <Headerbar
         is_Edit
-        text="모임이름{} 채팅방"
+        text={`${props.planName}`}
         _onClickClose={() => {
           navigate('/main');
         }}
         _onClickEdit={() => {}}
       ></Headerbar>
 
-      <Button
+      {/* <Button
         _onClick={() => {
           if (map) map.setBounds(bounds);
           console.log('PointerButton');
         }}
       >
         Chating
-      </Button>
+      </Button> */}
 
       <Map // 지도를 표시할 Container
         center={myLocation.center}
@@ -194,9 +209,12 @@ const PlanMap = forwardRef((props, ref) => {
         }}
         level={3} // 지도의 확대 레벨
         onCreate={setMap}
+        onClick={() => {
+          setInfo(false);
+          setPosition(undefined);
+        }}
       >
         {!myLocation.isLoading && <MapMarker position={myLocation.center} />}
-        {/* <MapMarker position={{ lat: 37.49732678, lng: 127.13505 }}></MapMarker> */}
         {publicMaps &&
           publicMaps.map((chat, index) => (
             // console.log('MAP', chat),
@@ -205,6 +223,15 @@ const PlanMap = forwardRef((props, ref) => {
                 <MapMarker
                   key={'map' + index}
                   position={{ lat: chat.lat, lng: chat.lng }}
+                  onClick={() => {
+                    console.log('clickclickclickclick');
+                    setInfo(true);
+                    setPosition({
+                      lat: chat.lat,
+                      lng: chat.lng,
+                      sender: chat.sender,
+                    });
+                  }}
                 />
               )}
               {chat.type === 'DEST' && (
@@ -218,10 +245,23 @@ const PlanMap = forwardRef((props, ref) => {
                     src: Ellipse32,
                     size: { width: 21, height: 21 },
                   }}
+                  onClick={() => {
+                    setInfo(true);
+                    setPosition({
+                      lat: parseFloat(chat.destLat).toFixed(5),
+                      lng: parseFloat(chat.destLng).toFixed(5),
+                      sender: 1,
+                    });
+                  }}
                 ></MapMarker>
               )}
             </>
           ))}
+        {position && (
+          <Section>
+            <PlanMapInfo map={map} position={position} />
+          </Section>
+        )}
       </Map>
     </>
   );
@@ -231,16 +271,15 @@ const PlanMap = forwardRef((props, ref) => {
 const StyleComponent = styled.div``;
 const Section = styled.div`
   position: absolute;
-  top: 0;
+  bottom: 0;
   box-sizing: border-box;
   width: 100%;
-  height: 100%;
+  height: 10%;
   z-index: 99;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
+  background-color: ${theme.color.white};
+  /* display: flex; */
+  /* justify-content: center; */
   align-items: center;
-  border-radius: 40px 40px 0px 0px;
 `;
 
 const MainModal = styled.div`
@@ -249,36 +288,6 @@ const MainModal = styled.div`
   height: 30%;
   background-color: white;
   border-radius: 15px;
-`;
-const ModalPopup = styled.div`
-  height: 100%;
-`;
-const ModalText = styled.div`
-  height: calc(100% - 40px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-`;
-const ModalButton = styled.div`
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-`;
-const ModalButtonOk = styled.div`
-  height: 40px;
-  width: 50%;
-  text-align: center;
-  cursor: pointer;
-  border: 1px solid #9e9e9e;
-`;
-const ModalButtonCencel = styled.div`
-  height: 40px;
-  width: 50%;
-  text-align: center;
-  cursor: pointer;
-  border: 1px solid #9e9e9e;
 `;
 
 // default props 작성 위치

@@ -33,6 +33,7 @@ const PlanSetName = props => {
   }, []);
 
   const planId = useSelector(state => state.map.planId);
+  const planName = useSelector(state => state.map.planName);
   let sock = useRef({});
   const sockUrl = process.env.REACT_APP_BE_IP_LYW + '/ws';
   sock = new SockJS(sockUrl);
@@ -74,6 +75,7 @@ const PlanSetName = props => {
         <Plansocket
           userNick={userNick}
           planId={planId}
+          planName={planName}
           client={client}
           sock={sock}
         />
