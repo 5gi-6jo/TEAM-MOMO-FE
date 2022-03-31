@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../elements/Button';
@@ -13,8 +13,9 @@ const RegisterForm = props => {
   const pwRef = useRef();
   const pwCheckRef = useRef();
   const dispatch = useDispatch();
-  const isAllCheckedRef = useRef();
-  // console.log(isAllCheckedRef.current.sendAllChecked());
+
+  const [checked, setChecked] = useState(false);
+  console.log(checked);
 
   const onRegist = e => {
     e.preventDefault();
@@ -95,15 +96,13 @@ const RegisterForm = props => {
           value={pwCheckRef}
         />
       </Grid>
-      <Agreement ref={isAllCheckedRef} />
+      <Agreement checked={checked} setChecked={setChecked} />
       <Button
         is_green={
-          nicknameRef === '' ||
-          emailRef === '' ||
-          pwRef === '' ||
-          pwCheckRef === ''
-            ? false
-            : true
+          // nickname === '' || email === '' || pw === '' || pwCheck === ''
+          //   ? false
+          //   : true
+          true
         }
         name={'회원가입하기'}
         width="320px"

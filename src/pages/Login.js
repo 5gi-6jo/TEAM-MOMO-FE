@@ -24,7 +24,7 @@ const Login = ({ isLogin }) => {
           <Login01 src={momoKor} />
         </Grid>
         <LoginForm />
-        <Grid center padding="20px 0px 20px 0px">
+        <Login04>
           <div
             onClick={() => {
               navigate('/', { replace: true });
@@ -44,8 +44,9 @@ const Login = ({ isLogin }) => {
               비밀번호 찾기
             </Text>
           </div>
-        </Grid>
-        <Login03 src={Line5} />
+        </Login04>
+        {/* <Login03 src={Line5} /> */}
+        <hr />
         <Grid padding="20px 100px 0px 100px">
           <Text color={theme.color.gray4} size="12px">
             '모두모여'가 처음이신가요?
@@ -84,8 +85,15 @@ const Login01 = styled.img`
 
 const Login02 = styled.img``;
 const Login03 = styled.img``;
-
-// default props 작성 위치
+const Login04 = styled.div`
+  display: flex;
+  align-items: center;
+  text-align: center;
+  align-content: stretch;
+  justify-content: space-evenly;
+  padding: 10px 50px 30px 50px;
+`;
+// defayltProps 작성 위치;
 Login.defaultProps = {};
 
 export default Login;

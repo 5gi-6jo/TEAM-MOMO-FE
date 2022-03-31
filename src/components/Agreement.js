@@ -1,19 +1,16 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Grid, Text } from '../elements';
 import { Rect10 } from '../img';
 import theme from '../Styles/theme';
 
-const Agreement = forwardRef((props, ref) => {
-  useImperativeHandle(ref, () => ({
-    sendAllChecked() {
-      isAllChecked();
-    },
-  }));
+const Agreement = props => {
   const [checkBox, setCheckBox] = useState([]);
   const isAllChecked = checkBox.length === 3;
-  console.log(isAllChecked);
+  useEffect(() => {
+    props.setChecked(isAllChecked);
+  });
 
   const changeHandler = (checked, id) => {
     if (checked) {
@@ -78,7 +75,7 @@ const Agreement = forwardRef((props, ref) => {
       </MainWrap>
     </>
   );
-});
+};
 
 const MainWrap = styled.div`
   position: relative;

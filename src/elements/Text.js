@@ -16,7 +16,6 @@ const Text = props => {
     ws,
     overf,
     cursor,
-    background,
 
     // media
     m_size,
@@ -33,7 +32,6 @@ const Text = props => {
     textoverf,
     ws,
     cursor,
-    background,
 
     // media
     m_size,
@@ -55,7 +53,6 @@ Text.defaultProps = {
   margin: 'auto',
   lineheight: 'null',
   cursor: 'default',
-  background: 'white',
 
   // media
   m_size: '1em',
@@ -76,7 +73,6 @@ const DefaultText = styled.p`
   ${props => (props.ws ? `white-space: ${props.ws}` : '')};
   cursor: ${props => props.cursor};
   letter-spacing: -1px;
-  background-color: ${props => props.background};
 `;
 
 // @media ${theme.device.mobileM} {

@@ -27,6 +27,8 @@ const Main = props => {
   const navigate = useNavigate();
   const Plans = useSelector(state => state.plan.plans);
   const time = useSelector(state => state.main.calendarDay);
+  const user = useSelector(state => state.user.user_info);
+  console.log(user);
   console.log(time);
   const [checktime, setChecktime] = useState();
   useEffect(() => {
@@ -58,10 +60,12 @@ const Main = props => {
   return (
     <React.Fragment>
       <Header />
-      <Grid padding="20px 0px 0px 20px">
-        <Text color="white" background={theme.color.green} size="20px">
-          '모여라'님
-        </Text>
+      <Grid is_flex padding="20px 0px 0px 20px">
+        <Main04>
+          <Text color="black" size="20px">
+            {user.nickname}님
+          </Text>
+        </Main04>
       </Grid>
       <Grid padding="0px 0px 0px 20px">
         <Text color={theme.color.black} size="20px">
@@ -124,8 +128,11 @@ const WriteButton = styled.div`
 const Main01 = styled.img``;
 const Main02 = styled.img``;
 const Main03 = styled.img``;
-
-const TextBox = styled.div``;
+const Main04 = styled.div`
+  background-color: ${theme.color.green};
+  width: auto;
+  display: flex;
+`;
 
 // default props 작성 위치
 Main.defaultProps = {};
