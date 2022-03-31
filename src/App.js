@@ -54,7 +54,6 @@ function App() {
     dispatch(getUserbyToken(navigate));
   }
 
-
   const userNick = useSelector(state => state.user.user_info).nickname;
 
   // console.log(userNick, guestNick, '::::app.js');
@@ -76,10 +75,17 @@ function App() {
   return (
     <>
       <Web>
-        <FramePhone src={frame}>
-          <div style={{ height: '100%', position: 'relative' }}>
-            <View>
-              <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <FramePhone src={frame}>
+            <div
+              style={{
+                height: '100%',
+                width: '100%',
+                // maxWidth: '360px',
+                position: 'relative',
+              }}
+            >
+              <View>
                 <FCMtoken />
                 <Routes>
                   <Route path="/" element={<Home />} />
@@ -120,11 +126,11 @@ function App() {
                     }
                   /> */}
                 </Routes>
-                {is_footer && <Footer />}
-              </ThemeProvider>
-            </View>
-          </div>
-        </FramePhone>
+              </View>
+              {is_footer && <Footer />}
+            </div>
+          </FramePhone>
+        </ThemeProvider>
       </Web>
     </>
   );
@@ -141,37 +147,83 @@ const Web = styled.div`
   }
 `;
 const FramePhone = styled.div`
-  width: 27vw;
+  width: 100vw;
+  height: 100vh;
+  /* width: 100%;
   height: 100%;
-  min-height: 750px;
-  position: fixed;
   right: 50%;
   top: 50%;
   transform: translate(50%, -50%);
-
+  position: fixed;
+  right: 50%;
+  top: 50%; */
   @media ${theme.device.laptop} {
-    background-image: url(${frame});
-    background-size: cover;
-    background-repeat: no-repeat;
+    transform: translate(50%, -50%);
+    position: fixed;
+    width: 35rem;
+    height: 100%;
+    max-width: 768px;
+    min-width: 360px;
+    min-height: 500px;
+    max-height: 847px;
+    /* min-height: 750px; */
+    right: 50%;
+    top: 50%;
+    background: url(${frame}) no-repeat;
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+
     right: 30%;
     top: 50%;
     transform: translate(0%, -50%);
+  }
+  @media ${theme.device.tablet} {
+    transform: translate(50%, -50%);
+    position: fixed;
+    width: 35rem;
+    height: 100%;
+    max-width: 768px;
+    min-width: 360px;
+    min-height: 847px;
+    max-height: 847px;
+
+    right: 50%;
+    top: 50%;
+    background: url(${frame}) no-repeat;
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+
+    right: 30%;
+    top: 50%;
+    transform: translate(0%, -50%) scale(0.8);
   }
 `;
 const View = styled.div`
   position: absolute;
   background-color: ${theme.color.white};
-  width: 100vw;
-  height: 100vh;
-  right: 50%;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome , Safari , Opera */
+  }
+  /* right: 50%;
   top: 50%;
-  transform: translate(50%, -50%);
+  transform: translate(50%, -50%); */
   @media ${theme.device.laptop} {
+    width: 35rem;
+
+    height: calc(84% - 46px);
+
     border-radius: 40px;
-    width: 75%;
-    height: 80%;
-    right: 42.8%;
-    top: 46.5%;
+    /* right: 42.8%;
+    top: 46.5%; */
+    max-width: 360px;
+
+    top: 47%;
+    right: 50%;
     transform: translate(50%, -50%);
     border-radius: 40px 40px 0px 0px;
   }
