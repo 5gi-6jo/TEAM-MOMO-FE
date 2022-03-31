@@ -59,11 +59,10 @@ function MyCalendar(props) {
           );
         }}
       />
-      <Grid padding="20px 0px 20px 0px">
-        <div className="text-gray-500 mt-4">
-          {moment(value).format('MM.DD')}
-          {moment(value).format('dd')}
-        </div>
+      <Grid padding="20px 0px 20px 10px">
+        <Text size="14px" bold>
+          {moment(value).format('MM.DD')} ({moment(value).format('dd')})
+        </Text>
       </Grid>
     </div>
   );

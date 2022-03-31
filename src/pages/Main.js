@@ -55,44 +55,13 @@ const Main = props => {
     document.execCommand('copy');
   };
 
-  //modal
-  // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  const modalEl = useRef();
-
-  const handleModalEl = ({ target }) => {
-    if (modalOpen && !modalEl.current.contains(target)) setModalOpen(false);
-  };
-
-  useEffect(() => {
-    window.addEventListener('click', handleModalEl);
-    return () => {
-      window.removeEventListener('click', handleModalEl);
-    };
-  }, []);
-
   return (
     <React.Fragment>
-      <button onClick={openModal}>모달팝업버튼</button>
-      <ModalInput
-        open={modalOpen}
-        close={closeModal}
-        title="팝업창제목"
-        contents="팝업창내용"
-        ref={modalEl}
-        // _onChange={실행시킬함수}
-      ></ModalInput>
       <Header />
       <Grid padding="20px 0px 0px 20px">
-        <Main01 src={main} />
+        <Text color="white" background={theme.color.green} size="20px">
+          '모여라'님
+        </Text>
       </Grid>
       <Grid padding="0px 0px 0px 20px">
         <Text color={theme.color.black} size="20px">

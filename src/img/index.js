@@ -14,9 +14,9 @@ import kakao from './icon/kakao.png';
 import Line4 from './icon/Line4.png';
 import Line5 from './icon/Line5.png';
 import Rect10 from './icon/Rectangle10.png';
-import main from './icon/main1.png';
 import face from './icon/face.png';
 import sparkle from './icon/sparkles.png';
+import Line17 from './icon/Line17.png';
 
 import frame from './frame.webp';
 import backImg2 from './backImg2.webp';
@@ -37,9 +37,9 @@ export {
   Line4,
   Line5,
   Rect10,
-  main,
   face,
   sparkle,
+  Line17,
   //틀
   frame,
   backImg2,
