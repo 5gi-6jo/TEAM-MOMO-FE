@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Calendar from '../components/Calendar';
-import { getPlans } from '../redux/modules/plan';
+import { getPlans, setFCMTokenplan } from '../redux/modules/plan';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Input, Text } from '../elements';
 import moment from 'moment';
@@ -80,7 +80,16 @@ const Main = props => {
   return (
     <React.Fragment>
       <button onClick={openModal}>모달팝업버튼</button>
-
+      <button
+        onClick={() => {
+          const data = {
+            token: sessionStorage.getItem('FCMtoken'),
+          };
+          dispatch(setFCMTokenplan(data));
+        }}
+      >
+        asdf
+      </button>
       <ModalInput
         open={modalOpen}
         close={closeModal}

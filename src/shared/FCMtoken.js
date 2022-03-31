@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { getToken, onMessage } from 'firebase/messaging';
 import { messaging } from '../firebase';
 import { useDispatch } from 'react-redux';
-import { setFCMTokenAxios } from '../redux/modules/user';
 import { useNavigate } from 'react-router-dom';
-import { setFCMTokenplan } from '../redux/modules/plan';
 
 const FCMtoken = () => {
   let swRegist = null;

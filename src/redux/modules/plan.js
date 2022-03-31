@@ -33,7 +33,13 @@ export const getOnePlan = createAsyncThunk(
           Authorization: sessionStorage.getItem('token'),
           'Content-Type': 'application/json',
         },
-      }).then(response => response.data.data);
+      }).then(response => {
+        const data = {
+          ...response.data.data,
+          planId: planId,
+        };
+        return data;
+      });
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -158,8 +164,12 @@ export const deleteImage = createAsyncThunk(
 export const setFCMTokenplan = createAsyncThunk(
   'plan/setFCMTokenplan',
   async (data, { rejectWithValue }) => {
+    const newdata = {
+      ...data,
+      planId: 24,
+    };
     try {
-      return await URL.post(`/users/device`, data, {
+      return await URL.post(`/api/fcm`, newdata, {
         headers: {
           Authorization: sessionStorage.getItem('token'),
           'Content-Type': 'application/json',

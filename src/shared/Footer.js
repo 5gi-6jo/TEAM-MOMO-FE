@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Grid from '../elements/Grid';
 import { AiOutlineCalendar } from 'react-icons/ai';
@@ -8,6 +8,7 @@ import { MdOutlinePlace } from 'react-icons/md';
 import { FiBookOpen } from 'react-icons/fi';
 import { BsPerson } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import theme from '../Styles/theme';
 // theme 색상 적용하기
 
@@ -20,61 +21,83 @@ import { NavLink } from 'react-router-dom';
 
 const Footer = props => {
   const navigate = useNavigate();
+  let location = useLocation();
+  const [showFooter, setShowFooter] = useState(false);
+  const showplan = useSelector(state => state.plan.showplan);
+
+  const locationArray = [
+    '/',
+    '/edit',
+    '/Login',
+    'Register',
+    `/plansdetail/images/:id`,
+    `/plan/32032375-2238-4765-b03d-b006ba31c1c3`, //지도 url고민중..
+
+    // `/plansdetail/images/${showplan.planId}`,
+  ];
+  useEffect(() => {
+    if (locationArray.indexOf(window.location.pathname) !== -1)
+      setShowFooter(false);
+    else setShowFooter(true);
+    return;
+  }, [location]);
 
   return (
     <>
-      <NavBox>
-        <Grid is_flex center>
-          <Grid>
-            <NavLink
-              to="/main"
-              style={({ isActive }) => ({
-                textDecoration: 'none',
-                color: isActive ? '#F84914' : '#999999',
-                fontWeight: isActive ? '800' : '400',
-              })}
-            >
-              <AiOutlineCalendar size="20px" />
-            </NavLink>
+      {showFooter && (
+        <NavBox>
+          <Grid is_flex center>
+            <Grid>
+              <NavLink
+                to="/main"
+                style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? '#F84914' : '#999999',
+                  fontWeight: isActive ? '800' : '400',
+                })}
+              >
+                <AiOutlineCalendar size="20px" />
+              </NavLink>
+            </Grid>
+            <Grid>
+              <NavLink
+                to="/plan/32032375-2238-4765-b03d-b006ba31c1c3"
+                style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? '#F84914' : '#999999',
+                  fontWeight: isActive ? '800' : '400',
+                })}
+              >
+                <MdOutlinePlace size="20px" />
+              </NavLink>
+            </Grid>
+            <Grid>
+              <NavLink
+                to="/plans"
+                style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? '#F84914' : '#999999',
+                  fontWeight: isActive ? '800' : '400',
+                })}
+              >
+                <FiBookOpen size="20px" />
+              </NavLink>
+            </Grid>
+            <Grid>
+              <NavLink
+                to="/mypage"
+                style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? '#F84914' : '#999999',
+                  fontWeight: isActive ? '800' : '400',
+                })}
+              >
+                <BsPerson size="20px" />
+              </NavLink>
+            </Grid>
           </Grid>
-          <Grid>
-            <NavLink
-              to="/plan/32032375-2238-4765-b03d-b006ba31c1c3"
-              style={({ isActive }) => ({
-                textDecoration: 'none',
-                color: isActive ? '#F84914' : '#999999',
-                fontWeight: isActive ? '800' : '400',
-              })}
-            >
-              <MdOutlinePlace size="20px" />
-            </NavLink>
-          </Grid>
-          <Grid>
-            <NavLink
-              to="/plans"
-              style={({ isActive }) => ({
-                textDecoration: 'none',
-                color: isActive ? '#F84914' : '#999999',
-                fontWeight: isActive ? '800' : '400',
-              })}
-            >
-              <FiBookOpen size="20px" />
-            </NavLink>
-          </Grid>
-          <Grid>
-            <NavLink
-              to="/mypage"
-              style={({ isActive }) => ({
-                textDecoration: 'none',
-                color: isActive ? '#F84914' : '#999999',
-                fontWeight: isActive ? '800' : '400',
-              })}
-            >
-              <BsPerson size="20px" />
-            </NavLink>
-          </Grid>
-        </Grid>
-      </NavBox>
+        </NavBox>
+      )}
     </>
   );
 };
@@ -98,18 +121,17 @@ const NavBox = styled.div`
   justify-content: space-around;
   /* margin: 0 auto; */
   bottom: 0;
-  left: 0;
-  right: 0;
+
   @media ${({ theme }) => theme.device.laptop} {
     max-width: 35rem;
     max-width: 768px;
     min-width: 360px;
     width: 64%;
-    bottom: -5%;
+    right: 30%;
     border: 1px solid #e4e4e4;
     border-radius: 0px 0px 40px 40px;
     /* max-width: 422px; */
-    transform: translate(27%, -253%);
+    transform: translate(19%, -172%);
   }
 `;
 

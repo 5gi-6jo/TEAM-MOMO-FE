@@ -109,11 +109,14 @@ const Plansocket = props => {
         };
       }
       if (payloadData.type === 'DEST') {
+        console.log('MapRef');
         MapRef.current.sendMyLocationfun();
         const data = {
           lat: payloadData.destLat,
           lng: payloadData.destLng,
         };
+        console.log('DEST', data);
+        MapRef.current.setDestpoint(data);
       }
     }
   };

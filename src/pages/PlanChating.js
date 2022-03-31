@@ -44,7 +44,6 @@ const PlanChating = props => {
   const scrollRef = useRef();
   console.log('userData', userData, 'publicChats', publicChats);
   useEffect(() => {
-    // props.handleUsername();
     scrollToBottom();
     return () => {
       // undidMount
@@ -54,6 +53,7 @@ const PlanChating = props => {
     const { scrollHeight, clientHeight } = scrollRef.current;
     scrollRef.current.scrollTop = scrollHeight - clientHeight;
   };
+  console.log(scrollRef);
 
   //메시지 내용 추가함수
   const handleMessage = event => {
@@ -96,43 +96,35 @@ const PlanChating = props => {
             _onClickEdit={() => {}}
           ></Headerbar>
           {userData.connected && (
-            <div
-              ref={scrollRef}
-              style={{ height: ' calc(100% - 92px)', overflow: 'auto' }}
-            >
-              {publicChats.map(
-                (chat, index) => (
-                  console.log('index', index),
-                  (
-                    <>
-                      {chat.type === 'ENTER' && (
-                        <EnterTheUser key={index + 'ENTER'}>
-                          <EnterTheUserInner>
-                            <Text>{chat.content}</Text>
-                          </EnterTheUserInner>
-                        </EnterTheUser>
-                      )}
-                      {chat.type === 'CHAT' && chat.sender === props.usernick && (
-                        <SenderWrapper key={index + 'CHAT'}>
-                          <Sender>{chat.sender}</Sender>
-                          <SenderInner>
-                            <Sendercontent>{chat.content}</Sendercontent>
-                          </SenderInner>
-                        </SenderWrapper>
-                      )}
+            <Page ref={scrollRef}>
+              {publicChats.map((chat, index) => (
+                <div key={index}>
+                  {chat.type === 'ENTER' && (
+                    <EnterTheUser>
+                      <EnterTheUserInner>
+                        <Text>{chat.content}</Text>
+                      </EnterTheUserInner>
+                    </EnterTheUser>
+                  )}
+                  {chat.type === 'CHAT' && chat.sender === props.usernick && (
+                    <SenderWrapper>
+                      <Sender>{chat.sender}</Sender>
+                      <SenderInner>
+                        <Sendercontent>{chat.content}</Sendercontent>
+                      </SenderInner>
+                    </SenderWrapper>
+                  )}
 
-                      {chat.type === 'CHAT' && chat.sender !== props.usernick && (
-                        <ReceiverWrapper key={index + 'CHAT'}>
-                          <Receiver>{chat.sender}</Receiver>
-                          <ReceiverInner>
-                            <Receiv>{chat.content}</Receiv>
-                          </ReceiverInner>
-                        </ReceiverWrapper>
-                      )}
-                    </>
-                  )
-                ),
-              )}
+                  {chat.type === 'CHAT' && chat.sender !== props.usernick && (
+                    <ReceiverWrapper>
+                      <Receiver>{chat.sender}</Receiver>
+                      <ReceiverInner>
+                        <Receiv>{chat.content}</Receiv>
+                      </ReceiverInner>
+                    </ReceiverWrapper>
+                  )}
+                </div>
+              ))}
               <TextInputWrapper>
                 <Grid is_flex center>
                   <ButtonImagePlus
@@ -151,7 +143,7 @@ const PlanChating = props => {
                   <ButtonImageSend src={sendbutton} onClick={sendMessage} />
                 </Grid>
               </TextInputWrapper>
-            </div>
+            </Page>
           )}
         </MainModal>
       </Section>
@@ -184,6 +176,16 @@ const MainModal = styled.div`
   height: 100%;
   background-color: white;
   border-radius: 40px;
+`;
+//채팅페이지
+const Page = styled.div`
+  height: calc(100% - 92px);
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome , Safari , Opera */
+  }
 `;
 //유저 입장표시
 const EnterTheUser = styled.div`
@@ -287,6 +289,9 @@ const ButtonImageSend = styled.img`
   height: 23px;
   border-radius: 50px;
   padding: 12px 4% 12px 4%;
+`;
+const ButtonImageSend2 = styled.img`
+  background-color: orange;
 `;
 const InputText = styled.input`
   border: 1px solid #c4c4c4;

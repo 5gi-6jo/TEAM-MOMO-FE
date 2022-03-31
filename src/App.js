@@ -42,7 +42,6 @@ function App() {
     measurementId: 'G-CXWX95R14M',
   };
   firebase.initializeApp(firebaseConfig);
-  const is_footer = useSelector(state => state.main.is_footer);
 
   const istoken = sessionStorage.getItem('token')
     ? sessionStorage.getItem('token')
@@ -100,14 +99,12 @@ function App() {
                   <Route path="/mypage" element={<Mypage />} />
                   <Route path="/plansdetail/:id" element={<PlansDetail />} />
                   <Route
-                    path="/plansdetail/:id/images"
+                    path="/plansdetail/images/:id"
                     element={<PlansDetailImage />}
                   />
                   <Route path="/plans" element={<Plans />} />
                   <Route path="/Register" element={<Register />} />
                   <Route path="/Login" element={<Login />} />
-                  <Route path="/Map" element={<Map />} />
-                  <Route path="/chating" element={<PlanChating />} />
                   <Route
                     path="/plan/:url"
                     element={
@@ -127,7 +124,7 @@ function App() {
                   /> */}
                 </Routes>
               </View>
-              {is_footer && <Footer />}
+              <Footer />
             </div>
           </FramePhone>
         </ThemeProvider>
@@ -193,7 +190,7 @@ const FramePhone = styled.div`
     background-size: 100% 100%;
     background-position: 50% 50%;
 
-    right: 30%;
+    right: 20%;
     top: 50%;
     transform: translate(0%, -50%) scale(0.8);
   }
@@ -215,122 +212,21 @@ const View = styled.div`
   @media ${theme.device.laptop} {
     width: 35rem;
 
-    height: calc(84% - 46px);
+    height: 83.5%;
+
+    /* calc(84% - 46px); */
 
     border-radius: 40px;
     /* right: 42.8%;
     top: 46.5%; */
     max-width: 360px;
 
-    top: 47%;
+    top: 49%;
     right: 50%;
     transform: translate(50%, -50%);
-    border-radius: 40px 40px 0px 0px;
+    /* border-radius: 40px 40px 0px 0px; */
+    border-radius: 40px;
   }
-`;
-
-//페이지 웹/모바일 전환
-const WebVer2 = styled.div`
-  position: fixed;
-  width: 100vw;
-  height: 100%;
-  z-index: -100;
-  background: #ffe899;
-  opacity: 0.18;
-  @media ${({ theme }) => theme.device.laptop} {
-    opacity: 1;
-    background-size: cover;
-    background-position: 50% 50%;
-    background-image: url(${backImg2});
-    background-repeat: no-repeat;
-  }
-  width: 577px;
-  height: 92%;
-  min-height: 924px;
-  position: fixed;
-  right: 50%;
-  top: 53%;
-  transform: translate(50%, -50%);
-  background: url(${frame}) no-repeat;
-  background-size: 100% 100%;
-`;
-
-const Wrap2 = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  min-width: 280px;
-  min-height: 500px;
-  height: 91vh;
-  margin: 0 auto;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background-color: white;
-  @media ${({ theme }) => theme.device.laptop} {
-    background-image: url(${frame});
-  }
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  //노트북 이상 웹페이지
-  @media ${({ theme }) => theme.device.laptop} {
-    position: relative;
-    margin: 0 0 0 calc(50vw - 1px);
-    border: 1px solid #e4e4e4;
-    max-width: 422px;
-    position: relative;
-  }
-`;
-
-//모바일 디바이스
-const Mobile2 = styled.div`
-  display: flex;
-  position: relative;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 640px;
-  min-width: 280px;
-  overflow: hidden;
-  background-color: ${theme.color.white};
-`;
-
-//웹 브라우저
-const Web2 = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: url(${backImg2});
-  background-size: cover;
-  background-position: 0% 100%;
-  background-repeat: no-repeat;
-`;
-const Phone2 = styled.div`
-  width: 577px;
-  height: 92%;
-  min-height: 924px;
-  position: fixed;
-  right: 50%;
-  top: 53%;
-  transform: translate(50%, -50%);
-  background: url(${frame}) no-repeat;
-  background-size: 100% 100%;
-
-  @media screen and (min-width: 1120px) {
-    right: 24%;
-    top: 50%;
-    transform: translate(0%, -50%);
-  }
-`;
-const WebViewLayout2 = styled.div`
-  max-width: 380px;
-  height: calc(100% - 178px);
-  position: relative;
-  top: 49%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 40px;
-  background-color: ${theme.color.white};
-  overflow: hidden;
 `;
 
 export default App;
