@@ -1,0 +1,9 @@
+diff a/src/pages/Main.js b/src/pages/Main.js	(rejected hunks)
+@@ -60,6 +60,7 @@
+   return (
+     <React.Fragment>
+       <Header />
++      <Grid is_flex padding="20px 0px 0px 20px">
+         <Main04>
+           <Text color="black" size="20px">
+             {user.nickname}님
