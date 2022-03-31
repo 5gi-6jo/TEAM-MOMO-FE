@@ -12,6 +12,7 @@ import moment from 'moment';
 import { IoIosAddCircle } from 'react-icons/io';
 import theme from '../Styles/theme';
 import ModalInput from '../components/Modal/ModalInput';
+import Header from '../shared/Header';
 
 /**
  * @param {*} props
@@ -80,7 +81,6 @@ const Main = props => {
   return (
     <React.Fragment>
       <button onClick={openModal}>모달팝업버튼</button>
-
       <ModalInput
         open={modalOpen}
         close={closeModal}
@@ -89,16 +89,9 @@ const Main = props => {
         ref={modalEl}
         // _onChange={실행시킬함수}
       ></ModalInput>
-      <Grid padding="20px">
-        <TextBox>
-          <Text color={theme.color.black} size="20px">
-            <br />
-            약속 늦지않게
-            <br />
-            조심하세요!
-          </Text>
-        </TextBox>
-      </Grid>
+      <Header />
+      <Grid padding="20px 0px 0px 20px"></Grid>
+
       <Grid padding="20px">
         <Calendar />
         {Plans &&
