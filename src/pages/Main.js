@@ -13,6 +13,7 @@ import { IoIosAddCircle } from 'react-icons/io';
 import theme from '../Styles/theme';
 import ModalInput from '../components/Modal/ModalInput';
 import Header from '../shared/Header';
+import { main, face, sparkle } from '../img';
 
 /**
  * @param {*} props
@@ -90,9 +91,20 @@ const Main = props => {
         // _onChange={실행시킬함수}
       ></ModalInput>
       <Header />
-      <Grid padding="20px 0px 0px 20px"></Grid>
+      <Grid padding="20px 0px 0px 20px">
+        <Main01 src={main} />
+      </Grid>
+      <Grid padding="0px 0px 0px 20px">
+        <Text color={theme.color.black} size="20px">
+          약속 늦지않게
+          <br />
+          조심하세요!
+          <Main02 src={face} />
+          <Main03 src={sparkle} />
+        </Text>
+      </Grid>
 
-      <Grid padding="20px">
+      <Grid padding="0px 20px 0px 20px">
         <Calendar />
         {Plans &&
           Plans.map(plan => (
@@ -139,6 +151,10 @@ const WriteButton = styled.div`
   // size: 50
   // color: theme.color.orange
 `;
+
+const Main01 = styled.img``;
+const Main02 = styled.img``;
+const Main03 = styled.img``;
 
 const TextBox = styled.div``;
 

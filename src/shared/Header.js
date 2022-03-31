@@ -21,9 +21,11 @@ const Header = props => {
         <Grid>
           <Header01 src={momo} />
         </Grid>
+        <Grid></Grid>
+        <Grid></Grid>
         <Grid>
           <FiBell
-            size="18px"
+            size="20px"
             cusor="pointer"
             onClick={_onClick}
             color={theme.color.gray2}
@@ -35,10 +37,9 @@ const Header = props => {
 };
 
 // 스타일 컴포넌트 작성 위치
-const StyleComponent = styled.div``;
 const Header01 = styled.img`
-  width: 30%;
-  height: 30%;
+  width: 75%;
+  height: 75%;
 `;
 
 // default props 작성 위치
