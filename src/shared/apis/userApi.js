@@ -28,27 +28,27 @@ class UserApi {
       });
   }
 
-  async login(data) {
-    const loginConfig = {
-      method: 'post',
-      url: `${this.base}/users/login`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: JSON.stringify(data),
-    };
+  // async login(data) {
+  //   const loginConfig = {
+  //     method: 'post',
+  //     url: `${this.base}/users/login`,
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     data: JSON.stringify(data),
+  //   };
 
-    return axios(loginConfig)
-      .then(res => {
-        console.log(res);
-        console.log(res.headers.authorization);
-        sessionStorage.setItem('token', res.headers.authorization);
-        return res;
-      })
-      .catch(err => {
-        console.log(err.response);
-      });
-  }
+  //   return axios(loginConfig)
+  //     .then(res => {
+  //       console.log(res);
+  //       console.log(res.headers.authorization);
+  //       sessionStorage.setItem('token', res.headers.authorization);
+  //       return res;
+  //     })
+  //     .catch(err => {
+  //       console.log(err.response);
+  //     });
+  // }
 
   async logout() {
     const logoutConfig = {

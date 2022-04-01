@@ -13,18 +13,6 @@ const LoginForm = props => {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
 
-  const loginData = {
-    email: email,
-    password: pw,
-  };
-
-  // dispatch(login(loginData)).then(res => navigate('/main'));
-  const data = {
-    token: sessionStorage.getItem('FCMtoken'),
-  };
-
-  dispatch(setFCMToken(data));
-
   return (
     <Form onSubmit={LoginForm}>
       <Grid padding="75px 20px 0px 20px">
@@ -36,6 +24,9 @@ const LoginForm = props => {
           labelText="이메일"
           placeholder="이메일 주소 (아이디)"
           width="10px"
+          _onChange={e => {
+            setEmail(e.target.value);
+          }}
         />
       </Grid>
       <Grid padding="0px 20px 0px 20px">
@@ -46,6 +37,9 @@ const LoginForm = props => {
           type="password"
           labelText="비밀번호"
           placeholder="비밀번호"
+          _onChange={e => {
+            setPw(e.target.value);
+          }}
         />
       </Grid>
       <Button
@@ -54,6 +48,21 @@ const LoginForm = props => {
         heignt="42px"
         margin="20px 0px 0px 20px"
         abled
+        _onClick={() => {
+          const loginData = {
+            email: email,
+            password: pw,
+          };
+          dispatch(login(loginData));
+          navigate('/main');
+          // .then(res => navigate('/main'));
+
+          const data = {
+            token: sessionStorage.getItem('FCMtoken'),
+          };
+
+          dispatch(setFCMToken(data));
+        }}
       />
     </Form>
   );
