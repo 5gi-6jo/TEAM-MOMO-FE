@@ -11,7 +11,6 @@ const FCMtoken = () => {
   const navigate = useNavigate();
 
   const FCMtoken = sessionStorage.getItem('FCMtoken') ? false : true;
-  console.log(FCMtoken);
   if (FCMtoken)
     getToken(messaging, {
       vapidKey: process.env.REACT_APP_VAPID_KEY,
