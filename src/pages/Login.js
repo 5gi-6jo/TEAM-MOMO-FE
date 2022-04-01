@@ -19,59 +19,57 @@ const Login = ({ isLogin }) => {
   });
 
   return (
-    <>
-      <React.Fragment>
-        <Headerbar
-          text="로그인/회원가입"
-          _onClickClose={() => {
-            navigate('/');
+    <React.Fragment>
+      <Headerbar
+        text="로그인/회원가입"
+        _onClickClose={() => {
+          navigate('/');
+        }}
+      />
+      <Grid padding="75px 125px 0px 125px">
+        <Login01 src={momoKor} />
+      </Grid>
+      <LoginForm />
+      <Login04>
+        <div
+          onClick={() => {
+            navigate('/', { replace: true });
           }}
-        />
-        <Grid padding="75px 125px 0px 125px">
-          <Login01 src={momoKor} />
-        </Grid>
-        <LoginForm />
-        <Login04>
-          <div
-            onClick={() => {
-              navigate('/', { replace: true });
-            }}
-          >
-            <Text color={theme.color.gray4} size="12px">
-              아이디 찾기
-            </Text>
-          </div>
-          <Login02 src={Line4} />
-          <div
-            onClick={() => {
-              navigate('/', { replace: true });
-            }}
-          >
-            <Text color={theme.color.gray4} size="12px">
-              비밀번호 찾기
-            </Text>
-          </div>
-        </Login04>
-        {/* <Login03 src={Line5} /> */}
-        <hr />
-        <Grid center padding="20px 0px 0px 0px">
+        >
           <Text color={theme.color.gray4} size="12px">
-            '모두모여'가 처음이신가요?
+            아이디 찾기
           </Text>
-        </Grid>
-        <Grid padding="10px 0px 0px 20px">
-          <Button
-            width="320px"
-            name={'회원가입하기'}
-            _onClick={() => {
-              navigate('/Register', { replace: true });
-            }}
-            value
-            is_green
-          />
-        </Grid>
-      </React.Fragment>
-    </>
+        </div>
+        <Login02 src={Line4} />
+        <div
+          onClick={() => {
+            navigate('/', { replace: true });
+          }}
+        >
+          <Text color={theme.color.gray4} size="12px">
+            비밀번호 찾기
+          </Text>
+        </div>
+      </Login04>
+      {/* <Login03 src={Line5} /> */}
+      <hr />
+      <Grid center padding="20px 0px 0px 0px">
+        <Text color={theme.color.gray4} size="12px">
+          '모두모여'가 처음이신가요?
+        </Text>
+      </Grid>
+      <Grid padding="10px 0px 0px 20px">
+        <Button
+          width="320px"
+          name={'회원가입하기'}
+          _onClick={() => {
+            navigate('/Register', { replace: true });
+          }}
+          value
+          is_green
+        />
+      </Grid>
+    </React.Fragment>
   );
 };
 

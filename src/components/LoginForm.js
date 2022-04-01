@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import Button from '../elements/Button';
 import { login, setFCMToken } from '../redux/modules/user';
 import { Grid, Input } from '../elements';
@@ -14,7 +13,7 @@ const LoginForm = props => {
   const [pw, setPw] = useState('');
 
   return (
-    <Form onSubmit={LoginForm}>
+    <React.Fragment>
       <Grid padding="75px 20px 0px 20px">
         <Input
           labelBold
@@ -64,13 +63,8 @@ const LoginForm = props => {
           dispatch(setFCMToken(data));
         }}
       />
-    </Form>
+    </React.Fragment>
   );
 };
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
 
 export default LoginForm;
