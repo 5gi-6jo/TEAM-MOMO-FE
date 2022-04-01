@@ -21,9 +21,14 @@ export const login = createAsyncThunk(
   'user/login',
   async (data, { rejectWithValue }) => {
     try {
+      // const navigate = useNavigate();
+      console.log('test1', data);
       return await URL.post(`/users/login`, data).then(response => {
         console.log(response);
+        console.log('test2');
         sessionStorage.setItem('token', response.headers.authorization);
+        console.log('test1');
+
         return response.data.data;
       });
     } catch (error) {
@@ -99,14 +104,20 @@ export const userSlice = createSlice({
       })
       //로그인
       .addCase(login.pending, state => {
+        console.log('pending');
+
         state.isLoading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
+        console.log('fullfilled');
+
         state.user_info = action.payload;
         state.isLoading = false;
         state.isLoggedin = true;
       })
       .addCase(login.rejected, (state, action) => {
+        console.log('rejected');
+
         state.isLoading = true;
         state.loginError = action.payload;
       })
@@ -137,12 +148,12 @@ export const KakaoLogin = code => {
 
         localStorage.setItem('token', ACCESS_TOKEN); //예시로 로컬에 저장함
 
-        navigate('/main', { replace: true }); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        // navigate('/main', { replace: true }); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       })
       .catch(err => {
         console.log('소셜로그인 에러', err);
 
-        navigate('/login', { replace: true }); // 로그인 실패하면 로그인화면으로 돌려보냄
+        // navigate('/login', { replace: true }); // 로그인 실패하면 로그인화면으로 돌려보냄
       });
   };
 };

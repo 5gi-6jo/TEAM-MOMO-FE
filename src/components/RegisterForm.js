@@ -18,16 +18,16 @@ const RegisterForm = props => {
   // 체크박스
   const [checked, setChecked] = useState(false);
   console.log(checked);
+  const Register = () => {
+    const data = {
+      email: email,
+      nickname: nickname,
+      password: pw,
+      checkPassword: pwCheck,
+    };
 
-  const data = {
-    email: email,
-    nickname: nickname,
-    password: pw,
-    checkPassword: pwCheck,
+    dispatch(register(data));
   };
-
-  dispatch(register({ data }));
-
   return (
     <Form onSubmit={RegisterForm}>
       <Grid padding="10px">
@@ -102,6 +102,7 @@ const RegisterForm = props => {
           width="320px"
           heignt="42px"
           margin="0px 0px 0px 10px"
+          _onClick={Register}
         />
       </Grid>
     </Form>
