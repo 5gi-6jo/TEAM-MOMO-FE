@@ -11,7 +11,7 @@ import React, {
 import styled from 'styled-components';
 import theme from '../Styles/theme';
 import Headerbar from '../shared/Headerbar';
-import { Button } from '../elements';
+import { Text } from '../elements';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -66,9 +66,9 @@ const PlanMapInfo = props => {
       {position && (
         <div>
           {address && (
-            <div>
+            <Text bold size="18px">
               {address.building_name}, {address.address_name}
-            </div>
+            </Text>
           )}
           <div>{position.sender === 1 ? '약속장소' : position.sender}</div>
         </div>
@@ -79,26 +79,7 @@ const PlanMapInfo = props => {
 
 // 스타일 컴포넌트 작성 위치
 const StyleComponent = styled.div``;
-const Section = styled.div`
-  position: absolute;
-  bottom: 0;
-  box-sizing: border-box;
-  width: 100%;
-  height: 10%;
-  z-index: 99;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MainModal = styled.div`
-  position: absolute;
-  width: 80%;
-  height: 30%;
-  background-color: white;
-  border-radius: 15px;
-`;
+const InfoCard = styled.div``;
 
 // default props 작성 위치
 PlanMapInfo.defaultProps = {};
