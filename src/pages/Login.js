@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginForm from '../components/LoginForm';
 import Button from '../elements/Button';
-import { Grid, Input, Text } from '../elements';
+import { Grid, Text } from '../elements';
 import theme from '../Styles/theme';
-import { momoKor, Line4, Line5 } from '../img';
+import { momoKor, Line4 } from '../img';
 import Headerbar from '../shared/Headerbar';
 
 const Login = ({ isLogin }) => {
@@ -13,7 +13,7 @@ const Login = ({ isLogin }) => {
 
   useEffect(() => {
     if (isLogin) {
-      alert('이미 로그인이 되어있습니다.');
+      //modal
       navigate('/main');
     }
   });
@@ -78,19 +78,13 @@ const Login = ({ isLogin }) => {
 // 스타일 컴포넌트 작성 위치
 const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 
-const TextBox = styled.div``;
-
-// const Home01 = styled.img`
-//   width: 150px;
-//   height: 84px;
-// `;
-
 const Login01 = styled.img`
   width: 100%;
   height: 100%;
 `;
 
 const Login02 = styled.img``;
+
 const Login04 = styled.div`
   display: flex;
   align-items: center;

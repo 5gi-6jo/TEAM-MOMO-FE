@@ -82,8 +82,6 @@ const Home = () => {
 };
 
 // 스타일 컴포넌트 작성 위치
-const TextBox = styled.div``;
-
 const Home01 = styled.img``;
 const Home02 = styled.img``;
 const Home03 = styled.img`

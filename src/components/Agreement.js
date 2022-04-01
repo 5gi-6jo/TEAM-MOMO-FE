@@ -25,10 +25,10 @@ const Agreement = props => {
   return (
     <>
       <MainWrap>
-        <Grid padding="20px 0px 0px 20px">
+        <Grid padding="10px">
           <Rect src={Rect10} />
           <CheckWrap>
-            <Grid is_flex padding="20px 0px 0px 40px">
+            <Grid is_flex padding="10px 0px 0px 40px">
               <input
                 type="checkbox"
                 id="check1"
