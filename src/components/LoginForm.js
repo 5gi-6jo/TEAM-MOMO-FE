@@ -46,7 +46,7 @@ const LoginForm = props => {
 
   return (
     <Form onSubmit={onLogin}>
-      <Grid padding="100px 20px 0px 20px">
+      <Grid padding="75px 20px 0px 20px">
         <Input
           labelBold
           labelColor={theme.color.gray1}

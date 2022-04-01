@@ -7,6 +7,7 @@ import ModalInput from '../components/Modal/ModalInput';
 import { useNavigate } from 'react-router-dom';
 
 import theme from '../Styles/theme';
+import { useSelector } from 'react-redux';
 
 /**
  * @param {*} props
@@ -17,6 +18,7 @@ import theme from '../Styles/theme';
 
 const Mypage = props => {
   const navigate = useNavigate();
+  const user = useSelector(state => state.user.user_info);
 
   //modal
   // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
@@ -51,20 +53,52 @@ const Mypage = props => {
         </Text>
       </Grid>
       <Mypage01 src={Line17} />
-      <Grid padding="40px 0px 0px 30px">
-        <Text size="20px" bold>
-          '모여라'님 <br />
-          안녕하세요.
-        </Text>
+      <Grid is_flex padding="30px 0px 0px 30px">
+        <Mypage03>
+          <Text color={theme.color.black} size="20px" bold>
+            {user.nickname ? user.nickname : 'unknown'}님
+            <br />
+            안녕하세요.
+          </Text>
+        </Mypage03>
       </Grid>
-      <Grid left padding="10px 0px 30px 30px">
+      {/* <Grid left padding="10px 0px 30px 30px">
         <div onClick>
           <Text size="13px">닉네임변경</Text>
         </div>
         <div onClick>
           <Text size="13px">로그아웃</Text>
         </div>
-      </Grid>
+      </Grid> */}
+      <Mypage04>
+        <div
+          onClick={() => {
+            navigate('/Mypage', { replace: true });
+          }}
+        >
+          <Text color={theme.color.gray4} size="13px">
+            닉네임변경
+          </Text>
+        </div>
+        <div
+          onClick={() => {
+            navigate('/Mypage', { replace: true });
+          }}
+        >
+          <Text color={theme.color.gray4} size="13px">
+            로그아웃
+          </Text>
+        </div>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <div></div>
+        <div></div>
+        <div></div>
+      </Mypage04>
       <Mypage01 src={Line17} />
       <Grid padding="30px 0px 30px 30px">
         <Grid padding="20px 0px 20px 0px">
@@ -96,7 +130,7 @@ const Mypage = props => {
             }}
           >
             <Text size="18px" bold>
-              모모에 참여하기
+              모모에 가입하기
             </Text>
           </Mypage02>
         </Grid>
@@ -118,9 +152,13 @@ const Mypage = props => {
 const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 
 const Mypage01 = styled.img``;
-
 const Mypage02 = styled.div`
   cursor: pointer;
+`;
+const Mypage03 = styled.div``;
+const Mypage04 = styled.div`
+  display: flex;
+  padding: 10px 0px 30px 30px;
 `;
 
 // default props 작성 위치

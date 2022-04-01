@@ -62,7 +62,7 @@ const Main = props => {
       <Grid is_flex padding="20px 0px 0px 20px">
         <Main04>
           <Text color="white" size="20px" bold>
-            {user.nickname ? user.nickname : '모여라'}님
+            {user.nickname ? user.nickname : 'unknown'}님
           </Text>
         </Main04>
       </Grid>

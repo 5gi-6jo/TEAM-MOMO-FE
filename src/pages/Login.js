@@ -6,6 +6,7 @@ import Button from '../elements/Button';
 import { Grid, Input, Text } from '../elements';
 import theme from '../Styles/theme';
 import { momoKor, Line4, Line5 } from '../img';
+import Headerbar from '../shared/Headerbar';
 
 const Login = ({ isLogin }) => {
   const navigate = useNavigate();
@@ -20,7 +21,13 @@ const Login = ({ isLogin }) => {
   return (
     <>
       <React.Fragment>
-        <Grid padding="127px 123px 0px 123px">
+        <Headerbar
+          text="로그인/회원가입"
+          _onClickClose={() => {
+            navigate('/');
+          }}
+        />
+        <Grid padding="75px 125px 0px 125px">
           <Login01 src={momoKor} />
         </Grid>
         <LoginForm />
@@ -47,12 +54,12 @@ const Login = ({ isLogin }) => {
         </Login04>
         {/* <Login03 src={Line5} /> */}
         <hr />
-        <Grid padding="20px 100px 0px 100px">
+        <Grid center padding="20px 0px 0px 0px">
           <Text color={theme.color.gray4} size="12px">
             '모두모여'가 처음이신가요?
           </Text>
         </Grid>
-        <Grid padding="20px 0px 0px 20px">
+        <Grid padding="10px 0px 0px 20px">
           <Button
             width="320px"
             name={'회원가입하기'}
@@ -62,17 +69,6 @@ const Login = ({ isLogin }) => {
             value
             is_green
           />
-        </Grid>
-        <Grid padding="20px 0px 0px 160px">
-          <RefWrap
-            onClick={() => {
-              navigate('/main', { replace: true });
-            }}
-          >
-            <Text color={theme.color.gray4} size="12px">
-              둘러보기
-            </Text>
-          </RefWrap>
         </Grid>
       </React.Fragment>
     </>
@@ -95,7 +91,6 @@ const Login01 = styled.img`
 `;
 
 const Login02 = styled.img``;
-const Login03 = styled.img``;
 const Login04 = styled.div`
   display: flex;
   align-items: center;
@@ -104,9 +99,7 @@ const Login04 = styled.div`
   justify-content: space-evenly;
   padding: 10px 50px 30px 50px;
 `;
-const RefWrap = styled.div`
-  cursor: pointer;
-`;
+
 // defayltProps 작성 위치;
 Login.defaultProps = {};
 
