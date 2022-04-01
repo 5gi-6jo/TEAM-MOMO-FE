@@ -14,9 +14,9 @@ import home_03 from './icon/home_03.png';
 import Line4 from './icon/Line4.png';
 import Line5 from './icon/Line5.png';
 
-
 import frame from './frame.webp';
 import backImg2 from './backImg2.webp';
+import Mascot from './Mascot.png';
 export {
   //--icons---
   log_in,
@@ -25,17 +25,15 @@ export {
   trash_3,
   edit,
   Ellipse32,
-
   chatingicon,
   plusbutton,
   sendbutton,
-
   home_01,
   home_02,
   home_03,
   Line4,
   Line5,
-
+  Mascot,
   //틀
   frame,
   backImg2,

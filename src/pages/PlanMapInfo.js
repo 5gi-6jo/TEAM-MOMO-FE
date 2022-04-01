@@ -11,7 +11,7 @@ import React, {
 import styled from 'styled-components';
 import theme from '../Styles/theme';
 import Headerbar from '../shared/Headerbar';
-import { Text } from '../elements';
+import { Grid, Text } from '../elements';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -20,6 +20,7 @@ import { setUserName } from '../redux/modules/user.js';
 //카카오 맵
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import useIsMount from '../hooks/useIsMount';
+import { setPlans } from '../redux/modules/plan';
 
 /**
  * @param {*} props
@@ -58,7 +59,10 @@ const PlanMapInfo = props => {
       parseFloat(position.lat),
       mycallback,
     );
-  }, [isMount]);
+    return () => {
+      setAddress();
+    };
+  }, [isMount, position]);
   // console.log(address);
 
   return (
@@ -66,11 +70,13 @@ const PlanMapInfo = props => {
       {position && (
         <div>
           {address && (
-            <Text bold size="18px">
-              {address.building_name}, {address.address_name}
-            </Text>
+            <Grid padding="20px">
+              <Text bold size="18px">
+                {address.building_name} , {address.address_name}
+              </Text>
+              <div>{position.sender === 1 ? '약속장소' : position.sender}</div>
+            </Grid>
           )}
-          <div>{position.sender === 1 ? '약속장소' : position.sender}</div>
         </div>
       )}
     </>

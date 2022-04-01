@@ -1,9 +1,12 @@
+/* eslint-disable no-undef */
 import React, { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { Button, Grid } from '../elements';
+import { Button, Grid, Text } from '../elements';
 import styled from 'styled-components';
 
 import Headerbar from '../shared/Headerbar';
+import theme from '../Styles/theme';
+import { BiSearch } from 'react-icons/bi';
 
 const PlanSelectMap = props => {
   const inputref = useRef(); //인풋데이터
@@ -13,6 +16,8 @@ const PlanSelectMap = props => {
   const [map, setMap] = useState(); //지도 데이터
   const [datas, setDatas] = useState(); //리스트 검색 시 들어오는 데이터
   const [isInput, setIsInput] = useState(false); //인풋 눌럿는지 체크
+  const [isdata, setIsData] = useState(false);
+  console.log('isdata', isdata);
   const [selectlist, setSelectlist] = useState({
     //리스트 클릭시 들어갈 데이터
     position: {
@@ -26,13 +31,13 @@ const PlanSelectMap = props => {
 
   useEffect(() => {
     if (!map) return;
-    const ps = new window.kakao.maps.services.Places();
+    const ps = new kakao.maps.services.Places();
 
     ps.keywordSearch(keyword, (data, status, _pagination) => {
-      if (status === window.kakao.maps.services.Status.OK) {
+      if (status === kakao.maps.services.Status.OK) {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
-        const bounds = new window.kakao.maps.LatLngBounds();
+        const bounds = new kakao.maps.LatLngBounds();
         let markers = [];
 
         for (var i = 0; i < data.length; i++) {
@@ -53,7 +58,7 @@ const PlanSelectMap = props => {
         setDatas(data);
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        // map.setBounds(bounds);
+        map.setBounds(bounds);
       }
     });
   }, [map, keyword]);
@@ -66,20 +71,14 @@ const PlanSelectMap = props => {
       <Section>
         <MainModal>
           <Headerbar
+            isback
             _onClickClose={() => {
               props.setShowMap(false);
             }}
             text="장소검색"
           ></Headerbar>
           <Grid padding="15px">
-            <button
-              onClick={() => {
-                setIsInput(false);
-              }}
-            >
-              x
-            </button>
-            <input
+            <InputDest
               ref={inputref}
               onChange={e => {
                 console.log(e.target.value);
@@ -88,24 +87,12 @@ const PlanSelectMap = props => {
               onClick={() => {
                 setIsInput(true);
               }}
-            ></input>
-            <button onClick={inputdatabutton}>test</button>
+            ></InputDest>
+            <Search onClick={inputdatabutton}>
+              <BiSearch size={'15px'} />
+            </Search>
           </Grid>
-          <Grid padding="0px 0px 100px 0px">
-            <div>
-              {selectlist.content}
-              <br />
-              {selectlist.road_address_name}
-            </div>
-            <MyButton>
-              <Button
-                name="도착"
-                height="100px"
-                width="100px"
-                _onClick={() => props.setShowMap(false)}
-              />
-            </MyButton>
-          </Grid>
+
           {isInput && (
             <Grid padding="12px">
               {datas &&
@@ -113,6 +100,7 @@ const PlanSelectMap = props => {
                   <div key={'datas' + index}>
                     <Grid
                       _onClick={() => {
+                        setIsData(true);
                         const markerdata = {
                           position: {
                             lat: point.y,
@@ -147,14 +135,14 @@ const PlanSelectMap = props => {
             </Grid>
           )}
           {!isInput && (
-            <Map // 로드뷰를 표시할 Container
+            <Map
               center={{
                 lat: 37.566826,
                 lng: 126.9786567,
               }}
               style={{
                 width: '100%',
-                height: '545px',
+                height: 'calc(100% - 100px)',
               }}
               level={3}
               onCreate={setMap}
@@ -168,6 +156,35 @@ const PlanSelectMap = props => {
                 )}
               </MapMarker>
             </Map>
+          )}
+          {isdata && (
+            <InfoMap>
+              <div>
+                <div style={{ padding: '0px 0px 5px 0px' }}>
+                  <Text size="18px" bold>
+                    {selectlist.content}
+                  </Text>
+                </div>
+                <Text size="12px">{selectlist.road_address_name}</Text>
+              </div>
+              <div
+                style={{
+                  right: '8%',
+                  position: 'absolute',
+                  padding: '0px 20px 0px 0px',
+                }}
+              >
+                <Button
+                  is_green={isdata}
+                  name="도착"
+                  able={!isdata}
+                  is_disabled={!isdata}
+                  height="100px"
+                  width="80px"
+                  _onClick={() => props.setShowMap(false)}
+                />
+              </div>
+            </InfoMap>
           )}
         </MainModal>
       </Section>
@@ -196,5 +213,29 @@ const MainModal = styled.div`
 const MyButton = styled.div`
   float: right;
 `;
+const InputDest = styled.input`
+  width: 100%;
+  height: 29px;
+  padding: 8px;
+  background: ${theme.color.white};
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  border-radius: 5px;
+`;
 
+const Search = styled.div`
+  position: absolute;
+  top: 8.1%;
+  right: 6%;
+`;
+
+const InfoMap = styled.div`
+  padding: 20px;
+  display: flex;
+  width: 100%;
+  z-index: 10;
+  background-color: ${theme.color.white};
+  position: absolute;
+  bottom: 0;
+`;
 export default PlanSelectMap;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Button, Grid, Text } from '../elements';
 import { GrClose } from 'react-icons/gr';
 import { FiSettings } from 'react-icons/fi';
+import { IoIosArrowBack } from 'react-icons/io';
 // import theme from '../Styles/theme';
 
 /**
@@ -13,12 +14,20 @@ import { FiSettings } from 'react-icons/fi';
  */
 
 const Headerbar = props => {
-  const { _onClickClose, text, _onClickEdit, is_Edit } = props;
+  const { _onClickClose, isback, text, _onClickEdit, is_Edit } = props;
 
   return (
     <>
       <Grid is_flex padding="12px" center>
-        <GrClose size="22px" cursor="pointer" onClick={_onClickClose} />
+        {isback ? (
+          <IoIosArrowBack
+            size="22px"
+            cursor="pointer"
+            onClick={_onClickClose}
+          />
+        ) : (
+          <GrClose size="22px" cursor="pointer" onClick={_onClickClose} />
+        )}
         <Text bold>{text}</Text>
         <div></div>
         {is_Edit && (
@@ -34,6 +43,6 @@ const Headerbar = props => {
 const StyleComponent = styled.div``;
 
 // default props 작성 위치
-Headerbar.defaultProps = { _onClick: () => {} };
+Headerbar.defaultProps = { isback: false, _onClick: () => {} };
 
 export default Headerbar;

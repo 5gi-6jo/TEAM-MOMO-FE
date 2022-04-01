@@ -191,14 +191,14 @@ const PlanMap = forwardRef((props, ref) => {
         _onClickEdit={() => {}}
       ></Headerbar>
 
-      {/* <Button
+      <Button
         _onClick={() => {
           if (map) map.setBounds(bounds);
           console.log('PointerButton');
         }}
       >
         Chating
-      </Button> */}
+      </Button>
 
       <Map // 지도를 표시할 Container
         center={myLocation.center}
