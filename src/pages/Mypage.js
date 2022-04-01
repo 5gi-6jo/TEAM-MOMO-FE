@@ -4,6 +4,11 @@ import { Grid, Text } from '../elements';
 import Header from '../shared/Header';
 import { Line17 } from '../img';
 import ModalInput from '../components/Modal/ModalInput';
+import { useDispatch } from 'react-redux';
+import { setFCMToken } from '../redux/modules/user';
+import { setFCMTokenplan } from '../redux/modules/plan';
+import { deleteToken, getToken } from 'firebase/messaging';
+import { messaging } from '../firebase';
 
 /**
  * @param {*} props
@@ -13,6 +18,7 @@ import ModalInput from '../components/Modal/ModalInput';
  */
 
 const Mypage = props => {
+  const dispatch = useDispatch();
   //modal
   // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
   const [modalOpen, setModalOpen] = useState(false);
@@ -25,7 +31,44 @@ const Mypage = props => {
   };
 
   const modalEl = useRef();
+  const FCMsetup = () => {
+    getToken(messaging, {
+      vapidKey: process.env.REACT_APP_VAPID_KEY,
+    }).then(token => {
+      console.log('token', token);
+      sessionStorage.setItem('FCMtoken', token);
+      const data = {
+        token: sessionStorage.getItem('FCMtoken'),
+      };
 
+      dispatch(setFCMToken(data));
+    });
+  };
+  const FCMremove = () => {
+    getToken(messaging, {
+      vapidKey: process.env.REACT_APP_VAPID_KEY,
+    }).then(token => {
+      deleteToken(messaging).then(() => {
+        console.log('deletetoken');
+        sessionStorage.deleteToken('FCMtoken');
+        const data = {
+          token: '',
+        };
+
+        dispatch(setFCMToken(data));
+      });
+    });
+  };
+  const [FCM, setFCM] = useState(false);
+  const FCMtoggle = () => {
+    if (!FCM) {
+      FCMsetup();
+      setFCM(true);
+    } else {
+      FCMremove();
+      setFCM(false);
+    }
+  };
   const handleModalEl = ({ target }) => {
     if (modalOpen && !modalEl.current.contains(target)) setModalOpen(false);
   };
@@ -75,6 +118,15 @@ const Mypage = props => {
         </div>
       </Grid>
       <button onClick={openModal}>모달팝업버튼</button>
+      <button
+        onClick={() => {
+          dispatch(setFCMTokenplan());
+        }}
+      >
+        FCM test
+      </button>
+      {!FCM ? <div>구독취소</div> : <div>구독</div>}
+      <button onClick={FCMtoggle}>FCM구독 버튼</button>
       <ModalInput
         open={modalOpen}
         close={closeModal}

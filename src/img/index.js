@@ -19,9 +19,8 @@ import face from './icon/face.png';
 import sparkle from './icon/sparkles.png';
 import Line17 from './icon/Line17.png';
 
-
 import frame from './frame.webp';
-import backImg2 from './backImg2.webp';
+import backImg2 from './backImg2.png';
 import Mascot from './Mascot.png';
 export {
   //--icons---
@@ -34,24 +33,16 @@ export {
   chatingicon,
   plusbutton,
   sendbutton,
-
-  home_01,
-  home_02,
-  home_03,
   Line4,
   Line5,
   Mascot,
-
   momoKor,
   momo,
   kakao,
-  Line4,
-  Line5,
   Rect10,
   face,
   sparkle,
   Line17,
-
   //틀
   frame,
   backImg2,

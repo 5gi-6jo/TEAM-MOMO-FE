@@ -183,7 +183,6 @@ const PlanMap = forwardRef((props, ref) => {
   return (
     <>
       <Headerbar
-        is_Edit
         text={`${props.planName}`}
         _onClickClose={() => {
           navigate('/main');
