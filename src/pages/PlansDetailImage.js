@@ -100,7 +100,7 @@ const PlansDetailImage = () => {
         )}
       </ImageDiv>
       <Wrap>
-        <Grid
+        {/* <Grid
           center
           is_cursor
           addStyle={{
@@ -111,7 +111,7 @@ const PlansDetailImage = () => {
           _onClick={downloadButton}
         >
           <Icon src={log_in} />
-        </Grid>
+        </Grid> */}
         <Grid
           center
           is_cursor

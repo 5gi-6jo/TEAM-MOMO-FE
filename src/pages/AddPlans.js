@@ -149,11 +149,29 @@ const AddPlans = props => {
               <Grid is_flex>
                 <Button
                   margin="6px 7px 6px 0px "
+                  abled={abled === 45}
+                  _onClick={timerButton}
+                  value={45}
+                >
+                  45분 전
+                </Button>
+                <Button
+                  margin="6px 0px 6px 7px "
                   abled={abled === 60}
                   _onClick={timerButton}
                   value={60}
                 >
                   1시간 전
+                </Button>
+              </Grid>
+              <Grid is_flex>
+                <Button
+                  margin="6px 7px 6px 0px "
+                  abled={abled === 90}
+                  _onClick={timerButton}
+                  value={90}
+                >
+                  1시간 30분 전
                 </Button>
                 <Button
                   margin="6px 0px 6px 7px "
@@ -162,24 +180,6 @@ const AddPlans = props => {
                   value={120}
                 >
                   2시간 전
-                </Button>
-              </Grid>
-              <Grid is_flex>
-                <Button
-                  margin="6px 7px 6px 0px "
-                  abled={abled === 1440}
-                  _onClick={timerButton}
-                  value={1440}
-                >
-                  1일 전
-                </Button>
-                <Button
-                  margin="6px 0px 6px 7px "
-                  abled={abled === 2880}
-                  _onClick={timerButton}
-                  value={2880}
-                >
-                  2일 전
                 </Button>
               </Grid>
             </Grid>

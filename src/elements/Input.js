@@ -101,7 +101,7 @@ const ElTextarea = styled.textarea`
 
 const ElInput = styled.input`
   border: 1px solid #c4c4c4;
-  width: 320px;
+  width: 100%;
   padding: 12px 12px;
   margin-top: 14px;
   box-sizing: border-box;

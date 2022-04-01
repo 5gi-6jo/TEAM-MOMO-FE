@@ -29,19 +29,23 @@ const Footer = props => {
     '/',
     '/edit',
     '/Login',
-    'Register',
+    '/Register',
     `/plansdetail/images/:id`,
-    `/plan/32032375-2238-4765-b03d-b006ba31c1c3`, //지도 url고민중..
-
-    // `/plansdetail/images/${showplan.planId}`,
+    `/plan/`, //지도
   ];
   useEffect(() => {
     if (locationArray.indexOf(window.location.pathname) !== -1)
       setShowFooter(false);
-    else setShowFooter(true);
+    else if (
+      //지도 URL로 인해 else if 추가
+      locationArray.indexOf(
+        window.location.pathname.split('/plan/')[0] + '/plan/',
+      ) !== -1
+    ) {
+      setShowFooter(false);
+    } else setShowFooter(true);
     return;
   }, [location]);
-
   return (
     <>
       {showFooter && (
@@ -61,7 +65,7 @@ const Footer = props => {
             </Grid>
             <Grid>
               <NavLink
-                to="/plan/32032375-2238-4765-b03d-b006ba31c1c3"
+                to="/plan/a415ad92-548e-4d6e-b0e0-f7b14b1391e2"
                 style={({ isActive }) => ({
                   textDecoration: 'none',
                   color: isActive ? '#F84914' : '#999999',

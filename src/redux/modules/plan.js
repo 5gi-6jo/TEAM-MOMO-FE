@@ -166,7 +166,7 @@ export const setFCMTokenplan = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     const newdata = {
       ...data,
-      planId: 24,
+      planId: 2,
     };
     try {
       return await URL.post(`/api/fcm`, newdata, {
