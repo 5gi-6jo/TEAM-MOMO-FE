@@ -63,6 +63,17 @@ const Login = ({ isLogin }) => {
             is_green
           />
         </Grid>
+        <Grid padding="20px 0px 0px 160px">
+          <RefWrap
+            onClick={() => {
+              navigate('/main', { replace: true });
+            }}
+          >
+            <Text color={theme.color.gray4} size="12px">
+              둘러보기
+            </Text>
+          </RefWrap>
+        </Grid>
       </React.Fragment>
     </>
   );
@@ -92,6 +103,9 @@ const Login04 = styled.div`
   align-content: stretch;
   justify-content: space-evenly;
   padding: 10px 50px 30px 50px;
+`;
+const RefWrap = styled.div`
+  cursor: pointer;
 `;
 // defayltProps 작성 위치;
 Login.defaultProps = {};

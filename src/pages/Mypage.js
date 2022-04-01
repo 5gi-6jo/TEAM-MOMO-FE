@@ -4,6 +4,9 @@ import { Grid, Text } from '../elements';
 import Header from '../shared/Header';
 import { Line17 } from '../img';
 import ModalInput from '../components/Modal/ModalInput';
+import { useNavigate } from 'react-router-dom';
+
+import theme from '../Styles/theme';
 
 /**
  * @param {*} props
@@ -13,6 +16,8 @@ import ModalInput from '../components/Modal/ModalInput';
  */
 
 const Mypage = props => {
+  const navigate = useNavigate();
+
   //modal
   // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
   const [modalOpen, setModalOpen] = useState(false);
@@ -61,18 +66,40 @@ const Mypage = props => {
         </div>
       </Grid>
       <Mypage01 src={Line17} />
-      <Grid padding="30px 0px 0px 30px">
-        <div onClick>
-          <Text size="18px" bold>
-            계정설정
-          </Text>
-        </div>
-        <br />
-        <div onClick>
-          <Text size="18px" bold>
-            피드백 보내기
-          </Text>
-        </div>
+      <Grid padding="30px 0px 30px 30px">
+        <Grid padding="20px 0px 20px 0px">
+          <Mypage02
+            onClick={() => {
+              navigate('/Mypage', { replace: true });
+            }}
+          >
+            <Text size="18px" bold>
+              계정설정
+            </Text>
+          </Mypage02>
+        </Grid>
+        <Grid padding="20px 0px 20px 0px">
+          <Mypage02
+            onClick={() => {
+              navigate('/Mypage', { replace: true });
+            }}
+          >
+            <Text size="18px" bold>
+              피드백 보내기
+            </Text>
+          </Mypage02>
+        </Grid>
+        <Grid padding="20px 0px 20px 0px">
+          <Mypage02
+            onClick={() => {
+              navigate('/', { replace: true });
+            }}
+          >
+            <Text size="18px" bold>
+              모모에 참여하기
+            </Text>
+          </Mypage02>
+        </Grid>
       </Grid>
       <button onClick={openModal}>모달팝업버튼</button>
       <ModalInput
@@ -91,6 +118,10 @@ const Mypage = props => {
 const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 
 const Mypage01 = styled.img``;
+
+const Mypage02 = styled.div`
+  cursor: pointer;
+`;
 
 // default props 작성 위치
 Mypage.defaultProps = {};
