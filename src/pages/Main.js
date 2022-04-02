@@ -30,12 +30,11 @@ const Main = props => {
   const data = {
     date: time,
   };
-  // const planLength = Plans.length;
-  // console.log(planLength);
-
   console.log(Plans);
   console.log(time);
   console.log(user);
+
+  // console.log(Plans[0].planDate);
 
   useEffect(() => {
     if (moment(time).format('YYYY-MM') !== checktime) {
@@ -55,7 +54,7 @@ const Main = props => {
   return (
     <React.Fragment>
       <Header />
-      <div style={{ padding: '20px' }}></div>
+      <div style={{ padding: '10px' }}></div>
       <Grid is_flex padding="5px 20px">
         <UserNick>
           <Text color="white" size="20px" bold>
@@ -65,7 +64,7 @@ const Main = props => {
       </Grid>
       <Grid padding="0px 20px">
         <Text size="20px" bold>
-          약속 늦지않게
+          약속 늦지 않게
           <br />
           조심하세요!
           <FaceImg src={face} />
@@ -75,23 +74,24 @@ const Main = props => {
       <Grid padding="0px 20px">
         <Calendar />
       </Grid>
-      <Grid padding="0px 20px">
+      <Grid padding="10px 20px">
         <Text size="16px">
           {moment(time).format('MM.DD')} ({moment(time).format('dd')})
         </Text>
       </Grid>
       <PlanList>
-        {/* {planLength === 0 ? (
-          <Grid is_flex center>
+        {Plans.length === 0 ? (
+          <Grid is_flex center padding="10px">
             <DinoImg src={dino1} />
-            <Text size="16px" color={theme.color.gray3}>
-              모임이 없습니다.
-              <br />
-              모임을 추가해보세요!
-            </Text>
+            <AlignLeft>
+              <Text size="16px" color={theme.color.gray3}>
+                모임이 없습니다
+                <br />
+                모임을 추가해보세요!
+              </Text>
+            </AlignLeft>
           </Grid>
-        ) : ( */}
-        {Plans &&
+        ) : (
           Plans.map(plan => (
             <Grid is_flex>
               <PlanId
@@ -102,6 +102,7 @@ const Main = props => {
                   });
                 }}
               >
+                {plan.planDate}
                 {plan.planName}
               </PlanId>
               <PlanUrl
@@ -113,16 +114,17 @@ const Main = props => {
                 <CopyText>
                   <input
                     type="text"
-                    // 링크 받아서 value에 넣어주기
-                    value="test copy success!"
+                    value={plan.url}
                     ref={textInput}
                     readOnly
                   ></input>
                 </CopyText>
-                <FiLink size="24px" />
+                {plan.url}
+                <FiLink size="28px" />
               </PlanUrl>
             </Grid>
-          ))}
+          ))
+        )}
       </PlanList>
       <div style={{ padding: '20px' }}></div>
 
@@ -151,13 +153,11 @@ const SparkleImg = styled.img`
   object-fit: cover;
 `;
 
-// @@@@@@@@@@@@@@@@@@@작업다시하기
 const UserNick = styled.div`
   display: flex;
   padding: 3px 5px;
   background-color: ${theme.color.green};
   border-radius: 5px;
-  width: auto;
 `;
 
 const DinoImg = styled.img`
@@ -175,7 +175,7 @@ const PlanList = styled.div`
 `;
 
 const PlanId = styled.div`
-  margin: 5px 0px;
+  margin: 10px 0px;
   padding: 10px;
   width: 200px;
   height: 30px;
@@ -185,9 +185,9 @@ const PlanId = styled.div`
 `;
 
 const PlanUrl = styled.div`
-  margin: 5px 0px;
+  margin: 10px 0px;
   padding: 10px;
-  width: 50px;
+  width: 45px;
   height: 30px;
   color: white;
   background-color: ${theme.color.green};
@@ -195,10 +195,9 @@ const PlanUrl = styled.div`
 `;
 
 const WriteButton = styled.div`
-  position: absolute;
-  bottom: 7vh;
-  left: 50%;
-  margin-left: 25%;
+  position: sticky;
+  left: 75%;
+  bottom: 10%;
   width: 60px;
   height: 60px;
   background-size: cover;
@@ -206,12 +205,16 @@ const WriteButton = styled.div`
 `;
 
 const CopyText = styled.div`
-  position: absolute;
+  /* position: absolute;
   width: 0px;
   height: 0px;
   bottom: 0;
   left: 0;
-  opacity: 0;
+  opacity: 0; */
+`;
+
+const AlignLeft = styled.div`
+  text-align: left;
 `;
 
 // default props 작성 위치
