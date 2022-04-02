@@ -17,17 +17,17 @@ function MyCalendar(props) {
   const [mark, setMark] = useState(['2022-04-05', '2022-04-26']);
   const dispatch = useDispatch();
   const SearchTime = moment(value).format().split('+')[0];
-  const Plans = useSelector(state => state.plan.plans);
+  // const Plans = useSelector(state => state.plan.plans);
 
   useEffect(() => {
     console.log('Calendar:::useEffect');
   }, [SearchTime]);
 
-  useEffect(() => {
-    for (let i = 0; i < Plans.length; i++) {
-      setMark.push(Plans[0].planDate.split('T')[0]);
-    }
-  }, [Plans]);
+  // useEffect(() => {
+  //   for (let i = 0; i < Plans.length; i++) {
+  //     setMark.push(Plans[0].planDate.split('T')[0]);
+  //   }
+  // }, [Plans]);
 
   return (
     <React.Fragment>
