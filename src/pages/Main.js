@@ -30,6 +30,7 @@ const Main = props => {
   const data = {
     date: time,
   };
+  const planLength = Plans.length;
 
   console.log(Plans);
   console.log(time);
@@ -79,7 +80,7 @@ const Main = props => {
         </Text>
       </Grid>
       <PlanList>
-        {Plans.length === 0 ? (
+        {planLength === 0 ? (
           <Grid is_flex center>
             <DinoImg src={dino1} />
             <Text size="16px" color={theme.color.gray3}>
