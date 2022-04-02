@@ -34,8 +34,6 @@ const Main = props => {
   console.log(time);
   console.log(user);
 
-  // console.log(Plans[0].planDate);
-
   useEffect(() => {
     if (moment(time).format('YYYY-MM') !== checktime) {
       dispatch(getPlans(data));
