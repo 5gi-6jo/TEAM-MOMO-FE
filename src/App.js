@@ -4,7 +4,6 @@ import styled, { ThemeProvider } from 'styled-components';
 import theme from './Styles/theme';
 
 //백그라운드 이미지
-import webImg from './img/backImg2.webp';
 import { backImg2, frame } from './img/index';
 
 import Main from './pages/Main';
@@ -16,6 +15,7 @@ import PlansDetail from './pages/PlansDetail';
 import PlansDetailImage from './pages/PlansDetailImage';
 import Home from './pages/Home';
 import OAuthHandler from './service/OAuthHandler';
+import Alarm from './pages/Alarm';
 
 import firebase from 'firebase/compat/app';
 import Register from './pages/Register';
@@ -108,6 +108,7 @@ function App() {
                       <PlanSetName islogin={islogin} userNick={userNick} />
                     }
                   />
+                  <Route path="/Alarm" element={<Alarm />} />
                   {/* <Route
                     path="/planmap/:url"
                     element={

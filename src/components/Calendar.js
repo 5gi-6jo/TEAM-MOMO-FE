@@ -4,35 +4,30 @@ import Calendar from 'react-calendar';
 import './Calendar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCalendarDay } from '../redux/modules/mainsys';
-import { Grid, Text } from '../elements';
+
+/**
+ * @param {*} props
+ * @returns 리턴 설명 적어주기
+ * @역할 무엇을 위한 컴포넌트인지 적어주기
+ * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
+ */
 
 function MyCalendar(props) {
   const [value, SetValue] = useState(new Date());
-  const [mark, setMark] = useState([
-    '2022-02-22',
-    '2022-03-03',
-    '2022-03-10',
-    '2022-03-15',
-    '2022-03-27',
-    '2022-04-26',
-    '2022-04-05',
-  ]);
+  const [mark, setMark] = useState(['2022-04-05', '2022-04-26']);
   const dispatch = useDispatch();
   const SearchTime = moment(value).format().split('+')[0];
-  console.log(SearchTime);
-  const Plans = useSelector(state => state.plan.plans);
-  const Test = () => {
-    const result = [];
-    for (let i = 0; i < Plans.length; i++) {
-      console.log(Plans[0].planDate.split('T')[0]);
-    }
-    return result;
-  };
+  // const Plans = useSelector(state => state.plan.plans);
 
   useEffect(() => {
     console.log('Calendar:::useEffect');
-    // console.log(value);
   }, [SearchTime]);
+
+  // useEffect(() => {
+  //   for (let i = 0; i < Plans.length; i++) {
+  //     setMark.push(Plans[0].planDate.split('T')[0]);
+  //   }
+  // }, [Plans]);
 
   return (
     <React.Fragment>
@@ -55,22 +50,26 @@ function MyCalendar(props) {
         locale={'en'}
         // 특정 날짜에 표시
         tileContent={({ date, view }) => {
-          let html = [];
+          let isDot = [];
           if (mark.find(x => x === moment(date).format('YYYY-MM-DD'))) {
-            html.push(<div className="dot"></div>);
+            isDot.push(<div className="dot"></div>);
           }
           return (
             <>
               <div className="flex justify-center items-center absoluteDiv">
-                {html}
+                {isDot}
               </div>
             </>
           );
         }}
       />
-      <Test />
     </React.Fragment>
   );
 }
+
+// styled components 작성 위치
+
+// default props 작성 위치
+MyCalendar.defaultProps = {};
 
 export default MyCalendar;

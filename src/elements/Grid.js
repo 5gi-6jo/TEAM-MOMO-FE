@@ -13,6 +13,7 @@ const Grid = props => {
     children,
     center,
     left,
+    right,
     bottom,
     heightCenter,
     is_cursor,
@@ -29,6 +30,7 @@ const Grid = props => {
     bg: bg,
     center: center,
     left: left,
+    right: right,
     bottom: bottom,
     height: height,
     heightCenter: heightCenter,
@@ -55,6 +57,7 @@ Grid.defaultProps = {
   bg: false,
   center: false,
   left: false,
+  right: false,
   bottom: false,
   heightCenter: false,
   is_cursor: false,
@@ -77,6 +80,10 @@ const GridBox = styled.div`
     ${props =>
     props.left
       ? `display: flex; align-items: center; justify-content: flex-start;`
+      : ''}
+          ${props =>
+    props.right
+      ? `display: flex; align-items: center; justify-content: flex-end;`
       : ''}
       ${props => (props.bottom ? `position: absolute; bottom: 0;` : '')}
   ${props => (props.is_cursor ? `cursor:pointer` : '')}

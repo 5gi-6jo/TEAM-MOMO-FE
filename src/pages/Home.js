@@ -5,7 +5,7 @@ import { Grid, Text } from '../elements';
 import theme from '../Styles/theme';
 import { KAKAO_AUTH_URL } from '../service/OAuth';
 import { useNavigate } from 'react-router-dom';
-import { momoKor, momo, kakao } from '../img';
+import { momoKor, momo, kakao, Line6 } from '../img';
 import GlobalStyle from '../Styles/GlobalStyle';
 
 /**
@@ -20,18 +20,19 @@ const Home = () => {
   return (
     <React.Fragment>
       <GlobalStyle />
-      <Grid padding="108px 0px 50px 20px">
-        <Text color={theme.color.black} size="24px">
-          <Home01 src={momoKor} /> 에
+      <Grid padding="60px 20px 30px 20px">
+        <Text color={theme.color.black} size="24px" bold>
+          <IconKorMomo src={momoKor} /> 에
           <br />
           <br />
           오신 것을 환영합니다.
           <br />
         </Text>
       </Grid>
-      <Grid padding="80px 0px 0px 20px">
+      <OrangeLine src={Line6} />
+      <Grid padding="30px 20px 60px 20px">
         <Text color={theme.color.gray4} size="14px">
-          <Home02 src={momo} /> 에서
+          <IconMomo src={momo} /> 에서
           <br />
           여러분의 모임을 정리하고
           <br />
@@ -39,56 +40,66 @@ const Home = () => {
         </Text>
       </Grid>
 
-      <Grid padding="">
+      <Grid padding="10px 20px">
         <a href={KAKAO_AUTH_URL}>
           <Button
             position="relative"
             name={'카카오톡으로 시작하기'}
             width="320px"
-            heignt="42px"
-            margin="80px 0px 0px 20px"
+            heignt="40px"
             abled
           >
-            <Home03 src={kakao} />
+            <IconKakao src={kakao} />
           </Button>
         </a>
       </Grid>
 
-      <Grid padding="">
+      <Grid padding="10px 20px">
         <Button
           name={'이메일 로그인·회원가입하기'}
           _onClick={() => {
             navigate('/Login', { replace: true });
           }}
           width="320px"
-          heignt="42px"
-          margin="20px 0px 0px 20px"
+          heignt="40px"
           abled
         />
       </Grid>
-      <Grid padding="20px 0px 0px 160px">
-        <RefWrap
+      <Grid is_Grid center padding="10px">
+        <div></div>
+        <GuestBtn
           onClick={() => {
             navigate('/main', { replace: true });
           }}
         >
-          <Text color={theme.color.gray4} size="12px">
+          <Text color={theme.color.gray4} size="12px" cusor="pointer">
             둘러보기
           </Text>
-        </RefWrap>
+        </GuestBtn>
+        <div></div>
       </Grid>
     </React.Fragment>
   );
 };
 
-// 스타일 컴포넌트 작성 위치
-const Home01 = styled.img``;
-const Home02 = styled.img``;
-const Home03 = styled.img`
-  z-index: 99;
+// styled componetns 작성 위치
+const IconKorMomo = styled.img`
+  object-fit: cover;
 `;
-const RefWrap = styled.div`
+const OrangeLine = styled.img`
+  padding: 0px 40px;
+  object-fit: cover;
+`;
+const IconMomo = styled.img`
+  width: 30px;
+  object-fit: cover;
+`;
+const IconKakao = styled.img`
+  position: absolute;
+`;
+const GuestBtn = styled.div`
   cursor: pointer;
+  margin: auto;
 `;
 
 // default props 작성 위치

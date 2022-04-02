@@ -8,13 +8,20 @@ import theme from '../Styles/theme';
 import { momoKor, Line4 } from '../img';
 import Headerbar from '../shared/Headerbar';
 
+/**
+ * @param {*} props
+ * @returns 리턴 설명 적어주기
+ * @역할 무엇을 위한 컴포넌트인지 적어주기
+ * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
+ */
+
 const Login = ({ isLogin }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isLogin) {
       //modal
-      navigate('/main');
+      navigate('/main', { replace: true });
     }
   });
 
@@ -26,11 +33,11 @@ const Login = ({ isLogin }) => {
           navigate('/');
         }}
       />
-      <Grid padding="75px 125px 0px 125px">
-        <Login01 src={momoKor} />
+      <Grid center padding="60px">
+        <IconMomoKor src={momoKor} />
       </Grid>
       <LoginForm />
-      <Login04>
+      <FindInfo>
         <div
           onClick={() => {
             navigate('/', { replace: true });
@@ -40,7 +47,7 @@ const Login = ({ isLogin }) => {
             아이디 찾기
           </Text>
         </div>
-        <Login02 src={Line4} />
+        <LineMini src={Line4} />
         <div
           onClick={() => {
             navigate('/', { replace: true });
@@ -50,17 +57,19 @@ const Login = ({ isLogin }) => {
             비밀번호 찾기
           </Text>
         </div>
-      </Login04>
-      {/* <Login03 src={Line5} /> */}
+      </FindInfo>
+      <div style={{ padding: '20px' }}></div>
       <hr />
-      <Grid center padding="20px 0px 0px 0px">
+      <div style={{ padding: '20px' }}></div>
+      <Grid center padding="5px">
         <Text color={theme.color.gray4} size="12px">
           '모두모여'가 처음이신가요?
         </Text>
       </Grid>
-      <Grid padding="10px 0px 0px 20px">
+      <Grid padding="15px">
         <Button
           width="320px"
+          heignt="40px"
           name={'회원가입하기'}
           _onClick={() => {
             navigate('/Register', { replace: true });
@@ -73,26 +82,21 @@ const Login = ({ isLogin }) => {
   );
 };
 
-// 스타일 컴포넌트 작성 위치
-const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
-
-const Login01 = styled.img`
-  width: 100%;
-  height: 100%;
+// styled components 작성 위치
+const IconMomoKor = styled.img`
+  width: 100px;
+  object-fit: cover;
 `;
 
-const Login02 = styled.img``;
-
-const Login04 = styled.div`
+const FindInfo = styled.div`
   display: flex;
-  align-items: center;
-  text-align: center;
-  align-content: stretch;
   justify-content: space-evenly;
-  padding: 10px 50px 30px 50px;
+  padding: 5px 80px;
 `;
 
-// defayltProps 작성 위치;
+const LineMini = styled.img``;
+
+// defaultProps 작성 위치
 Login.defaultProps = {};
 
 export default Login;
