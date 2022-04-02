@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import './Calendar.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCalendarDay } from '../redux/modules/mainsys';
 import { Grid, Text } from '../elements';
 
@@ -19,17 +19,26 @@ function MyCalendar(props) {
   ]);
   const dispatch = useDispatch();
   const SearchTime = moment(value).format().split('+')[0];
+  console.log(SearchTime);
+  const Plans = useSelector(state => state.plan.plans);
+  const Test = () => {
+    const result = [];
+    for (let i = 0; i < Plans.length; i++) {
+      console.log(Plans[0].planDate.split('T')[0]);
+    }
+    return result;
+  };
 
   useEffect(() => {
     console.log('Calendar:::useEffect');
     // console.log(value);
   }, [SearchTime]);
+
   return (
-    <div>
+    <React.Fragment>
       <Calendar
         onChange={e => {
           SetValue(e);
-          console.log(e);
           dispatch(setCalendarDay(moment(e).format().split('+')[0]));
         }}
         value={value}
@@ -59,12 +68,8 @@ function MyCalendar(props) {
           );
         }}
       />
-      <Grid padding="20px 0px 20px 10px">
-        <Text size="14px" bold>
-          {moment(value).format('MM.DD')} ({moment(value).format('dd')})
-        </Text>
-      </Grid>
-    </div>
+      <Test />
+    </React.Fragment>
   );
 }
 

@@ -89,7 +89,7 @@ Input.defaultProps = {
   width: '',
   height: '',
   _onChange: () => {},
-  _onChlick: () => {},
+  _onClick: () => {},
 };
 
 const ElTextarea = styled.textarea`

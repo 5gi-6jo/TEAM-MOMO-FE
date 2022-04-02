@@ -87,7 +87,7 @@ const AddPlans = props => {
               labelColor={theme.color.gray1}
               labelText="장소*"
               placeholder="장소를 입력해주세요."
-              _onChlick={() => {
+              _onClick={() => {
                 setShowMap(true);
               }}
               value={address}
