@@ -15,7 +15,7 @@ const Select = props => {
     islabel,
   } = props;
   const time = Array.from({ length: 24 }, (v, i) => i);
-  const minute = Array.from({ length: 60 }, (v, i) => i);
+  const minute = Array.from({ length: 12 }, (v, i) => i * 5);
 
   if (islabel) {
     return (
