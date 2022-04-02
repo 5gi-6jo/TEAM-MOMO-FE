@@ -18,6 +18,8 @@ import Rect10 from './icon/Rectangle10.png';
 import face from './icon/face.png';
 import sparkle from './icon/sparkles.png';
 import Line17 from './icon/Line17.png';
+import dino1 from './icon/dino1.png';
+import dino2 from './icon/dino2.png';
 
 import frame from './frame.webp';
 import backImg2 from './backImg2.png';
@@ -43,6 +45,8 @@ export {
   face,
   sparkle,
   Line17,
+  dino1,
+  dino2,
   //틀
   frame,
   backImg2,

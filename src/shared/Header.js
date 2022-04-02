@@ -4,6 +4,7 @@ import { Grid } from '../elements';
 import { momo } from '../img';
 import { FiBell } from 'react-icons/fi';
 import theme from '../Styles/theme';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * @param {*} props _onClickClose : Close아이콘 클릭이벤트
@@ -13,23 +14,21 @@ import theme from '../Styles/theme';
  */
 
 const Header = props => {
-  const { _onClick } = props;
-
+  const navigate = useNavigate();
   return (
     <React.Fragment>
       <Grid is_flex padding="12px" center>
-        <Grid>
+        <Grid
+          _onClick={() => {
+            navigate('/main');
+          }}
+        >
           <Header01 src={momo} />
         </Grid>
         <Grid></Grid>
         <Grid></Grid>
         <Grid>
-          <FiBell
-            size="20px"
-            cusor="pointer"
-            onClick={_onClick}
-            color={theme.color.gray2}
-          />
+          <FiBell size="20px" cusor="pointer" color={theme.color.gray2} />
         </Grid>
       </Grid>
     </React.Fragment>

@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import { Grid, Text } from '../elements';
 import { Rect10 } from '../img';
 import theme from '../Styles/theme';
+import { HiOutlineChevronRight } from 'react-icons/hi';
 
 const Agreement = props => {
   const [checkBox, setCheckBox] = useState([]);
   const isAllChecked = checkBox.length === 3;
+  console.log(isAllChecked);
   useEffect(() => {
     props.setChecked(isAllChecked);
   });
@@ -23,12 +25,20 @@ const Agreement = props => {
   };
 
   return (
-    <>
+    <React.Fragment>
       <MainWrap>
-        <Grid padding="20px 0px 0px 20px">
+        <Grid padding="10px">
+          <EachCheckWrap>
+            <input type="checkbox" id="checkAll" />
+            <label id="checkAll" htmlFor="checkAll">
+              <Text color={theme.color.black} size="16px" bold>
+                전체 약관 동의
+              </Text>
+            </label>
+          </EachCheckWrap>
           <Rect src={Rect10} />
           <CheckWrap>
-            <Grid is_flex padding="20px 0px 0px 40px">
+            <EachCheckWrap>
               <input
                 type="checkbox"
                 id="check1"
@@ -37,12 +47,20 @@ const Agreement = props => {
                 }}
                 checked={checkBox.includes('check1') ? true : false}
               ></input>
-              <label id="check1" htmlFor="check1"></label>
-              <Text color={theme.color.gray1} size="11px">
-                회원가입 및 운영약관 동의 (필수)
-              </Text>
-            </Grid>
-            <Grid is_flex padding="20px 0px 0px 40px">
+              <label id="check1" htmlFor="check1">
+                <Text color={theme.color.gray1} size="12px">
+                  회원가입 및 운영약관 동의 (필수)
+                </Text>
+              </label>
+              <Icon
+                onClick={() => {
+                  //modal
+                }}
+              >
+                <HiOutlineChevronRight className="right" />
+              </Icon>
+            </EachCheckWrap>
+            <EachCheckWrap>
               <input
                 type="checkbox"
                 id="check2"
@@ -51,12 +69,20 @@ const Agreement = props => {
                 }}
                 checked={checkBox.includes('check2') ? true : false}
               ></input>
-              <label id="check2" htmlFor="check2"></label>
-              <Text color={theme.color.gray1} size="11px">
-                개인정보 수집 및 이용 동의 (필수)
-              </Text>
-            </Grid>
-            <Grid is_flex padding="20px 0px 0px 40px">
+              <label id="check2" htmlFor="check2">
+                <Text color={theme.color.gray1} size="12px">
+                  개인정보 수집 및 이용 동의 (필수)
+                </Text>
+              </label>
+              <Icon
+                onClick={() => {
+                  //modal
+                }}
+              >
+                <HiOutlineChevronRight className="right" />
+              </Icon>
+            </EachCheckWrap>
+            <EachCheckWrap>
               <input
                 type="checkbox"
                 id="check3"
@@ -65,15 +91,23 @@ const Agreement = props => {
                 }}
                 checked={checkBox.includes('check3') ? true : false}
               ></input>
-              <label id="check3" htmlFor="check3"></label>
-              <Text color={theme.color.gray1} size="11px">
-                위치정보 이용약관 동의 (필수)
-              </Text>
-            </Grid>
+              <label id="check3" htmlFor="check3">
+                <Text color={theme.color.gray1} size="12px">
+                  위치정보 이용약관 동의 (필수)
+                </Text>
+              </label>
+              <Icon
+                onClick={() => {
+                  //modal
+                }}
+              >
+                <HiOutlineChevronRight className="right" />
+              </Icon>
+            </EachCheckWrap>
           </CheckWrap>
         </Grid>
       </MainWrap>
-    </>
+    </React.Fragment>
   );
 };
 
@@ -82,8 +116,18 @@ const MainWrap = styled.div`
 `;
 const CheckWrap = styled.div`
   position: absolute;
-  top: 15%;
-  left: 0%;
+  top: 30%;
+  left: 5%;
+`;
+const EachCheckWrap = styled.div`
+  display: flex;
+  padding: 10px;
+  align-items: center;
+`;
+const Icon = styled.div`
+  position: relative;
+  .right {
+  }
 `;
 
 const Rect = styled.img``;

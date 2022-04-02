@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
+import Header from '../shared/Header';
+import { dino2 } from '../img';
+import { useSelector } from 'react-redux';
+import { Grid, Text } from '../elements';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Text } from '../elements';
-import FCMtoken from '../shared/FCMtoken';
-// import { testcol } from '../shared/apis/Socket';
 import theme from '../Styles/theme';
-
-// const writeIcon = '../img/review_write.png';
 
 /**
  * @param {*} props
@@ -15,40 +15,43 @@ import theme from '../Styles/theme';
  */
 
 const Plans = props => {
-  //copy테스트
-  const [success, setSuccess] = useState(false);
-
-  const textInput = useRef();
-
-  const copy = () => {
-    const el = textInput.current;
-    el.select();
-    document.execCommand('copy');
-    setSuccess(true);
-  };
-  // testcol();
-
-  const planunsubscribe = () => {
-    // const unsub = unsubscribe();
-    console.log('unsub');
-  };
+  const navigate = useNavigate();
+  const Plans = useSelector(state => state.plan.plans);
   return (
     <>
-      <input type="text" ref={textInput}></input>
-      <button onClick={copy}>copy</button>
-      <button onClick={planunsubscribe}>구독취소</button>
-      {success ? <div style={{ color: 'green' }}>Success!</div> : null}
-      <div>plans</div>
-      <Text size="17px" bold color={theme.color.gray3}>
-        test
-      </Text>
-      {/* <FCMtoken /> */}
+      <Header />
+      {Plans.length === 0 && (
+        <Grid>
+          <Grid center padding="160px 0px">
+            <Text size="16px" color={theme.color.gray3}>
+              모임을 추가해
+              <br />
+              소중한 추억을
+              <br />
+              만들어 나가세요
+            </Text>
+          </Grid>
+          <Grid center bottom>
+            <Plan01 src={dino2} />
+          </Grid>
+        </Grid>
+      )}
+      {Plans &&
+        Plans.map(plan => (
+          <Grid
+            key={`plans=${plan.planId}`}
+            onClick={() => {
+              navigate(`/plansdetail/${plan.planId}`, { state: plan.planId });
+            }}
+          >
+            {plan.planName}
+          </Grid>
+        ))}
     </>
   );
 };
-//test
 // 스타일 컴포넌트 작성 위치
-const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
+const Plan01 = styled.img``;
 
 // default props 작성 위치
 Plans.defaultProps = {};

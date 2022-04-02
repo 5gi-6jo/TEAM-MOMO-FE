@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import UserApi from '../../shared/apis/userApi';
 import axios from 'axios';
 import { URL } from '../../shared/apis/API';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import { useHistory } from 'react-router';
 
 export const register = createAsyncThunk(
@@ -21,9 +21,14 @@ export const login = createAsyncThunk(
   'user/login',
   async (data, { rejectWithValue }) => {
     try {
+      // const navigate = useNavigate();
+      console.log('test1', data);
       return await URL.post(`/users/login`, data).then(response => {
         console.log(response);
+        console.log('test2');
         sessionStorage.setItem('token', response.headers.authorization);
+        console.log('test1');
+
         return response.data.data;
       });
     } catch (error) {
@@ -37,64 +42,6 @@ export const logout = createAsyncThunk('user/logout', async () => {
   sessionStorage.removeItem('token');
   sessionStorage.removeItem('nickname');
 });
-
-export const KakaoLogin = code => {
-  // const navigate = useNavigate();
-  return function ({ navigate }) {
-    axios({
-      method: 'GET',
-      url: `https://seoultaste.click/users/kakao/callback?code=${code}`,
-    })
-      .then(res => {
-        console.log(res); // 토큰이 넘어올 것임
-
-        const ACCESS_TOKEN = res.data.accessToken;
-
-        localStorage.setItem('token', ACCESS_TOKEN); //예시로 로컬에 저장함
-
-        // navigate('/main', { replace: true }); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
-      })
-      .catch(err => {
-        console.log('소셜로그인 에러', err);
-
-        // navigate('/login', { replace: true }); // 로그인 실패하면 로그인화면으로 돌려보냄
-      });
-  };
-};
-
-// export const sighupAxios = createAsyncThunk(
-//   'user/sighupAxios',
-//   async ({ registerData, navigate }) => {
-//     await Userapi.signUp({ registerData, navigate });
-//   },
-// );
-
-// export const signinAxios = createAsyncThunk(
-//   'user/sighinAxios',
-//   async ({ loginData, navigate }, { dispatch }) => {
-//     const userData = await Userapi.signIn({ loginData, navigate });
-//     console.log(loginData);
-//     console.log(userData.data.data);
-//     const data = {
-//       email: loginData.email,
-//       nickname: userData.data.data.nickname,
-//     };
-//     console.log(data);
-//     dispatch(setUserToSession(data));
-//     // navigate('/', { replace: true });
-
-//     return data;
-//   },
-// );
-
-// export const logoutAxios = createAsyncThunk(
-//   'user/logoutAxios',
-//   async ({ navigate }, { dispatch }) => {
-//     dispatch(deleteUserFromSession());
-//     navigate('/', { replace: true });
-//     return true;
-//   },
-// );
 
 const Userapi = new UserApi();
 export const setFCMTokenAxios = createAsyncThunk(
@@ -157,14 +104,20 @@ export const userSlice = createSlice({
       })
       //로그인
       .addCase(login.pending, state => {
+        console.log('pending');
+
         state.isLoading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
+        console.log('fullfilled');
+
         state.user_info = action.payload;
         state.isLoading = false;
         state.isLoggedin = true;
       })
       .addCase(login.rejected, (state, action) => {
+        console.log('rejected');
+
         state.isLoading = true;
         state.loginError = action.payload;
       })
@@ -180,8 +133,31 @@ export const userSlice = createSlice({
   },
 });
 
+export const { setUserName } = userSlice.actions;
+export const KakaoLogin = code => {
+  const navigate = useNavigate();
+  return function () {
+    axios({
+      method: 'GET',
+      url: `https://seoultaste.click/users/kakao/callback?code=${code}`,
+    })
+      .then(res => {
+        console.log(res); // 토큰이 넘어올 것임
+
+        const ACCESS_TOKEN = res.data.accessToken;
+
+        localStorage.setItem('token', ACCESS_TOKEN); //예시로 로컬에 저장함
+
+        // navigate('/main', { replace: true }); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+      })
+      .catch(err => {
+        console.log('소셜로그인 에러', err);
+
+        // navigate('/login', { replace: true }); // 로그인 실패하면 로그인화면으로 돌려보냄
+      });
+  };
+};
 const actionCreators = { KakaoLogin };
 export { actionCreators };
-export const { setUserName } = userSlice.actions;
 
 export default userSlice.reducer;
