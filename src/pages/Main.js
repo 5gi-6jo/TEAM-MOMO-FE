@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Text } from '../elements';
 import moment from 'moment';
 import Header from '../shared/Header';
-import { face, sparkle } from '../img';
+import { face, sparkle, dino1 } from '../img';
 
 // import moment from 'moment';import theme from '../Styles/theme';
 import { IoIosAddCircle } from 'react-icons/io';
@@ -78,9 +78,10 @@ const Main = props => {
       <Grid padding="0px 10px 0px 10px">
         <Calendar />
       </Grid>
+      {Plans.length === 0 && <Main03 src={dino1} />}
       {Plans &&
         Plans.map(plan => (
-          <div
+          <Grid
             key={`plans=${plan.planId}`}
             onClick={() => {
               navigate(`/plansdetail/${plan.planId}`, { state: plan.planId });
@@ -91,7 +92,7 @@ const Main = props => {
               <input type="text" value="url" ref={textInput} readOnly></input>
               <button onClick={copy}>copy</button>
             </>
-          </div>
+          </Grid>
         ))}
       <WriteButton>
         <IoIosAddCircle
@@ -125,6 +126,8 @@ const WriteButton = styled.div`
 
 const Main01 = styled.img``;
 const Main02 = styled.img``;
+const Main03 = styled.img``;
+
 const Main04 = styled.div`
   background-color: ${theme.color.green};
   width: auto;

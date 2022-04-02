@@ -18,7 +18,7 @@ const Input = props => {
     _type,
     _accept,
     _ref,
-    _onChlick,
+    _onClick,
     value,
     width,
   } = props;
@@ -56,7 +56,7 @@ const Input = props => {
           ref={_ref}
           placeholder={placeholder}
           onChange={_onChange}
-          onClick={_onChlick}
+          onClick={_onClick}
           value={value}
         />
       </Grid>

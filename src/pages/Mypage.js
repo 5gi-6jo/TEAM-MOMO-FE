@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Grid, Text } from '../elements';
 import Header from '../shared/Header';
 import { Line17 } from '../img';
 import ModalInput from '../components/Modal/ModalInput';
 import { useNavigate } from 'react-router-dom';
+import { HiOutlineChevronRight } from 'react-icons/hi';
 
 import theme from '../Styles/theme';
 import { useSelector } from 'react-redux';
@@ -99,38 +100,47 @@ const Mypage = props => {
         </div>
       </Mypage04>
       <Mypage01 src={Line17} />
-      <Grid padding="30px 0px 30px 30px">
-        <Grid padding="20px 0px 20px 0px">
-          <Mypage02
-            onClick={() => {
-              navigate('/Mypage', { replace: true });
-            }}
-          >
-            <Text size="18px" bold>
+      <Grid padding="20px">
+        <Grid padding="20px">
+          <Mypage02>
+            <Text size="18px" bold margin="0px">
+              로그인
+            </Text>
+            <Icon
+              onClick={() => {
+                navigate('/');
+              }}
+            >
+              <HiOutlineChevronRight className="right" />
+            </Icon>
+          </Mypage02>
+        </Grid>
+        <Grid padding="20px">
+          <Mypage02>
+            <Text size="18px" bold margin="0px">
               계정설정
             </Text>
+            <Icon
+              onClick={() => {
+                navigate('/Mypage');
+              }}
+            >
+              <HiOutlineChevronRight className="right" />
+            </Icon>
           </Mypage02>
         </Grid>
-        <Grid padding="20px 0px 20px 0px">
-          <Mypage02
-            onClick={() => {
-              navigate('/Mypage', { replace: true });
-            }}
-          >
-            <Text size="18px" bold>
+        <Grid padding="20px">
+          <Mypage02>
+            <Text size="18px" bold margin="0px">
               피드백 보내기
             </Text>
-          </Mypage02>
-        </Grid>
-        <Grid padding="20px 0px 20px 0px">
-          <Mypage02
-            onClick={() => {
-              navigate('/', { replace: true });
-            }}
-          >
-            <Text size="18px" bold>
-              모모에 가입하기
-            </Text>
+            <Icon
+              onClick={() => {
+                navigate('/Mypage');
+              }}
+            >
+              <HiOutlineChevronRight className="right" />
+            </Icon>
           </Mypage02>
         </Grid>
       </Grid>
@@ -151,12 +161,21 @@ const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 
 const Mypage01 = styled.img``;
 const Mypage02 = styled.div`
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: auto;
 `;
 const Mypage03 = styled.div``;
 const Mypage04 = styled.div`
   display: flex;
   padding: 10px 0px 30px 30px;
+`;
+
+const Icon = styled.div`
+  position: relative;
+  .right {
+  }
 `;
 
 // default props 작성 위치

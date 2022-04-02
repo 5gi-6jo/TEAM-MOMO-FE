@@ -27,7 +27,7 @@ const RegisterForm = props => {
     };
 
     dispatch(register(data));
-    navigate('/main');
+    navigate('/Login');
     console.log(data);
   };
   return (
