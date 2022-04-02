@@ -4,35 +4,25 @@ import Calendar from 'react-calendar';
 import './Calendar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCalendarDay } from '../redux/modules/mainsys';
-import { Grid, Text } from '../elements';
 
 function MyCalendar(props) {
   const [value, SetValue] = useState(new Date());
-  const [mark, setMark] = useState([
-    '2022-02-22',
-    '2022-03-03',
-    '2022-03-10',
-    '2022-03-15',
-    '2022-03-27',
-    '2022-04-26',
-    '2022-04-05',
-  ]);
+  const [mark, setMark] = useState([]);
   const dispatch = useDispatch();
   const SearchTime = moment(value).format().split('+')[0];
   console.log(SearchTime);
   const Plans = useSelector(state => state.plan.plans);
-  const Test = () => {
-    const result = [];
-    for (let i = 0; i < Plans.length; i++) {
-      console.log(Plans[0].planDate.split('T')[0]);
-    }
-    return result;
-  };
 
   useEffect(() => {
     console.log('Calendar:::useEffect');
     // console.log(value);
   }, [SearchTime]);
+
+  useEffect(() => {
+    for (let i = 0; i < Plans.length; i++) {
+      setMark.push(Plans[0].planDate.split('T')[0]);
+    }
+  }, [Plans]);
 
   return (
     <React.Fragment>
@@ -68,7 +58,6 @@ function MyCalendar(props) {
           );
         }}
       />
-      <Test />
     </React.Fragment>
   );
 }
