@@ -189,7 +189,7 @@ const FramePhone = styled.div`
 
     right: 20%;
     top: 50%;
-    transform: translate(0%, -50%) scale(0.8);
+    transform: translate(0%, -50%) scale(1);
   }
 `;
 const View = styled.div`
@@ -219,7 +219,7 @@ const View = styled.div`
     max-width: 360px;
 
     top: 49%;
-    right: 50%;
+    right: 48%;
     transform: translate(50%, -50%);
     /* border-radius: 40px 40px 0px 0px; */
     border-radius: 40px;
