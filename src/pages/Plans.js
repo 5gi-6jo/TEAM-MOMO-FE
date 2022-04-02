@@ -20,7 +20,7 @@ const Plans = props => {
   return (
     <>
       <Header />
-      {Plans.length === 0 && (
+      {Plans.length === 0 ? (
         <Grid>
           <Grid center padding="160px 0px">
             <Text size="16px" color={theme.color.gray3}>
@@ -32,11 +32,10 @@ const Plans = props => {
             </Text>
           </Grid>
           <Grid center bottom>
-            <Plan01 src={dino2} />
+            <DinoImg src={dino2} />
           </Grid>
         </Grid>
-      )}
-      {Plans &&
+      ) : (
         Plans.map(plan => (
           <Grid
             key={`plans=${plan.planId}`}
@@ -46,12 +45,15 @@ const Plans = props => {
           >
             {plan.planName}
           </Grid>
-        ))}
+        ))
+      )}
     </>
   );
 };
-// 스타일 컴포넌트 작성 위치
-const Plan01 = styled.img``;
+// styled components 작성 위치
+const DinoImg = styled.img`
+  object-fit: cover;
+`;
 
 // default props 작성 위치
 Plans.defaultProps = {};

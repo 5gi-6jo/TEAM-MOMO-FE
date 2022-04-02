@@ -6,15 +6,34 @@ import { login, setFCMToken } from '../redux/modules/user';
 import { Grid, Input } from '../elements';
 import theme from '../Styles/theme';
 
+/**
+ * @param {*} props
+ * @returns 리턴 설명 적어주기
+ * @역할 무엇을 위한 컴포넌트인지 적어주기
+ * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
+ */
+
 const LoginForm = props => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
+  const Login = () => {
+    const loginData = {
+      email: email,
+      password: pw,
+    };
+    dispatch(login(loginData));
+    navigate('/main');
+    const data = {
+      token: sessionStorage.getItem('FCMtoken'),
+    };
+    dispatch(setFCMToken(data));
+  };
 
   return (
     <React.Fragment>
-      <Grid padding="75px 20px 0px 20px">
+      <Grid padding="0px 20px">
         <Input
           labelBold
           labelColor={theme.color.gray1}
@@ -28,7 +47,7 @@ const LoginForm = props => {
           }}
         />
       </Grid>
-      <Grid padding="0px 20px 0px 20px">
+      <Grid padding="0px 20px">
         <Input
           labelBold
           labelColor={theme.color.gray1}
@@ -44,27 +63,18 @@ const LoginForm = props => {
       <Button
         name={'로그인하기'}
         width="320px"
-        heignt="42px"
-        margin="20px 0px 0px 20px"
+        heignt="40px"
+        margin="15px 20px"
         abled
-        _onClick={() => {
-          const loginData = {
-            email: email,
-            password: pw,
-          };
-          dispatch(login(loginData));
-          navigate('/main');
-          // .then(res => navigate('/main'));
-
-          const data = {
-            token: sessionStorage.getItem('FCMtoken'),
-          };
-
-          dispatch(setFCMToken(data));
-        }}
+        _onClick={Login}
       />
     </React.Fragment>
   );
 };
+
+// styled components 작성 위치
+
+// default props 작성 위치
+LoginForm.defaultProps = {};
 
 export default LoginForm;

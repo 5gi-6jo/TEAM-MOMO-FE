@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import Button from '../elements/Button';
 import { register } from '../redux/modules/user';
 import { Grid, Input } from '../elements';
 import Agreement from './Agreement';
 import theme from '../Styles/theme';
 import { useNavigate } from 'react-router-dom';
+
+/**
+ * @param {*} props
+ * @returns 리턴 설명 적어주기
+ * @역할 무엇을 위한 컴포넌트인지 적어주기
+ * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
+ */
+
 const RegisterForm = props => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,8 +23,9 @@ const RegisterForm = props => {
   const [pw, setPw] = useState('');
   const [pwCheck, setPwCheck] = useState('');
 
-  // 체크박스
+  // checkbox
   const [checked, setChecked] = useState(false);
+
   const Register = () => {
     const data = {
       email: email,
@@ -37,20 +45,6 @@ const RegisterForm = props => {
           islabel
           labelBold
           labelColor={theme.color.gray1}
-          labelText="닉네임*"
-          placeholder="닉네임을 입력하세요"
-          type="text"
-          _onChange={e => {
-            setNickname(e.target.value);
-          }}
-          value={nickname}
-        />
-      </Grid>
-      <Grid padding="10px">
-        <Input
-          islabel
-          labelBold
-          labelColor={theme.color.gray1}
           labelText="이메일 주소 (아이디)*"
           placeholder="이메일을 입력하세요"
           type="text"
@@ -58,6 +52,20 @@ const RegisterForm = props => {
             setEmail(e.target.value);
           }}
           value={email}
+        />
+      </Grid>
+      <Grid padding="10px">
+        <Input
+          islabel
+          labelBold
+          labelColor={theme.color.gray1}
+          labelText="닉네임*"
+          placeholder="닉네임을 입력하세요"
+          type="text"
+          _onChange={e => {
+            setNickname(e.target.value);
+          }}
+          value={nickname}
         />
       </Grid>
       <Grid padding="10px">
@@ -101,8 +109,8 @@ const RegisterForm = props => {
         }
         name={'회원가입하기'}
         width="320px"
-        heignt="42px"
-        margin="0px 0px 0px 10px"
+        heignt="40px"
+        margin="0px 10px"
         type="button"
         _onClick={Register}
       />
@@ -110,8 +118,9 @@ const RegisterForm = props => {
   );
 };
 
-// 스타일 컴포넌트 작성 위치
+// styled components 작성 위치
 
 // default props 작성 위치
+RegisterForm.defaultProps = {};
 
 export default RegisterForm;

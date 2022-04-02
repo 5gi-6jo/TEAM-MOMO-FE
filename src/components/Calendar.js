@@ -5,17 +5,22 @@ import './Calendar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCalendarDay } from '../redux/modules/mainsys';
 
+/**
+ * @param {*} props
+ * @returns 리턴 설명 적어주기
+ * @역할 무엇을 위한 컴포넌트인지 적어주기
+ * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
+ */
+
 function MyCalendar(props) {
   const [value, SetValue] = useState(new Date());
   const [mark, setMark] = useState([]);
   const dispatch = useDispatch();
   const SearchTime = moment(value).format().split('+')[0];
-  console.log(SearchTime);
   const Plans = useSelector(state => state.plan.plans);
 
   useEffect(() => {
     console.log('Calendar:::useEffect');
-    // console.log(value);
   }, [SearchTime]);
 
   useEffect(() => {
@@ -43,16 +48,17 @@ function MyCalendar(props) {
         prev2Label={''}
         // 요일 영어로 표시
         locale={'en'}
+        selectRange={true}
         // 특정 날짜에 표시
         tileContent={({ date, view }) => {
-          let html = [];
+          let isDot = [];
           if (mark.find(x => x === moment(date).format('YYYY-MM-DD'))) {
-            html.push(<div className="dot"></div>);
+            isDot.push(<div className="dot"></div>);
           }
           return (
             <>
               <div className="flex justify-center items-center absoluteDiv">
-                {html}
+                {isDot}
               </div>
             </>
           );
@@ -61,5 +67,10 @@ function MyCalendar(props) {
     </React.Fragment>
   );
 }
+
+// styled components 작성 위치
+
+// default props 작성 위치
+Calendar.defaultProps = {};
 
 export default MyCalendar;

@@ -23,7 +23,7 @@ const Header = props => {
             navigate('/main');
           }}
         >
-          <Header01 src={momo} />
+          <IconMomo src={momo} />
         </Grid>
         <Grid></Grid>
         <Grid></Grid>
@@ -35,10 +35,10 @@ const Header = props => {
   );
 };
 
-// 스타일 컴포넌트 작성 위치
-const Header01 = styled.img`
-  width: 75%;
-  height: 75%;
+// styled components 작성 위치
+const IconMomo = styled.img`
+  width: 60px;
+  object-fit: cover;
 `;
 
 // default props 작성 위치

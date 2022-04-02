@@ -12,13 +12,11 @@ import momoKor from './icon/momoKor.png';
 import momo from './icon/momo.png';
 import kakao from './icon/kakao.png';
 import Line4 from './icon/Line4.png';
-import Line5 from './icon/Line5.png';
 import Line6 from './icon/Line6.png';
 
 import Rect10 from './icon/Rectangle10.png';
 import face from './icon/face.png';
 import sparkle from './icon/sparkles.png';
-import Line17 from './icon/Line17.png';
 import dino1 from './icon/dino1.png';
 import dino2 from './icon/dino2.png';
 
@@ -37,7 +35,6 @@ export {
   plusbutton,
   sendbutton,
   Line4,
-  Line5,
   Line6,
   Mascot,
   momoKor,
@@ -46,7 +43,6 @@ export {
   Rect10,
   face,
   sparkle,
-  Line17,
   dino1,
   dino2,
   //틀
