@@ -20,7 +20,7 @@ const Plans = props => {
   return (
     <>
       <Header />
-      {Plans.length === 0 ? (
+      {/* {Plans.length === 0 ? (
         <Grid>
           <Grid center padding="160px 0px">
             <Text size="16px" color={theme.color.gray3}>
@@ -35,7 +35,8 @@ const Plans = props => {
             <DinoImg src={dino2} />
           </Grid>
         </Grid>
-      ) : (
+      ) : ( */}
+      {Plans &&
         Plans.map(plan => (
           <Grid
             key={`plans=${plan.planId}`}
@@ -45,8 +46,7 @@ const Plans = props => {
           >
             {plan.planName}
           </Grid>
-        ))
-      )}
+        ))}
     </>
   );
 };
