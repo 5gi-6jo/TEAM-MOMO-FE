@@ -12,6 +12,7 @@ import { face, sparkle, dino1 } from '../img';
 
 // import moment from 'moment';import theme from '../Styles/theme';
 import { IoIosAddCircle } from 'react-icons/io';
+import { FiLink } from 'react-icons/fi';
 import theme from '../Styles/theme';
 
 /**
@@ -27,8 +28,9 @@ const Main = props => {
   const Plans = useSelector(state => state.plan.plans);
   const time = useSelector(state => state.main.calendarDay);
   const user = useSelector(state => state.user.user_info);
-  console.log(user);
+  console.log(Plans);
   console.log(time);
+  console.log(user);
   const [checktime, setChecktime] = useState();
   useEffect(() => {
     if (moment(time).format('YYYY-MM') !== checktime) {
@@ -39,17 +41,13 @@ const Main = props => {
     }
     return console.log('main::return');
   }, [time]);
-  console.log(moment(time).format('YYYY-MM'));
-  console.log(checktime);
-  console.log(checktime === moment(time).format('YYYY-MM'));
-  console.log(Plans);
   const data = {
     date: time,
   };
-  // console.log(data);
-  //-01T00:00:00
-  const textInput = useRef();
 
+  // 링크버튼받아오기
+
+  const textInput = useRef();
   const copy = () => {
     const el = textInput.current;
     el.select();
@@ -60,40 +58,65 @@ const Main = props => {
     <React.Fragment>
       <Header />
       <Grid is_flex padding="20px 0px 0px 20px">
-        <Main04>
+        <UserNick>
           <Text color="white" size="20px" bold>
             {user.nickname ? user.nickname : 'unknown'}님
           </Text>
-        </Main04>
+        </UserNick>
       </Grid>
       <Grid padding="10px 0px 0px 20px">
         <Text size="20px" bold>
           약속 늦지않게
           <br />
           조심하세요!
-          <Main01 src={face} />
-          <Main02 src={sparkle} />
+          <FaceImg src={face} />
+          <SparkleImg src={sparkle} />
         </Text>
       </Grid>
-      <Grid padding="0px 10px 0px 10px">
+      <Grid padding="10px">
         <Calendar />
       </Grid>
-      {Plans.length === 0 && <Main03 src={dino1} />}
-      {Plans &&
-        Plans.map(plan => (
-          <Grid
-            key={`plans=${plan.planId}`}
-            onClick={() => {
-              navigate(`/plansdetail/${plan.planId}`, { state: plan.planId });
-            }}
-          >
-            {plan.planName}
-            <>
-              <input type="text" value="url" ref={textInput} readOnly></input>
-              <button onClick={copy}>copy</button>
-            </>
-          </Grid>
-        ))}
+      <Grid padding="5px 20px">
+        <Text size="14px">
+          {moment(time).format('MM.DD')} ({moment(time).format('dd')})
+        </Text>
+      </Grid>
+      <PlanList>
+        {Plans.length === 0 && <DinoImg src={dino1} />}
+        {Plans &&
+          Plans.map(plan => (
+            <Grid is_flex>
+              <PlanId
+                key={`plans=${plan.planId}`}
+                onClick={() => {
+                  navigate(`/plansdetail/${plan.planId}`, {
+                    state: plan.planId,
+                  });
+                }}
+              >
+                {plan.planName}
+              </PlanId>
+              <PlanUrl
+                onClick={() => {
+                  copy();
+                  // modal실행
+                }}
+              >
+                <CopyText>
+                  <input
+                    type="text"
+                    value="url"
+                    ref={textInput}
+                    readOnly
+                  ></input>
+                </CopyText>
+                <FiLink size="24px" />
+              </PlanUrl>
+            </Grid>
+          ))}
+      </PlanList>
+      <div style={{ padding: '20px' }}></div>
+
       <WriteButton>
         <IoIosAddCircle
           className="WriteButton"
@@ -109,7 +132,49 @@ const Main = props => {
 };
 
 // 스타일 컴포넌트 작성 위치
-const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
+const FaceImg = styled.img``;
+
+const SparkleImg = styled.img``;
+
+const UserNick = styled.div`
+  padding: 3px 5px;
+  background-color: ${theme.color.green};
+  border-radius: 5px;
+  width: auto;
+  display: flex;
+`;
+
+const DinoImg = styled.img``;
+
+const PlanList = styled.div`
+  padding: 10px 30px;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome , Safari , Opera */
+  }
+`;
+
+const PlanId = styled.div`
+  margin: 5px 0px;
+  padding: 10px;
+  width: 200px;
+  height: 30px;
+  color: white;
+  background-color: ${theme.color.green};
+  border-radius: 10px;
+`;
+
+const PlanUrl = styled.div`
+  margin: 5px 0px;
+  padding: 10px;
+  width: 50px;
+  height: 30px;
+  color: white;
+  background-color: ${theme.color.green};
+  border-radius: 10px;
+`;
 
 const WriteButton = styled.div`
   position: absolute;
@@ -124,14 +189,13 @@ const WriteButton = styled.div`
   // color: theme.color.orange
 `;
 
-const Main01 = styled.img``;
-const Main02 = styled.img``;
-const Main03 = styled.img``;
-
-const Main04 = styled.div`
-  background-color: ${theme.color.green};
-  width: auto;
-  display: flex;
+const CopyText = styled.div`
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
 `;
 
 // default props 작성 위치

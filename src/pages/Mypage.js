@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Grid, Text } from '../elements';
 import Header from '../shared/Header';
@@ -9,6 +9,11 @@ import { HiOutlineChevronRight } from 'react-icons/hi';
 
 import theme from '../Styles/theme';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setFCMToken } from '../redux/modules/user';
+import { setFCMTokenplan } from '../redux/modules/plan';
+import { deleteToken, getToken } from 'firebase/messaging';
+import { messaging } from '../firebase';
 
 /**
  * @param {*} props
@@ -19,6 +24,7 @@ import { useSelector } from 'react-redux';
 
 const Mypage = props => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector(state => state.user.user_info);
 
   //modal
@@ -32,27 +38,56 @@ const Mypage = props => {
     setModalOpen(false);
   };
 
-  // const modalEl = useRef();
+  const modalEl = useRef();
 
-  // const handleModalEl = ({ target }) => {
-  //   if (modalOpen && !modalEl.current.contains(target)) setModalOpen(false);
-  // };
+  const handleModalEl = ({ target }) => {
+    if (modalOpen && !modalEl.current.contains(target)) setModalOpen(false);
+  };
 
-  // useEffect(() => {
-  //   window.addEventListener('click', handleModalEl);
-  //   return () => {
-  //     window.removeEventListener('click', handleModalEl);
-  //   };
-  // }, []);
+  useEffect(() => {
+    window.addEventListener('click', handleModalEl);
+    return () => {
+      window.removeEventListener('click', handleModalEl);
+    };
+  }, []);
 
-  // const handleModal = (e) => {
-  //   if(modalOpen && )
-  // }
+  const FCMsetup = () => {
+    getToken(messaging, {
+      vapidKey: process.env.REACT_APP_VAPID_KEY,
+    }).then(token => {
+      console.log('token', token);
+      sessionStorage.setItem('FCMtoken', token);
+      const data = {
+        token: sessionStorage.getItem('FCMtoken'),
+      };
 
-  // if (modalOpen) {
-  //   window.addEventListener('click', handleMoal);
-  // }
-
+      dispatch(setFCMToken(data));
+    });
+  };
+  const FCMremove = () => {
+    getToken(messaging, {
+      vapidKey: process.env.REACT_APP_VAPID_KEY,
+    }).then(token => {
+      deleteToken(messaging).then(() => {
+        console.log('deletetoken');
+        sessionStorage.deleteToken('FCMtoken');
+        const data = {
+          token: '',
+        };
+        dispatch(setFCMToken(data));
+      });
+    });
+  };
+  const [FCM, setFCM] = useState(false);
+  const FCMtoggle = () => {
+    if (!FCM) {
+      FCMsetup();
+      setFCM(true);
+    } else {
+      FCMremove();
+      setFCM(false);
+    }
+  };
   return (
     <React.Fragment>
       <Header />
@@ -71,14 +106,6 @@ const Mypage = props => {
           </Text>
         </Mypage03>
       </Grid>
-      {/* <Grid left padding="10px 0px 30px 30px">
-        <div onClick>
-          <Text size="13px">닉네임변경</Text>
-        </div>
-        <div onClick>
-          <Text size="13px">로그아웃</Text>
-        </div>
-      </Grid> */}
       <Mypage04>
         <div
           onClick={() => {
@@ -152,6 +179,15 @@ const Mypage = props => {
         contents="팝업창내용"
         // _onChange={실행시킬함수}
       ></ModalInput>
+      <button
+        onClick={() => {
+          dispatch(setFCMTokenplan());
+        }}
+      >
+        FCM test
+      </button>
+      {!FCM ? <div>구독취소</div> : <div>구독</div>}
+      <button onClick={FCMtoggle}>FCM구독 버튼</button>
     </React.Fragment>
   );
 };
