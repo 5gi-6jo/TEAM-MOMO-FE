@@ -20,7 +20,7 @@ import sparkle from './icon/sparkles.png';
 import dino1 from './icon/dino1.png';
 import dino2 from './icon/dino2.png';
 
-import frame from './frame.webp';
+import frame from './frame.png';
 import backImg2 from './backImg2.png';
 import Mascot from './Mascot.png';
 export {
