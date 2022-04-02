@@ -146,13 +146,14 @@ export const deleteImage = createAsyncThunk(
   async (imageId, { rejectWithValue }) => {
     try {
       console.log(imageId);
-      return await URL.delete(`/plans/images/${imageId}`, {
+      return await URL.delete(`/images/${imageId}`, {
         headers: {
           Authorization: sessionStorage.getItem('token'),
           'Content-Type': 'application/json',
         },
       }).then(res => {
         console.log(res);
+        return imageId;
       });
     } catch (error) {
       console.log(error);
@@ -166,7 +167,7 @@ export const setFCMTokenplan = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     const newdata = {
       ...data,
-      planId: 24,
+      planId: 3,
     };
     try {
       return await URL.post(`/api/fcm`, newdata, {
@@ -223,6 +224,12 @@ export const planSlice = createSlice({
           action.payload,
         );
         state.images = action.payload;
+      })
+
+      .addCase(deleteImage.fulfilled, (state, action) => {
+        state.showplan.imageList = state.showplan.imageList.filter(
+          e => e.imageId !== action.payload,
+        );
       })
       .addCase(setFCMTokenplan.fulfilled, (state, action) => {});
 

@@ -21,11 +21,7 @@ import firebase from 'firebase/compat/app';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import EditPlans from './pages/EditPlans';
-import Map from './pages/Map';
 import { useDispatch, useSelector } from 'react-redux';
-import PlanChating from './pages/PlanChating';
-import PlanMap from './pages/PlanMap';
-import Plansocket from './pages/Plansocket';
 import { useEffect, useState } from 'react';
 import { getUserbyToken } from './redux/modules/user';
 import FCMtoken from './shared/FCMtoken';
@@ -49,6 +45,7 @@ function App() {
   const islogin = useSelector(state => state.user.is_login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   if (istoken && !islogin) {
     dispatch(getUserbyToken(navigate));
   }
@@ -85,7 +82,7 @@ function App() {
               }}
             >
               <View>
-                <FCMtoken />
+                {/* <FCMtoken /> */}
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route

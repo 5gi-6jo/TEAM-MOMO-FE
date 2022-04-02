@@ -9,7 +9,7 @@ export const getPlanId = createAsyncThunk(
           Authorization: sessionStorage.getItem('token'),
           'Content-Type': 'application/json',
         },
-      }).then(response => response.data.data.planId);
+      }).then(response => response.data.data);
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -21,7 +21,7 @@ export const mapSlice = createSlice({
   name: 'map',
   initialState: {
     planId: '',
-    showplan: [],
+    planName: '',
     publicMaps: [],
     publicChats: [],
 
@@ -66,7 +66,8 @@ export const mapSlice = createSlice({
       })
 
       .addCase(getPlanId.fulfilled, (state, action) => {
-        state.planId = action.payload;
+        state.planId = action.payload.planId;
+        state.planName = action.payload.planeName;
         state.loading = false;
       });
   },

@@ -24,7 +24,7 @@ import { FiSettings } from 'react-icons/fi';
  * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
  */
 
-const AddPlans = props => {
+const EditPlans = props => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [abled, setabled] = useState('');
@@ -272,6 +272,6 @@ const Icon = styled.div`
 `;
 
 // default props 작성 위치
-AddPlans.defaultProps = {};
+EditPlans.defaultProps = {};
 
-export default AddPlans;
+export default EditPlans;

@@ -88,7 +88,7 @@ const PlanChating = props => {
         <MainModal>
           <Headerbar
             is_Edit
-            text="모임이름{} 채팅방"
+            text={`${props.planName} 채팅방`}
             _onClickClose={() => {
               console.log('asdfsad');
               setIsChating(false);

@@ -21,6 +21,7 @@ import PlanChating from './PlanChating';
 
 const Plansocket = props => {
   const planId = props.planId;
+  const planName = props.planName;
   const sock = props.sock;
   const client = props.client;
   const dispatch = useDispatch();
@@ -151,6 +152,7 @@ const Plansocket = props => {
         publicChats={publicChats}
         publicMaps={publicMaps}
         planId={planId}
+        planName={planName}
         usernick={usernick}
       />
       <Image
@@ -171,6 +173,7 @@ const Plansocket = props => {
           // handleMessage={handleMessage}
           // sendMessage={sendMessage}
           planId={planId}
+          planName={planName}
           usernick={usernick}
           setIsChating={setIsChating}
         />
