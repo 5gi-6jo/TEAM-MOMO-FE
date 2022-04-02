@@ -5,7 +5,7 @@ import { Grid, Text } from '../elements';
 import theme from '../Styles/theme';
 import { KAKAO_AUTH_URL } from '../service/OAuth';
 import { useNavigate } from 'react-router-dom';
-import { momoKor, momo, kakao } from '../img';
+import { momoKor, momo, kakao, Line6 } from '../img';
 import GlobalStyle from '../Styles/GlobalStyle';
 
 /**
@@ -21,7 +21,7 @@ const Home = () => {
     <React.Fragment>
       <GlobalStyle />
       <Grid padding="108px 0px 50px 20px">
-        <Text color={theme.color.black} size="24px">
+        <Text color={theme.color.black} size="24px" bold>
           <Home01 src={momoKor} /> 에
           <br />
           <br />
@@ -29,6 +29,7 @@ const Home = () => {
           <br />
         </Text>
       </Grid>
+      <OrangeLine src={Line6} />
       <Grid padding="80px 0px 0px 20px">
         <Text color={theme.color.gray4} size="14px">
           <Home02 src={momo} /> 에서
@@ -41,6 +42,7 @@ const Home = () => {
 
       <Grid padding="">
         <a href={KAKAO_AUTH_URL}>
+          <Home03 src={kakao} />
           <Button
             position="relative"
             name={'카카오톡으로 시작하기'}
@@ -48,9 +50,7 @@ const Home = () => {
             heignt="42px"
             margin="80px 0px 0px 20px"
             abled
-          >
-            <Home03 src={kakao} />
-          </Button>
+          ></Button>
         </a>
       </Grid>
 
@@ -83,9 +83,14 @@ const Home = () => {
 
 // 스타일 컴포넌트 작성 위치
 const Home01 = styled.img``;
+const OrangeLine = styled.img`
+  padding: 0px 40px;
+`;
 const Home02 = styled.img``;
 const Home03 = styled.img`
-  z-index: 99;
+  position: absolute;
+  top: 70.3%;
+  left: 14.5%;
 `;
 const RefWrap = styled.div`
   cursor: pointer;

@@ -13,6 +13,7 @@ import momo from './icon/momo.png';
 import kakao from './icon/kakao.png';
 import Line4 from './icon/Line4.png';
 import Line5 from './icon/Line5.png';
+import Line6 from './icon/Line6.png';
 
 import Rect10 from './icon/Rectangle10.png';
 import face from './icon/face.png';
@@ -37,6 +38,7 @@ export {
   sendbutton,
   Line4,
   Line5,
+  Line6,
   Mascot,
   momoKor,
   momo,
