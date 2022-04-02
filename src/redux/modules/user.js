@@ -78,7 +78,9 @@ export const getUserbyToken = createAsyncThunk(
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    user_info: {},
+    user_info: {
+      nickname: '',
+    },
     is_login: false,
     loginError: '',
     registerError: '',

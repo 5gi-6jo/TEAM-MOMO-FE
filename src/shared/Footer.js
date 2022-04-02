@@ -135,7 +135,7 @@ const NavBox = styled.div`
     border: 1px solid #e4e4e4;
     border-radius: 0px 0px 40px 40px;
     /* max-width: 422px; */
-    transform: translate(19%, -172%);
+    transform: translate(22%, -160%);
   }
 `;
 
