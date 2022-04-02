@@ -14,7 +14,7 @@ import { setCalendarDay } from '../redux/modules/mainsys';
 
 function MyCalendar(props) {
   const [value, SetValue] = useState(new Date());
-  const [mark, setMark] = useState([]);
+  const [mark, setMark] = useState(['2022-04-05', '2022-04-26']);
   const dispatch = useDispatch();
   const SearchTime = moment(value).format().split('+')[0];
   const Plans = useSelector(state => state.plan.plans);
@@ -48,7 +48,6 @@ function MyCalendar(props) {
         prev2Label={''}
         // 요일 영어로 표시
         locale={'en'}
-        selectRange={true}
         // 특정 날짜에 표시
         tileContent={({ date, view }) => {
           let isDot = [];
@@ -71,6 +70,6 @@ function MyCalendar(props) {
 // styled components 작성 위치
 
 // default props 작성 위치
-Calendar.defaultProps = {};
+MyCalendar.defaultProps = {};
 
 export default MyCalendar;
