@@ -30,7 +30,8 @@ const Main = props => {
   const data = {
     date: time,
   };
-  const planLength = Plans.length;
+  // const planLength = Plans.length;
+  // console.log(planLength);
 
   console.log(Plans);
   console.log(time);
@@ -80,7 +81,7 @@ const Main = props => {
         </Text>
       </Grid>
       <PlanList>
-        {planLength === 0 ? (
+        {/* {planLength === 0 ? (
           <Grid is_flex center>
             <DinoImg src={dino1} />
             <Text size="16px" color={theme.color.gray3}>
@@ -89,7 +90,8 @@ const Main = props => {
               모임을 추가해보세요!
             </Text>
           </Grid>
-        ) : (
+        ) : ( */}
+        {Plans &&
           Plans.map(plan => (
             <Grid is_flex>
               <PlanId
@@ -120,8 +122,7 @@ const Main = props => {
                 <FiLink size="24px" />
               </PlanUrl>
             </Grid>
-          ))
-        )}
+          ))}
       </PlanList>
       <div style={{ padding: '20px' }}></div>
 
