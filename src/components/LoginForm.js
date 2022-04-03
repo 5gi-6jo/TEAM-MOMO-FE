@@ -24,7 +24,7 @@ const LoginForm = props => {
       password: pw,
     };
     dispatch(login(loginData));
-    navigate('/main');
+    // navigate('/main');
     const data = {
       token: sessionStorage.getItem('FCMtoken'),
     };
