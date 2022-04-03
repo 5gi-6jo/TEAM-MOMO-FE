@@ -226,7 +226,7 @@ const EditPlans = props => {
                   dispatch(setOnePlan(data));
                 }}
               >
-                모임 추가하기
+                모임 수정하기
               </Button>
             </Grid>
           </Grid>

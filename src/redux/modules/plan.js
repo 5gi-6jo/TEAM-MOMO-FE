@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { URL } from '../../shared/apis/API';
+import { tokenURL, URL } from '../../shared/apis/API';
 import { MOCK } from '../../shared/apis/plans';
 
 const ismock = false;
@@ -10,12 +10,10 @@ export const getPlans = createAsyncThunk(
       if (ismock) return MOCK.Plans.data;
 
       // console.log(sessionStorage.getItem('token').split('Bearer ')[1]);
-      return await URL.get(`/plans?date=${data.date}`, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      }).then(response => response.data.data);
+      return await tokenURL.get(`/plans?date=${data.date}`).then(response => {
+        console.log(response);
+        return response.data.data;
+      });
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -28,12 +26,7 @@ export const getOnePlan = createAsyncThunk(
   async (planId, { rejectWithValue }) => {
     try {
       if (ismock) return MOCK.PlanDetail.data;
-      return await URL.get(`/plans/${planId}`, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      }).then(response => {
+      return await tokenURL.get(`/plans/${planId}`).then(response => {
         const data = {
           ...response.data.data,
           planId: planId,
@@ -50,12 +43,7 @@ export const setPlans = createAsyncThunk(
   'plan/setPlans',
   async (data, { rejectWithValue }) => {
     try {
-      return await URL.post('/plans', data, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      }).then(res => {
+      return await tokenURL.post('/plans', data).then(res => {
         return res.data;
       });
     } catch (error) {
@@ -68,12 +56,7 @@ export const editPlans = createAsyncThunk(
   'plan/editPlans',
   async (data, { rejectWithValue }) => {
     try {
-      return await URL.put(`/plans/${data.id}`, data, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      }).then(res => {
+      return await tokenURL.put(`/plans/${data.id}`, data).then(res => {
         console.log(res);
         // setOnePlan(data);
       });
@@ -87,12 +70,7 @@ export const deletePlans = createAsyncThunk(
   'plan/deletePlans',
   async (data, { rejectWithValue }) => {
     try {
-      return await URL.delete(`/plans/${data.id}`, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      }).then(res => {
+      return await tokenURL.delete(`/plans/${data.id}`).then(res => {
         return data.id;
       });
     } catch (error) {
@@ -110,12 +88,9 @@ export const setUploadImage = createAsyncThunk(
       for (let i = 0; i < data.files.length; i++) {
         formdata.append('files', data.files[i]);
       }
-      return await URL.post(`/plans/${data.planId}/images`, formdata, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'multipart/form-data',
-        },
-      }).then(res => res.data.data);
+      return await tokenURL
+        .post(`/plans/${data.planId}/images`, formdata)
+        .then(res => res.data.data);
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -127,12 +102,7 @@ export const getImage = createAsyncThunk(
   'plan/getImage',
   async (planId, { rejectWithValue }) => {
     try {
-      return await URL.get(`/plans/${planId}/images`, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      }).then(res => {
+      return await tokenURL.get(`/plans/${planId}/images`).then(res => {
         console.log(res);
       });
     } catch (error) {
@@ -146,12 +116,7 @@ export const deleteImage = createAsyncThunk(
   async (imageId, { rejectWithValue }) => {
     try {
       console.log(imageId);
-      return await URL.delete(`/images/${imageId}`, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      }).then(res => {
+      return await tokenURL.delete(`/images/${imageId}`).then(res => {
         console.log(res);
         return imageId;
       });
@@ -170,12 +135,9 @@ export const setFCMTokenplan = createAsyncThunk(
       planId: 3,
     };
     try {
-      return await URL.post(`/api/fcm`, newdata, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      }).then(response => response.data.data);
+      return await tokenURL
+        .post(`/api/fcm`, newdata)
+        .then(response => response.data.data);
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);

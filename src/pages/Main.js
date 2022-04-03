@@ -90,38 +90,45 @@ const Main = props => {
             </AlignLeft>
           </Grid>
         ) : (
-          Plans.map(plan => (
-            <Grid is_flex>
-              <PlanId
-                key={`plans=${plan.planId}`}
-                onClick={() => {
-                  navigate(`/plansdetail/${plan.planId}`, {
-                    state: plan.planId,
-                  });
-                }}
-              >
-                {plan.planDate}
-                {plan.planName}
-              </PlanId>
-              <PlanUrl
-                onClick={() => {
-                  copy();
-                  // modal실행
-                }}
-              >
-                <CopyText>
-                  <input
-                    type="text"
-                    value={plan.url}
-                    ref={textInput}
-                    readOnly
-                  ></input>
-                </CopyText>
-                {plan.url}
-                <FiLink size="28px" />
-              </PlanUrl>
-            </Grid>
-          ))
+          Plans.map(
+            (plan, index) => (
+              console.log(plan),
+              (
+                <Grid is_flex key={index}>
+                  <PlanId
+                    key={`plans=${plan.planId}`}
+                    onClick={() => {
+                      navigate(`/plansdetail/${plan.planId}`, {
+                        state: plan.planId,
+                      });
+                    }}
+                  >
+                    {plan.planDate}
+                    {plan.planName}
+                  </PlanId>
+                  {plan.url && (
+                    <PlanUrl
+                      onClick={() => {
+                        copy();
+                        // modal실행
+                      }}
+                    >
+                      <CopyText>
+                        <input
+                          type="text"
+                          value={plan.url}
+                          ref={textInput}
+                          readOnly
+                        ></input>
+                      </CopyText>
+                      {plan.url}
+                      <FiLink size="28px" />
+                    </PlanUrl>
+                  )}
+                </Grid>
+              )
+            ),
+          )
         )}
       </PlanList>
       <div style={{ padding: '20px' }}></div>

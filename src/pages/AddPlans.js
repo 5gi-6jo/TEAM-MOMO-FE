@@ -47,6 +47,29 @@ const AddPlans = props => {
     'YYYY MM DD hh:mm',
   ).format();
   console.log(selectTime);
+  console.log(
+    moment(selectTime, 'YYYY MM DD hh:mm')
+      .subtract(abled, 'minutes')
+      .format('YYYY MM DD hh:mm'),
+  );
+  console.log(
+    -1 *
+      moment().diff(
+        moment(selectTime, 'YYYY MM DD hh:mm')
+          .subtract(abled, 'minutes')
+          .format('YYYY MM DD hh:mm'),
+        'minutes',
+      ),
+  );
+  const a =
+    -1 *
+    moment().diff(
+      moment(selectTime, 'YYYY MM DD hh:mm')
+        .subtract(abled, 'minutes')
+        .format('YYYY MM DD hh:mm'),
+      'minutes',
+    );
+  console.log(a >= 0);
   const timerButton = e => {
     let minutestr = parseInt(e.target.value);
     setabled(minutestr);
@@ -195,6 +218,19 @@ const AddPlans = props => {
               //   nameRef === '' || desRef === '' || timeRef === '' ? true : false
               // }
               _onClick={() => {
+                //노티스 시간 계산
+                const noticeTime =
+                  -1 *
+                  moment().diff(
+                    moment(selectTime, 'YYYY MM DD hh:mm')
+                      .subtract(abled, 'minutes')
+                      .format('YYYY MM DD hh:mm'),
+                    'minutes',
+                  );
+                if (noticeTime <= 0) {
+                  window.alert('설정한 시간이 현재시간보다 이전시간입니다.');
+                  return;
+                }
                 const data = {
                   planName: name,
                   destination: address,

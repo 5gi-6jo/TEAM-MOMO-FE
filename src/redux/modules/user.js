@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import UserApi from '../../shared/apis/userApi';
 import axios from 'axios';
-import { URL } from '../../shared/apis/API';
+import { tokenURL, URL } from '../../shared/apis/API';
 import { useNavigate } from 'react-router-dom';
+import { deleteCookie, setCookie } from '../../shared/utils/Cookie';
 // import { useHistory } from 'react-router';
 
 export const register = createAsyncThunk(
@@ -23,11 +24,16 @@ export const login = createAsyncThunk(
     try {
       // const navigate = useNavigate();
       console.log('test1', data);
-      return await URL.post(`/users/login`, data).then(response => {
+      return await URL.post(`/users/login`, data, {
+        withCredentials: true,
+      }).then(response => {
         console.log(response);
         console.log('test2');
-        sessionStorage.setItem('token', response.headers.authorization);
+        setCookie('token', response.headers.authorization, 1);
+        // sessionStorage.setItem('token', response.headers.authorization);
         console.log('test1');
+        setTimeout(() => {});
+        window.location.assign('/main');
 
         return response.data.data;
       });
@@ -41,37 +47,46 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk('user/logout', async () => {
   sessionStorage.removeItem('token');
   sessionStorage.removeItem('nickname');
+  deleteCookie('token');
 });
 
-const Userapi = new UserApi();
-export const setFCMTokenAxios = createAsyncThunk(
-  'plan/setFCMTokenAxios',
-  async ({ registerData, navigate }) => {
-    console.log(registerData);
-    await Userapi.setFCMToken({ registerData, navigate });
-  },
-);
+// const Userapi = new UserApi();
+// export const setFCMTokenAxios = createAsyncThunk(
+//   'plan/setFCMTokenAxios',
+//   async ({ registerData, navigate }) => {
+//     console.log(registerData);
+//     await Userapi.setFCMToken({ registerData, navigate });
+//   },
+// );
 export const setFCMToken = createAsyncThunk(
   'plan/setFCMToken',
   async (data, { rejectWithValue }) => {
     try {
-      return await URL.post(`/users/devices`, data, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      }).then(response => response.data.data);
+      return await tokenURL
+        .post(`/users/devices`, data)
+        .then(response => response.data.data);
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
     }
   },
 );
+
 export const getUserbyToken = createAsyncThunk(
   'user/getUserbyToken',
-  async ({ navigate }, { dispatch }) => {
-    const Data = await Userapi.getUserbyToken({ navigate });
-    return Data.data.data;
+  async (_, { rejectWithValue }) => {
+    try {
+      return await tokenURL
+        .get(`/users`, { withCredentials: true })
+        .then(response => {
+          console.log(response);
+
+          return response.data.data;
+        });
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
   },
 );
 
@@ -84,6 +99,7 @@ export const userSlice = createSlice({
     is_login: false,
     loginError: '',
     registerError: '',
+    isLoggedin: false,
   },
   reducers: {
     setUserName: (state, action) => {
