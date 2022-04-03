@@ -26,6 +26,7 @@ import { useEffect, useState } from 'react';
 import { getUserbyToken } from './redux/modules/user';
 import FCMtoken from './shared/FCMtoken';
 import PlanSetName from './pages/PlanSetName';
+import { getCookie } from './shared/utils/Cookie';
 
 function App() {
   const firebaseConfig = {
@@ -39,16 +40,10 @@ function App() {
   };
   firebase.initializeApp(firebaseConfig);
 
-  const istoken = sessionStorage.getItem('token')
-    ? sessionStorage.getItem('token')
-    : false;
+  const istoken = getCookie('token') ? getCookie('token') : false;
   const islogin = useSelector(state => state.user.is_login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  if (istoken && !islogin) {
-    dispatch(getUserbyToken(navigate));
-  }
 
   const userNick = useSelector(state => state.user.user_info).nickname;
 
@@ -56,16 +51,10 @@ function App() {
   // setGuestNick(userNick);
 
   useEffect(() => {
-    console.log('app.js::didmount');
-    // if (istoken && !islogin) {
-    //   dispatch(getUserbyToken(navigate));
-    // }
-    // setGuestNick(userNick);
-
-    // if (islogin) dispatch(getUserbyToken(navigate));
-    // return () => {
-    //   console.log('app.js::Undidmount');
-    // };
+    // console.log('app.js::didmount');
+    if (istoken && !islogin) {
+      dispatch(getUserbyToken());
+    }
   }, []);
 
   return (
