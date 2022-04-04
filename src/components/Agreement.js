@@ -5,6 +5,7 @@ import { Grid, Text } from '../elements';
 import { Rect10 } from '../img';
 import theme from '../Styles/theme';
 import { HiOutlineChevronRight } from 'react-icons/hi';
+import ModalConfirm from '../components/Modal/ModalConfirm';
 
 /**
  * @param {*} props
@@ -35,11 +36,52 @@ const Agreement = props => {
       setAllCheck(false);
     }
   };
-  console.log(checkBox.length);
-  console.log(allCheck);
+
+  const [modalOpenA, setModalOpenA] = useState(false);
+
+  const openModalA = () => {
+    setModalOpenA(true);
+  };
+  const closeModalA = () => {
+    setModalOpenA(false);
+  };
+  const [modalOpenB, setModalOpenB] = useState(false);
+
+  const openModalB = () => {
+    setModalOpenB(true);
+  };
+  const closeModalB = () => {
+    setModalOpenB(false);
+  };
+  const [modalOpenC, setModalOpenC] = useState(false);
+
+  const openModalC = () => {
+    setModalOpenC(true);
+  };
+  const closeModalC = () => {
+    setModalOpenC(false);
+  };
 
   return (
     <React.Fragment>
+      <ModalConfirm
+        open={modalOpenA}
+        close={closeModalA}
+        title="회원가입 및 운영약관 동의"
+        contents="팝업창내용"
+      ></ModalConfirm>
+      <ModalConfirm
+        open={modalOpenB}
+        close={closeModalB}
+        title="개인정보 수집 및 이용 동의"
+        contents="팝업창내용"
+      ></ModalConfirm>
+      <ModalConfirm
+        open={modalOpenC}
+        close={closeModalC}
+        title="위치정보 이용약관 동의"
+        contents="팝업창내용"
+      ></ModalConfirm>
       <MainWrap>
         <EachCheckWrap>
           <input
@@ -72,14 +114,11 @@ const Agreement = props => {
                 회원가입 및 운영약관 동의 (필수)
               </Text>
             </label>
-            <RightIcon
-              onClick={() => {
-                //modal
-              }}
-            >
+            <RightIcon onClick={openModalA}>
               <HiOutlineChevronRight className="right" />
             </RightIcon>
           </EachCheckWrap>
+
           <EachCheckWrap>
             <input
               type="checkbox"
@@ -94,11 +133,7 @@ const Agreement = props => {
                 개인정보 수집 및 이용 동의 (필수)
               </Text>
             </label>
-            <RightIcon
-              onClick={() => {
-                //modal
-              }}
-            >
+            <RightIcon onClick={openModalB}>
               <HiOutlineChevronRight className="right" />
             </RightIcon>
           </EachCheckWrap>
@@ -116,11 +151,7 @@ const Agreement = props => {
                 위치정보 이용약관 동의 (필수)
               </Text>
             </label>
-            <RightIcon
-              onClick={() => {
-                //modal
-              }}
-            >
+            <RightIcon onClick={openModalC}>
               <HiOutlineChevronRight className="right" />
             </RightIcon>
           </EachCheckWrap>
