@@ -7,18 +7,12 @@ import Spinner from '../elements/Spinner';
 
 const OAuthHandler = props => {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  // 인가코드
   let code = new URL(window.location.href).searchParams.get('code');
   console.log(code);
 
-  // React.useEffect(async () => {
-  //   await dispatch(userActions.kakaoLogin(code));
-  // }, []);
-
   useEffect(() => {
     function fetchData() {
-      dispatch(userActions.kakaoLogin(code));
+      dispatch(userActions.KakaoLogin(code));
     }
     fetchData();
   }, []);

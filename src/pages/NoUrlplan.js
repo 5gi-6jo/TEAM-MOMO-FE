@@ -1,10 +1,9 @@
 import React from 'react';
 import { dino2 } from '../img';
 import { Grid, Text } from '../elements';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../Styles/theme';
-import Headerbar from '../shared/Headerbar';
+import Header from '../shared/Header';
 
 /**
  * @param {*} props
@@ -14,16 +13,15 @@ import Headerbar from '../shared/Headerbar';
  */
 
 const NoUrlplan = props => {
-  const navigate = useNavigate();
   return (
     <React.Fragment>
-      <Headerbar
-        text={'지도'}
-        _onClickClose={() => {
-          navigate('/main');
-        }}
-        _onClickEdit={() => {}}
-      ></Headerbar>
+      <Header />
+      <Grid is_flex padding="20px">
+        <Text size="14px" bold>
+          추억
+        </Text>
+      </Grid>
+      <hr />
       <PlanList>
         <Grid>
           <Grid center padding="160px 0px">
@@ -46,7 +44,7 @@ const DinoImgDiv = styled.div`
   position: absolute;
   display: flex;
   bottom: 0;
-  right: -20%;
+  right: -25%;
 `;
 const DinoImg = styled.img`
   object-fit: cover;

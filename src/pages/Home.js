@@ -42,15 +42,16 @@ const Home = () => {
 
       <Grid padding="10px 20px">
         <a href={KAKAO_AUTH_URL}>
-          <Button
-            position="relative"
-            name={'카카오톡으로 시작하기'}
-            width="100%"
-            heignt="40px"
-            abled
-          >
+          <Grid is_flex>
             <IconKakao src={kakao} />
-          </Button>
+            <Button
+              position="relative"
+              name={'카카오톡으로 시작하기'}
+              width="100%"
+              heignt="40px"
+              abled
+            ></Button>
+          </Grid>
         </a>
       </Grid>
 
@@ -96,6 +97,8 @@ const IconMomo = styled.img`
 `;
 const IconKakao = styled.img`
   position: absolute;
+  object-fit: cover;
+  left: 20%;
 `;
 const GuestBtn = styled.div`
   cursor: pointer;
