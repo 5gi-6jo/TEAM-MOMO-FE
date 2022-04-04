@@ -253,7 +253,7 @@ MOMO과 이용자간에 발생한 서비스 이용에 관한 분쟁에 대하여
             <div style={{ padding: '3px' }}></div>
             <label id="checkAll" htmlFor="checkAll">
               <Text color={theme.color.black} size="16px" bold margin="0px 5px">
-                전체 약관 동의
+                전체 약관 동의*
               </Text>
             </label>
           </CheckContents>

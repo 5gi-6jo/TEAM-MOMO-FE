@@ -28,7 +28,7 @@ const EditPlans = props => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [abled, setabled] = useState('');
-  const [name, setName] = useState('');
+  const [name, setName] = useState(props.planName);
   const [contenst, setContenst] = useState('');
   const [time, setTime] = useState('');
   const [minute, setMinute] = useState('');
@@ -103,6 +103,7 @@ const EditPlans = props => {
                 labelColor={theme.color.gray1}
                 labelText="모임 이름*"
                 placeholder="모임 이름을 입력해주세요."
+                value={name}
                 _onChange={e => {
                   setName(e.target.value);
                 }}

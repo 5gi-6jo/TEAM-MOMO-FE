@@ -47,17 +47,14 @@ const DinoImgDiv = styled.div`
   right: -25%;
 `;
 const DinoImg = styled.img`
+  overflow: hidden;
+
   object-fit: cover;
+  cursor: none;
 `;
 
 const PlanList = styled.div`
-  padding: 10px 30px;
-  overflow-y: scroll;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  ::-webkit-scrollbar {
-    display: none; /* Chrome , Safari , Opera */
-  }
+  overflow: hidden;
 `;
 
 // default props 작성 위치

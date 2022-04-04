@@ -18,8 +18,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserName } from '../redux/modules/user.js';
 //카카오 맵
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { Ellipse32, trash_3 } from '../img';
+import { Ellipse32, marker, redmarker, trash_3 } from '../img';
 import PlanMapInfo from './PlanMapInfo';
+import BiTargetLock from 'react-icons/bi';
 
 /**
  * @param {*} props
@@ -125,9 +126,9 @@ const PlanMap = forwardRef((props, ref) => {
   };
 
   //내위치 반복 보내기
-  // useInterval(() => {
-  //   sendMyLocation();
-  // }, 10000);
+  useInterval(() => {
+    sendMyLocation();
+  }, 60000);
   const bounds = useMemo(() => {
     const bounds = new kakao.maps.LatLngBounds();
     if (points) {
@@ -185,11 +186,11 @@ const PlanMap = forwardRef((props, ref) => {
       <Headerbar
         text={`${props.planName}`}
         _onClickClose={() => {
-          navigate('/main');
+          navigate('/main', { replace: true });
         }}
         _onClickEdit={() => {}}
       ></Headerbar>
-
+      {/* 
       <Button
         _onClick={() => {
           if (map) map.setBounds(bounds);
@@ -197,7 +198,7 @@ const PlanMap = forwardRef((props, ref) => {
         }}
       >
         Chating
-      </Button>
+      </Button> */}
 
       <Map // 지도를 표시할 Container
         center={myLocation.center}
@@ -213,25 +214,51 @@ const PlanMap = forwardRef((props, ref) => {
           setPosition(undefined);
         }}
       >
-        {!myLocation.isLoading && <MapMarker position={myLocation.center} />}
+        {/* {!myLocation.isLoading && <MapMarker position={myLocation.center} />} */}
         {publicMaps &&
           publicMaps.map((chat, index) => (
             // console.log('MAP', chat),
             <>
               {chat.type === 'MAP' && (
-                <MapMarker
-                  key={'map' + index}
-                  position={{ lat: chat.lat, lng: chat.lng }}
-                  onClick={() => {
-                    console.log('clickclickclickclick');
-                    setInfo(true);
-                    setPosition({
-                      lat: chat.lat,
-                      lng: chat.lng,
-                      sender: chat.sender,
-                    });
-                  }}
-                />
+                <>
+                  {chat.sender === props.usernick ? (
+                    <MapMarker
+                      key={'map' + index}
+                      position={{ lat: chat.lat, lng: chat.lng }}
+                      image={{
+                        src: redmarker,
+                        size: { width: 33, height: 41 },
+                      }}
+                      onClick={() => {
+                        console.log('clickclickclickclick');
+                        setInfo(true);
+                        setPosition({
+                          lat: chat.lat,
+                          lng: chat.lng,
+                          sender: chat.sender,
+                        });
+                      }}
+                    />
+                  ) : (
+                    <MapMarker
+                      key={'map' + index}
+                      position={{ lat: chat.lat, lng: chat.lng }}
+                      image={{
+                        src: marker,
+                        size: { width: 33, height: 41 },
+                      }}
+                      onClick={() => {
+                        console.log('clickclickclickclick');
+                        setInfo(true);
+                        setPosition({
+                          lat: chat.lat,
+                          lng: chat.lng,
+                          sender: chat.sender,
+                        });
+                      }}
+                    />
+                  )}
+                </>
               )}
               {chat.type === 'DEST' && (
                 <MapMarker
