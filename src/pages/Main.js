@@ -158,7 +158,7 @@ const Main = props => {
       </WriteButton>
       <button
         onClick={() => {
-          navigate('/plan/746d0dc9-fcf7-43ab-9e22-e9579696feb2');
+          navigate('/plan/2158424a-be8a-49f3-b67e-d6c0aceb04c8');
         }}
       >
         asdf
