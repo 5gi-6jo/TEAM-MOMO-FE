@@ -19,6 +19,7 @@ const Input = props => {
     _accept,
     _ref,
     _onClick,
+    _onKeyDown,
     value,
     width,
   } = props;
@@ -69,6 +70,7 @@ const Input = props => {
         <ElInput
           type={type}
           ref={_ref}
+          onKeyDown={_onKeyDown}
           placeholder={placeholder}
           onChange={_onChange}
           width={width}
@@ -90,6 +92,7 @@ Input.defaultProps = {
   height: '',
   _onChange: () => {},
   _onClick: () => {},
+  _onKeyDown: () => {},
 };
 
 const ElTextarea = styled.textarea`

@@ -45,7 +45,7 @@ const Home = () => {
           <Button
             position="relative"
             name={'카카오톡으로 시작하기'}
-            width="320px"
+            width="100%"
             heignt="40px"
             abled
           >
@@ -60,7 +60,7 @@ const Home = () => {
           _onClick={() => {
             navigate('/Login', { replace: true });
           }}
-          width="320px"
+          width="100%"
           heignt="40px"
           abled
         />

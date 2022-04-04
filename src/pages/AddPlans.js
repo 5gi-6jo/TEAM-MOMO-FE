@@ -84,6 +84,9 @@ const AddPlans = props => {
     }
   }, []);
 
+  console.log(
+    name === '' || address === '' || time === '' || abled === '' ? false : true,
+  );
   return (
     <React.Fragment>
       <Grid>
@@ -218,7 +221,9 @@ const AddPlans = props => {
                   : true
               }
               // is_disabled={
-              //   nameRef === '' || desRef === '' || timeRef === '' ? true : false
+              //   name === '' || address === '' || time === '' || abled === ''
+              //     ? false
+              //     : true
               // }
               _onClick={() => {
                 //노티스 시간 계산
@@ -232,6 +237,14 @@ const AddPlans = props => {
                   );
                 if (noticeTime <= 0) {
                   window.alert('설정한 시간이 현재시간보다 이전시간입니다.');
+                  return;
+                }
+                if (
+                  name === '' || address === '' || time === '' || abled === ''
+                    ? true
+                    : false
+                ) {
+                  window.alert('*표시 내용을 모두 입력해주세요');
                   return;
                 }
 

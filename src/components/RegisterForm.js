@@ -97,23 +97,24 @@ const RegisterForm = props => {
         />
       </Grid>
       <Agreement checked={checked} setChecked={setChecked} />
-      <Button
-        is_green={
-          nickname === '' ||
-          email === '' ||
-          pw === '' ||
-          pwCheck === '' ||
-          !checked
-            ? false
-            : true
-        }
-        name={'회원가입하기'}
-        width="320px"
-        heignt="40px"
-        margin="0px 10px"
-        type="button"
-        _onClick={Register}
-      />
+      <Grid padding="10px">
+        <Button
+          is_green={
+            nickname === '' ||
+            email === '' ||
+            pw === '' ||
+            pwCheck === '' ||
+            !checked
+              ? false
+              : true
+          }
+          name={'회원가입하기'}
+          width="100%"
+          heignt="40px"
+          type="button"
+          _onClick={Register}
+        />
+      </Grid>
     </Grid>
   );
 };

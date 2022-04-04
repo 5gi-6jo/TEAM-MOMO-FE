@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie } from '../utils/Cookie';
+import { getCookie, setCookie } from '../utils/Cookie';
 
 const URL = axios.create({
   baseURL: process.env.REACT_APP_BE_IP_LYW,
@@ -34,22 +34,17 @@ tokenURL.interceptors.response.use(
     return response;
   },
   async function (error) {
-    console.log(error);
-    console.log(error.message);
-    console.log(error.response);
-    console.log(error.response.data.message);
-    console.log(error.config);
     const originalRequest = error.config;
     if (
       error.response.data.message === '만료된 JWT 입니다.' &&
       !originalRequest._retry
     ) {
-      console.log('test');
+      console.log('로그인정보를 갱신합니다.');
       const data = {
         accessToken: getCookie('token'),
       };
-      const { response } = await tokenURL
-        .post(`/users/reissue`, data, {
+      const { response } = await axios
+        .get(`${process.env.REACT_APP_BE_IP_LYW}/users/reissue`, {
           withCredentials: true,
           headers: {
             Authorization: getCookie('token'),
@@ -57,12 +52,16 @@ tokenURL.interceptors.response.use(
           },
         })
         .then(res => {
-          console.log(res);
+          // console.log(res);
+
+          setCookie('token', res.headers.authorization);
+          originalRequest.headers['Authorization'] = getCookie('token');
+          return axios(originalRequest);
         })
         .catch(error => {
-          console.log(error.response);
+          // console.log(error.response);
         });
-      console.log(response);
+      return axios(originalRequest);
     }
     return error;
   },

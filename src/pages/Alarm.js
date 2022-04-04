@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { deleteToken, getToken } from 'firebase/messaging';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -9,6 +10,7 @@ import { messaging } from '../firebase';
 import { setFCMTokenplan } from '../redux/modules/plan';
 import { setFCMToken } from '../redux/modules/user';
 import Headerbar from '../shared/Headerbar';
+import { getCookie } from '../shared/utils/Cookie';
 import theme from '../Styles/theme';
 
 /**
@@ -63,7 +65,7 @@ const Alarm = () => {
       vapidKey: process.env.REACT_APP_VAPID_KEY,
     }).then(token => {
       deleteToken(messaging).then(() => {
-        console.log('deletetoken');
+        console.log('deleteFCMtoken');
         sessionStorage.deleteToken('FCMtoken');
         const data = {
           token: '',
@@ -88,21 +90,6 @@ const Alarm = () => {
 
   return (
     <React.Fragment>
-      <button onClick={openModal}>모달팝업버튼</button>
-      <ModalInput
-        open={modalOpen}
-        close={closeModal}
-        title="팝업창제목"
-        contents="팝업창내용"
-        // _onChange={실행시킬함수}
-      ></ModalInput>
-      <button
-        onClick={() => {
-          dispatch(setFCMTokenplan());
-        }}
-      >
-        FCM test
-      </button>
       <Headerbar
         isback
         text="알림"
@@ -120,6 +107,21 @@ const Alarm = () => {
           </ToggleBtn>
         </Grid>
       </Grid>
+      <button onClick={openModal}>모달팝업버튼</button>
+      <ModalInput
+        open={modalOpen}
+        close={closeModal}
+        title="팝업창제목"
+        contents="팝업창내용"
+        // _onChange={실행시킬함수}
+      ></ModalInput>
+      <button
+        onClick={() => {
+          dispatch(setFCMTokenplan());
+        }}
+      >
+        FCM test
+      </button>
     </React.Fragment>
   );
 };

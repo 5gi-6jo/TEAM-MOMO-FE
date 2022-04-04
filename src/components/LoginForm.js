@@ -17,18 +17,27 @@ const LoginForm = props => {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
   const Login = () => {
-    const loginData = {
-      email: email,
-      password: pw,
-    };
-    dispatch(login(loginData));
-    // navigate('/main');
-    const data = {
-      token: sessionStorage.getItem('FCMtoken'),
-    };
-    dispatch(setFCMToken(data));
+    if (email === '' || pw === '') {
+      window.alert('이메일, 비밀번호 모두 입력해주세요.');
+    } else {
+      const loginData = {
+        email: email,
+        password: pw,
+      };
+      dispatch(login(loginData));
+      // navigate('/main');
+      const data = {
+        token: sessionStorage.getItem('FCMtoken'),
+      };
+      dispatch(setFCMToken(data));
+    }
   };
-
+  //엔터 입력시
+  const handleKeyDownSendMessage = e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      Login();
+    }
+  };
   return (
     <React.Fragment>
       <Grid padding="0px 20px">
@@ -40,6 +49,7 @@ const LoginForm = props => {
           labelText="이메일"
           placeholder="이메일 주소 (아이디)"
           width="10px"
+          _onKeyDown={handleKeyDownSendMessage}
           _onChange={e => {
             setEmail(e.target.value);
           }}
@@ -53,19 +63,21 @@ const LoginForm = props => {
           type="password"
           labelText="비밀번호"
           placeholder="비밀번호"
+          _onKeyDown={handleKeyDownSendMessage}
           _onChange={e => {
             setPw(e.target.value);
           }}
         />
       </Grid>
-      <Button
-        name={'로그인하기'}
-        width="320px"
-        heignt="40px"
-        margin="15px 20px"
-        abled
-        _onClick={Login}
-      />
+      <Grid padding=" 20px">
+        <Button
+          name={'로그인하기'}
+          width="100%"
+          heignt="40px"
+          abled
+          _onClick={Login}
+        />
+      </Grid>
     </React.Fragment>
   );
 };
