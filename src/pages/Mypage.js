@@ -130,7 +130,7 @@ const Mypage = () => {
       </UserHandler>
       <div style={{ padding: '15px' }}></div>
       <hr />
-      <Grid is_Grid padding="20px 30px">
+      {/* <Grid is_Grid padding="20px 30px">
         <div
           onClick={() => {
             navigate('/mypage');
@@ -149,7 +149,7 @@ const Mypage = () => {
         >
           <HiOutlineChevronRight className="right" />
         </Grid>
-      </Grid>
+      </Grid> */}
       <Grid is_Grid padding="20px 30px">
         <div
           onClick={() => {

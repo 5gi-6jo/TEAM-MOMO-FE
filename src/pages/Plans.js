@@ -37,9 +37,9 @@ const Plans = props => {
                 소중한 추억을 쌓아보세요
               </Text>
             </Grid>
-            <Grid center bottom>
+            <DinoImgDiv>
               <DinoImg src={dino2} />
-            </Grid>
+            </DinoImgDiv>
           </Grid>
         ) : (
           Plans.map(plan => (
@@ -82,6 +82,13 @@ const Plans = props => {
 // styled components 작성 위치
 const DinoImg = styled.img`
   object-fit: cover;
+`;
+
+const DinoImgDiv = styled.div`
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  right: -25%;
 `;
 
 const PlanList = styled.div`

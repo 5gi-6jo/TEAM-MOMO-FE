@@ -33,12 +33,13 @@
   cursor: pointer;
 }
 .react-calendar__navigation {
-  display: absolute;
+  display: flex;
+  width: 240px;
   height: 20px;
+  margin-left: 40%;
 }
 .react-calendar__navigation button {
-  /* width: 100px; */
-  width: 70px;
+  width: 30px;
   background: none;
   font-weight: bold;
 }
