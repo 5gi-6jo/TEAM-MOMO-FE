@@ -4,6 +4,7 @@ import Calendar from 'react-calendar';
 import './Calendar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCalendarDay } from '../redux/modules/mainsys';
+import styled from 'styled-components';
 
 /**
  * @param {*} props
@@ -68,6 +69,9 @@ function MyCalendar(props) {
 }
 
 // styled components 작성 위치
+// const Test = styled.div`
+//   min-height: 200px;
+// `;
 
 // default props 작성 위치
 MyCalendar.defaultProps = {};
