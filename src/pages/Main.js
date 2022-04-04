@@ -45,9 +45,13 @@ const Main = props => {
   }, [time]);
 
   const dayPlan = [];
-  for (let i = 0; i < Plans.length; i++) {
-    if (moment(time).format('YYYY-MM-DD') === Plans[i].planDate.split('T')[0]) {
-      dayPlan.push(Plans[i]);
+  if (Plans) {
+    for (let i = 0; i < Plans.length; i++) {
+      if (
+        moment(time).format('YYYY-MM-DD') === Plans[i].planDate.split('T')[0]
+      ) {
+        dayPlan.push(Plans[i]);
+      }
     }
   }
 
