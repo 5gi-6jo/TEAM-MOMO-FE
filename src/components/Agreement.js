@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Text } from '../elements';
-import { Rect10 } from '../img';
 import theme from '../Styles/theme';
 import { HiOutlineChevronRight } from 'react-icons/hi';
 import ModalConfirm from '../components/Modal/ModalConfirm';
@@ -244,65 +243,74 @@ MOMO과 이용자간에 발생한 서비스 이용에 관한 분쟁에 대하여
       ></ModalConfirm>
       <MainWrap>
         <EachCheckWrap>
-          <input
-            type="checkbox"
-            id="checkAll"
-            onChange={checkAllHandelr}
-            checked={checkAll}
-          />
-          <label id="checkAll" htmlFor="checkAll">
-            <Text color={theme.color.black} size="16px" bold margin="0px 5px">
-              전체 약관 동의*
-            </Text>
-          </label>
-        </EachCheckWrap>
-        <Rectangle src={Rect10} />
-        <CheckWrap>
-          <EachCheckWrap>
+          <CheckContents>
             <input
               type="checkbox"
-              id="checkA"
-              onChange={checkAHandler}
-              checked={checkA}
-            ></input>
-            <label id="checkA" htmlFor="checkA">
-              <Text color={theme.color.gray1} size="12px" margin="0px 5px">
-                회원가입 및 운영약관 동의 (필수)
+              id="checkAll"
+              onChange={checkAllHandelr}
+              checked={checkAll}
+            />
+            <div style={{ padding: '3px' }}></div>
+            <label id="checkAll" htmlFor="checkAll">
+              <Text color={theme.color.black} size="16px" bold margin="0px 5px">
+                전체 약관 동의*
               </Text>
             </label>
+          </CheckContents>
+        </EachCheckWrap>
+        <CheckWrap>
+          <EachCheckWrap>
+            <CheckContents>
+              <input
+                type="checkbox"
+                id="checkA"
+                onChange={checkAHandler}
+                checked={checkA}
+              ></input>
+              <label id="checkA" htmlFor="checkA">
+                <Text color={theme.color.gray1} size="12px" margin="0px 5px">
+                  회원가입 및 운영약관 동의 (필수)
+                </Text>
+              </label>
+            </CheckContents>
+
             <RightIcon onClick={openModalA}>
               <HiOutlineChevronRight className="right" />
             </RightIcon>
           </EachCheckWrap>
 
           <EachCheckWrap>
-            <input
-              type="checkbox"
-              id="checkB"
-              onChange={checkBHandler}
-              checked={checkB}
-            ></input>
-            <label id="checkB" htmlFor="checkB">
-              <Text color={theme.color.gray1} size="12px" margin="0px 5px">
-                개인정보 수집 및 이용 동의 (필수)
-              </Text>
-            </label>
+            <CheckContents>
+              <input
+                type="checkbox"
+                id="checkB"
+                onChange={checkBHandler}
+                checked={checkB}
+              ></input>
+              <label id="checkB" htmlFor="checkB">
+                <Text color={theme.color.gray1} size="12px" margin="0px 5px">
+                  개인정보 수집 및 이용 동의 (필수)
+                </Text>
+              </label>
+            </CheckContents>
             <RightIcon onClick={openModalB}>
               <HiOutlineChevronRight className="right" />
             </RightIcon>
           </EachCheckWrap>
           <EachCheckWrap>
-            <input
-              type="checkbox"
-              id="checkC"
-              onChange={checkCHandler}
-              checked={checkC}
-            ></input>
-            <label id="checkC" htmlFor="checkC">
-              <Text color={theme.color.gray1} size="12px" margin="0px 5px">
-                위치정보 이용약관 동의 (필수)
-              </Text>
-            </label>
+            <CheckContents>
+              <input
+                type="checkbox"
+                id="checkC"
+                onChange={checkCHandler}
+                checked={checkC}
+              ></input>
+              <label id="checkC" htmlFor="checkC">
+                <Text color={theme.color.gray1} size="12px" margin="0px 5px">
+                  위치정보 이용약관 동의 (필수)
+                </Text>
+              </label>
+            </CheckContents>
             <RightIcon onClick={openModalC}>
               <HiOutlineChevronRight className="right" />
             </RightIcon>
@@ -319,20 +327,23 @@ const MainWrap = styled.div`
   padding: 10px;
 `;
 const CheckWrap = styled.div`
-  position: absolute;
-  top: 32%;
-  left: 5%;
+  border: 1px solid ${theme.color.gray3};
+  padding: 20px;
+  border-radius: 10px;
 `;
+
 const EachCheckWrap = styled.div`
   display: flex;
   padding: 10px;
   align-items: center;
+  justify-content: space-between;
 `;
-const RightIcon = styled.div`
-  position: absolute;
-  margin-left: 130%;
+
+const CheckContents = styled.div`
+  display: flex;
 `;
-const Rectangle = styled.img``;
+
+const RightIcon = styled.div``;
 
 // default props 작성 위치
 Agreement.defaultProps = {};

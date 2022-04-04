@@ -5,7 +5,7 @@ import LoginForm from '../components/LoginForm';
 import Button from '../elements/Button';
 import { Grid, Text } from '../elements';
 import theme from '../Styles/theme';
-import { momoKor, Line4 } from '../img';
+import { momoKor } from '../img';
 import Headerbar from '../shared/Headerbar';
 
 /**
@@ -37,7 +37,7 @@ const Login = ({ isLogin }) => {
         <IconMomoKor src={momoKor} />
       </Grid>
       <LoginForm />
-      <FindInfo>
+      {/* <FindInfo>
         <div
           onClick={() => {
             navigate('/', { replace: true });
@@ -57,7 +57,7 @@ const Login = ({ isLogin }) => {
             비밀번호 찾기
           </Text>
         </div>
-      </FindInfo>
+      </FindInfo> */}
       <div style={{ padding: '20px' }}></div>
       <hr />
       <div style={{ padding: '20px' }}></div>
@@ -88,13 +88,13 @@ const IconMomoKor = styled.img`
   object-fit: cover;
 `;
 
-const FindInfo = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  padding: 5px 80px;
-`;
+// const FindInfo = styled.div`
+//   display: flex;
+//   justify-content: space-evenly;
+//   padding: 5px 80px;
+// `;
 
-const LineMini = styled.img``;
+// const LineMini = styled.img``;
 
 // defaultProps 작성 위치
 Login.defaultProps = {};

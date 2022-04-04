@@ -37,9 +37,9 @@ const Plans = props => {
                 소중한 추억을 쌓아보세요
               </Text>
             </Grid>
-            <Grid center bottom>
+            <DinoImgDiv>
               <DinoImg src={dino2} />
-            </Grid>
+            </DinoImgDiv>
           </Grid>
         ) : (
           Plans.map(plan => (
@@ -52,23 +52,24 @@ const Plans = props => {
                   });
                 }}
               >
-                <Grid is_Grid>
+                <Grid is_Grid center heightCenter>
                   <Grid>{plan.planName}</Grid>
-                  <Grid>
-                    {plan.planDate.split('T')[1].split(':')[0]}:
-                    {plan.planDate.split('T')[1].split(':')[1]}
+                  <Text size="14px" color={theme.color.white}>
+                    {plan.planDate.split('T')[0].split('-')[0].split('0')[1]}
+                    {plan.planDate.split('T')[0].split('-')[1]}
+                    {plan.planDate.split('T')[0].split('-')[2]}
+                  </Text>
+                  {/* <Grid>{plan.Location}</Grid> */}
+                  <Grid
+                    right
+                    onClick={() => {
+                      navigate(`/plansdetail/${plan.planId}`, {
+                        state: plan.planId,
+                      });
+                    }}
+                  >
+                    <HiOutlineChevronRight className="right" />
                   </Grid>
-                </Grid>
-                {/* <Grid>{plan.Location}</Grid> */}
-                <Grid
-                  right
-                  onClick={() => {
-                    navigate(`/plansdetail/${plan.planId}`, {
-                      state: plan.planId,
-                    });
-                  }}
-                >
-                  <HiOutlineChevronRight className="right" />
                 </Grid>
               </PlanId>
             </Grid>
@@ -81,6 +82,13 @@ const Plans = props => {
 // styled components 작성 위치
 const DinoImg = styled.img`
   object-fit: cover;
+`;
+
+const DinoImgDiv = styled.div`
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  right: -25%;
 `;
 
 const PlanList = styled.div`
@@ -98,7 +106,7 @@ const PlanId = styled.div`
   padding: 10px;
   width: 300px;
   height: 60px;
-  color: white;
+  color: ${theme.color.white};
   background-color: ${theme.color.green};
   border-radius: 10px;
 `;

@@ -193,6 +193,7 @@ export const KakaoLogin = code => {
         localStorage.setItem('token', ACCESS_TOKEN); //예시로 로컬에 저장함
 
         // navigate('/main', { replace: true }); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        window.location.href = 'https://momo-cbc21.web.app/main';
       })
       .catch(err => {
         console.log('소셜로그인 에러', err);

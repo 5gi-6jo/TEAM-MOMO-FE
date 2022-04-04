@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Grid, Text } from '../elements';
 import Header from '../shared/Header';
@@ -6,9 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { HiOutlineChevronRight } from 'react-icons/hi';
 import theme from '../Styles/theme';
 import { useDispatch, useSelector } from 'react-redux';
-import ModalInput from '../components/Modal/ModalInput';
-import ModalCancel from '../components/Modal/ModalCancel';
-import { logout, setUserName } from '../redux/modules/user';
+import { logout } from '../redux/modules/user';
 
 /**
  * @param {*} props
@@ -23,27 +21,27 @@ const Mypage = () => {
   const is_login = useSelector(state => state.user.is_login);
   // member modal
   // 조건문 isLogin true
-  const [modalOpenInput, setModalOpenInput] = useState(false);
+  // const [modalOpenInput, setModalOpenInput] = useState(false);
 
-  // eslint-disable-next-line no-unused-vars
-  const openModalInput = () => {
-    setModalOpenInput(true);
-  };
-  const closeModalInput = () => {
-    setModalOpenInput(false);
-  };
-  const dispatch = useDispatch();
-  const inputRef = useRef();
+  // const openModalInput = () => {
+  //   setModalOpenInput(true);
+  // };
+  // const closeModalInput = () => {
+  //   setModalOpenInput(false);
+  // };
+  // const inputRef = useRef();
 
   // guest modal
-  const [modalOpenCancel, setModalOpenCancel] = useState(false);
+  // const [modalOpenCancel, setModalOpenCancel] = useState(false);
 
-  const openModalCancel = () => {
-    setModalOpenCancel(true);
-  };
-  const closeModalCancel = () => {
-    setModalOpenCancel(false);
-  };
+  // const openModalCancel = () => {
+  //   setModalOpenCancel(true);
+  // };
+  // const closeModalCancel = () => {
+  //   setModalOpenCancel(false);
+  // };
+
+  const dispatch = useDispatch();
 
   const Logout = () => {
     // logout function
@@ -54,7 +52,7 @@ const Mypage = () => {
     <React.Fragment>
       <Header />
       {/* 조건문 isLogin true */}
-      <ModalInput
+      {/* <ModalInput
         open={modalOpenInput}
         close={closeModalInput}
         title="닉네임 설정"
@@ -62,10 +60,10 @@ const Mypage = () => {
         _onChange={() => {
           dispatch(setUserName(inputRef.current.value));
         }}
-      ></ModalInput>
+      ></ModalInput> */}
 
       {/* 조건문 isLogin false */}
-      <ModalCancel
+      {/* <ModalCancel
         open={modalOpenCancel}
         close={closeModalCancel}
         title="로그인"
@@ -73,7 +71,7 @@ const Mypage = () => {
         _onChange={() => {
           navigate('/');
         }}
-      ></ModalCancel>
+      ></ModalCancel> */}
       <Grid is_flex padding="20px">
         <Text size="14px" bold>
           마이페이지
@@ -101,16 +99,15 @@ const Mypage = () => {
         </div> */}
 
         {/* 조건문 isLogin false */}
-        <div onClick={openModalCancel}>
+        {/* <div onClick={openModalCancel}>
           <Text color={theme.color.gray4} size="13px">
             닉네임 설정
           </Text>
-        </div>
+        </div> */}
 
         {/* 조건문 isLogin true */}
         {is_login ? (
           <>
-            <div style={{ padding: '5px' }}></div>
             <div onClick={Logout}>
               <Text color={theme.color.gray4} size="13px">
                 로그아웃
@@ -119,7 +116,6 @@ const Mypage = () => {
           </>
         ) : (
           <>
-            <div style={{ padding: '5px' }}></div>
             <div
               onClick={() => {
                 navigate('/', { replace: true });
@@ -134,7 +130,7 @@ const Mypage = () => {
       </UserHandler>
       <div style={{ padding: '15px' }}></div>
       <hr />
-      <Grid is_Grid padding="20px 30px">
+      {/* <Grid is_Grid padding="20px 30px">
         <div
           onClick={() => {
             navigate('/mypage');
@@ -153,7 +149,7 @@ const Mypage = () => {
         >
           <HiOutlineChevronRight className="right" />
         </Grid>
-      </Grid>
+      </Grid> */}
       <Grid is_Grid padding="20px 30px">
         <div
           onClick={() => {

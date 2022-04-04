@@ -132,7 +132,7 @@ const ToggleBtn = styled.button`
   border-radius: 30px;
   border: none;
   cursor: pointer;
-  background-color: ${props => (!props.toggle ? 'none' : '#2DBEB1')};
+  background-color: ${props => (!props.toggle ? '#8C8C8C' : '#2DBEB1')};
   display: flex;
   justify-content: center;
   align-items: center;

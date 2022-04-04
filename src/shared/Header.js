@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Grid } from '../elements';
 import { momo } from '../img';
-import { FiBell } from 'react-icons/fi';
-import theme from '../Styles/theme';
+// import { FiBell } from 'react-icons/fi';
+// import theme from '../Styles/theme';
 import { useNavigate } from 'react-router-dom';
 
 /**
@@ -28,7 +28,7 @@ const Header = props => {
         <Grid></Grid>
         <Grid></Grid>
         <Grid>
-          <FiBell size="20px" cusor="pointer" color={theme.color.gray2} />
+          {/* <FiBell size="20px" cusor="pointer" color={theme.color.gray2} /> */}
         </Grid>
       </Grid>
     </React.Fragment>
