@@ -12,6 +12,8 @@ export const register = createAsyncThunk(
     try {
       return await URL.post(`/users/signup`, data).then(response => response);
     } catch (error) {
+      window.alert(error.response.data.message);
+
       console.log(error);
       return rejectWithValue(error.response);
     }
@@ -39,6 +41,8 @@ export const login = createAsyncThunk(
       });
     } catch (error) {
       console.log(error);
+      window.alert(error.response.data.message);
+
       return rejectWithValue(error.response);
     }
   },

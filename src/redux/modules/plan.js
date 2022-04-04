@@ -48,6 +48,7 @@ export const setPlans = createAsyncThunk(
       });
     } catch (error) {
       console.log(error);
+      window.alert(error.response.data.message);
       return rejectWithValue(error.response.data);
     }
   },
@@ -62,6 +63,8 @@ export const editPlans = createAsyncThunk(
       });
     } catch (error) {
       console.log(error);
+      window.alert(error.response.data.message);
+
       return rejectWithValue(error.response.data);
     }
   },
@@ -75,6 +78,8 @@ export const deletePlans = createAsyncThunk(
       });
     } catch (error) {
       console.log(error);
+      window.alert(error.response.data.message);
+
       return rejectWithValue(error.response.data);
     }
   },
@@ -93,6 +98,8 @@ export const setUploadImage = createAsyncThunk(
         .then(res => res.data.data);
     } catch (error) {
       console.log(error);
+      window.alert(error.response.data.message);
+
       return rejectWithValue(error.response.data);
     }
   },
@@ -107,6 +114,7 @@ export const getImage = createAsyncThunk(
       });
     } catch (error) {
       console.log(error);
+
       return rejectWithValue(error.response.data);
     }
   },
@@ -122,6 +130,8 @@ export const deleteImage = createAsyncThunk(
       });
     } catch (error) {
       console.log(error);
+      window.alert(error.response.data.message);
+
       return rejectWithValue(error.response.data);
     }
   },
@@ -132,7 +142,7 @@ export const setFCMTokenplan = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     const newdata = {
       ...data,
-      planId: 3,
+      planId: 20,
     };
     try {
       return await tokenURL
@@ -174,7 +184,7 @@ export const planSlice = createSlice({
       })
       .addCase(deletePlans.fulfilled, (state, action) => {
         state.showplan = null;
-        console.log(state.plans[1].planId);
+        // console.log(state.plans[1].planId);
         console.log(action.payload);
         console.log(state.plans.filter(e => e.planId !== action.payload));
         state.plans = state.plans.filter(e => e.planId !== action.payload);
