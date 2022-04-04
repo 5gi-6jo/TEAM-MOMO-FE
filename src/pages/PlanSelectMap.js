@@ -210,9 +210,6 @@ const MainModal = styled.div`
   background-color: white;
 `;
 
-const MyButton = styled.div`
-  float: right;
-`;
 const InputDest = styled.input`
   width: 100%;
   height: 29px;

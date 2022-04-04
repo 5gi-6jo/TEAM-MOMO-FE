@@ -1,26 +1,10 @@
 /* eslint-disable no-undef */
 
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import styled from 'styled-components';
-import theme from '../Styles/theme';
-import Headerbar from '../shared/Headerbar';
+import React, { useEffect, useState } from 'react';
 import { Grid, Text } from '../elements';
 
-import { useNavigate, useParams } from 'react-router-dom';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserName } from '../redux/modules/user.js';
 //카카오 맵
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import useIsMount from '../hooks/useIsMount';
-import { setPlans } from '../redux/modules/plan';
 
 /**
  * @param {*} props
@@ -33,8 +17,6 @@ const PlanMapInfo = props => {
   const map = props.map;
   const position = props.position;
   const isMount = useIsMount();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [address, setAddress] = useState();
   useEffect(() => {
     if (!map) return;
@@ -62,6 +44,7 @@ const PlanMapInfo = props => {
     return () => {
       setAddress();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMount, position]);
   // console.log(address);
 
@@ -84,8 +67,6 @@ const PlanMapInfo = props => {
 };
 
 // 스타일 컴포넌트 작성 위치
-const StyleComponent = styled.div``;
-const InfoCard = styled.div``;
 
 // default props 작성 위치
 PlanMapInfo.defaultProps = {};

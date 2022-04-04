@@ -1,31 +1,9 @@
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import theme from '../Styles/theme';
 import Headerbar from '../shared/Headerbar';
-import { Navigate } from 'react-router-dom';
-import { Text, Grid, Image, Input } from '../elements';
+import { Text, Grid } from '../elements';
 import { sendbutton, plusbutton } from '../img';
-
-import {
-  disConneted,
-  handleMessage,
-  // handleUsername,
-  publicChats,
-  // registerUser,
-  sendMessage,
-  settestvalue,
-  testcol,
-  testvalue,
-  userData,
-} from '../shared/apis/Socket';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFooterView } from '../redux/modules/mainsys.js';
 
 /**
  * @param {*} props
@@ -35,7 +13,6 @@ import { setFooterView } from '../redux/modules/mainsys.js';
  */
 
 const PlanChating = props => {
-  const dispatch = useDispatch();
   let stompClient = props.stompClient;
   let userData = props.userData;
   let setUserData = props.setUserData;
@@ -152,7 +129,6 @@ const PlanChating = props => {
 };
 
 // 스타일 컴포넌트 작성 위치
-const StyleComponent = styled.div``;
 //전체 모달창
 const Section = styled.div`
   position: absolute;
@@ -290,9 +266,7 @@ const ButtonImageSend = styled.img`
   border-radius: 50px;
   padding: 12px 4% 12px 4%;
 `;
-const ButtonImageSend2 = styled.img`
-  background-color: orange;
-`;
+
 const InputText = styled.input`
   border: 1px solid #c4c4c4;
   width: 100%;

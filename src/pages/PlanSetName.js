@@ -16,6 +16,7 @@ const PlanSetName = props => {
   const userNick = useSelector(state => state.user.user_info).nickname;
   console.log('props.userNick', props.userNick, 'userNick', userNick);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     console.log('PlanSetName:::didmount');
     if (!userNick && !props.userNick) {
@@ -30,6 +31,7 @@ const PlanSetName = props => {
   const path = useParams(); //path주소 받아오기 랜덤URL
   useEffect(() => {
     if (path && !planId) dispatch(getPlanId(path.url));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const planId = useSelector(state => state.map.planId);
@@ -85,6 +87,7 @@ const PlanSetName = props => {
 };
 
 // 스타일 컴포넌트 작성 위치
+// eslint-disable-next-line no-unused-vars
 const StyleComponent = styled.div``;
 const Section = styled.div`
   position: absolute;

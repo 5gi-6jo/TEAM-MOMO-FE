@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
 
