@@ -24,7 +24,6 @@ import EditPlans from './pages/EditPlans';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getUserbyToken } from './redux/modules/user';
-import FCMtoken from './shared/FCMtoken';
 import PlanSetName from './pages/PlanSetName';
 import { getCookie } from './shared/utils/Cookie';
 import NoUrlplan from './pages/NoUrlplan';
@@ -56,7 +55,7 @@ function App() {
     if (istoken && !islogin) {
       dispatch(getUserbyToken());
     }
-  }, []);
+  }, [istoken]);
 
   return (
     <>

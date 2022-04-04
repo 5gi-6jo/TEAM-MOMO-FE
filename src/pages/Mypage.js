@@ -8,7 +8,7 @@ import theme from '../Styles/theme';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalInput from '../components/Modal/ModalInput';
 import ModalCancel from '../components/Modal/ModalCancel';
-import { setUserName } from '../redux/modules/user';
+import { logout, setUserName } from '../redux/modules/user';
 
 /**
  * @param {*} props
@@ -20,7 +20,7 @@ import { setUserName } from '../redux/modules/user';
 const Mypage = () => {
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user_info);
-
+  const is_login = useSelector(state => state.user.is_login);
   // member modal
   // 조건문 isLogin true
   const [modalOpenInput, setModalOpenInput] = useState(false);
@@ -46,7 +46,7 @@ const Mypage = () => {
 
   const Logout = () => {
     // logout function
-    navigate('/');
+    dispatch(logout());
   };
 
   return (
@@ -107,24 +107,29 @@ const Mypage = () => {
         </div>
 
         {/* 조건문 isLogin true */}
-        {/* <div style={{ padding: '5px' }}></div>
-        <div onClick={Logout}>
-          <Text color={theme.color.gray4} size="13px">
-            로그아웃
-          </Text>
-        </div> */}
-
-        {/* 조건문 isLogin false */}
-        <div style={{ padding: '5px' }}></div>
-        <div
-          onClick={() => {
-            navigate('/', { replace: true });
-          }}
-        >
-          <Text color={theme.color.gray4} size="13px">
-            로그인/회원가입
-          </Text>
-        </div>
+        {is_login ? (
+          <>
+            <div style={{ padding: '5px' }}></div>
+            <div onClick={Logout}>
+              <Text color={theme.color.gray4} size="13px">
+                로그아웃
+              </Text>
+            </div>
+          </>
+        ) : (
+          <>
+            <div style={{ padding: '5px' }}></div>
+            <div
+              onClick={() => {
+                navigate('/', { replace: true });
+              }}
+            >
+              <Text color={theme.color.gray4} size="13px">
+                로그인/회원가입
+              </Text>
+            </div>
+          </>
+        )}
       </UserHandler>
       <div style={{ padding: '15px' }}></div>
       <hr />

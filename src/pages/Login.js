@@ -68,7 +68,7 @@ const Login = ({ isLogin }) => {
       </Grid>
       <Grid padding="15px">
         <Button
-          width="320px"
+          width="100%"
           heignt="40px"
           name={'회원가입하기'}
           _onClick={() => {

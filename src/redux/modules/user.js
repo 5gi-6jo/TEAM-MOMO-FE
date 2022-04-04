@@ -48,11 +48,31 @@ export const login = createAsyncThunk(
   },
 );
 
-export const logout = createAsyncThunk('user/logout', async () => {
+export const logout2 = createAsyncThunk('user/logout', async () => {
   sessionStorage.removeItem('token');
   sessionStorage.removeItem('nickname');
   deleteCookie('token');
 });
+
+export const logout = createAsyncThunk(
+  'user/logout',
+  async (_, { rejectWithValue }) => {
+    const data = {
+      data: '',
+    };
+    try {
+      return await tokenURL.post(`/users/logout`, data).then(response => {
+        window.location.assign('/');
+        deleteCookie('token');
+      });
+    } catch (error) {
+      window.alert(error.response.data.message);
+
+      console.log(error);
+      return rejectWithValue(error.response);
+    }
+  },
+);
 
 // const Userapi = new UserApi();
 // export const setFCMTokenAxios = createAsyncThunk(
@@ -145,6 +165,11 @@ export const userSlice = createSlice({
       })
       // 로그아웃
       .addCase(logout.fulfilled, state => {
+        const user_info = {
+          nickname: '',
+        };
+        state.user_info = user_info;
+        state.is_login = false;
         state.isLoggedin = false;
       })
       .addCase(setFCMToken.fulfilled, (state, action) => {})
