@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Grid } from '../../elements';
 
 const ModalInput = props => {
   const { open, close, title, contents, _onChange, setNickname } = props;
@@ -11,15 +12,15 @@ const ModalInput = props => {
             <MainModal>
               <ModalPopup>
                 <ModalText>
-                  <div>
-                    <div>{title}</div>
-                    <div>{contents}</div>
+                  <Grid padding="20px">
+                    {title}
+                    {contents}
                     <input
                       onChange={e => {
                         setNickname(e.target.value);
                       }}
                     ></input>
-                  </div>
+                  </Grid>
                 </ModalText>
                 <ModalButton>
                   <ModalButtonCancel className="close" onClick={close}>
@@ -72,6 +73,13 @@ const ModalText = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome , Safari , Opera */
+  }
+  white-space: pre-line;
 `;
 const ModalButton = styled.div`
   display: flex;

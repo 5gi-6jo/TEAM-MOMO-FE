@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Grid } from '../../elements';
 
 const ModalCancel = props => {
-  const { open, close, title, contents, _onChange, is_Cancel } = props;
+  const { open, close, title, contents, _onChange } = props;
   return (
     <>
       <div className={open ? 'openModal modal' : 'modal'}>
@@ -11,10 +12,10 @@ const ModalCancel = props => {
             <MainModal>
               <ModalPopup>
                 <ModalText>
-                  <div>
-                    <div>{title}</div>
-                    <div>{contents}</div>
-                  </div>
+                  <Grid padding="20px">
+                    {title}
+                    {contents}
+                  </Grid>
                 </ModalText>
                 <ModalButton>
                   <ModalButtonCancel className="close" onClick={close}>
@@ -67,6 +68,13 @@ const ModalText = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome , Safari , Opera */
+  }
+  white-space: pre-line;
 `;
 const ModalButton = styled.div`
   display: flex;

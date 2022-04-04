@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Grid } from '../../elements';
 
 const ModalConfirm = props => {
-  const { open, close, title, contents, ref } = props;
-  //ref
+  const { open, close, title, contents } = props;
   return (
     <>
       <div className={open ? 'openModal modal' : 'modal'}>
@@ -12,10 +12,10 @@ const ModalConfirm = props => {
             <MainModal>
               <ModalPopup>
                 <ModalText>
-                  <div>
-                    <div>{title}</div>
-                    <div>{contents}</div>
-                  </div>
+                  <Grid padding="20px">
+                    {title}
+                    {contents}
+                  </Grid>
                 </ModalText>
                 <ModalButton>
                   <ModalButtonConfirm className="close" onClick={close}>
@@ -59,8 +59,15 @@ const ModalText = styled.div`
   height: calc(100% - 40px);
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   text-align: center;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome , Safari , Opera */
+  }
+  white-space: pre-line;
 `;
 const ModalButton = styled.div`
   display: flex;

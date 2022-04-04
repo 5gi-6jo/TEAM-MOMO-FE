@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Grid } from '../../elements';
 
 const ModalPermit = props => {
   const { open, title, contents, _onChange } = props;
@@ -11,10 +12,10 @@ const ModalPermit = props => {
             <MainModal>
               <ModalPopup>
                 <ModalText>
-                  <div>
-                    <div>{title}</div>
-                    <div>{contents}</div>
-                  </div>
+                  <Grid padding="20px">
+                    {title}
+                    {contents}
+                  </Grid>
                 </ModalText>
                 <ModalButton>
                   <ModalButtonCancel
@@ -71,6 +72,13 @@ const ModalText = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome , Safari , Opera */
+  }
+  white-space: pre-line;
 `;
 const ModalButton = styled.div`
   display: flex;
