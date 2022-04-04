@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Grid, Text } from '../elements';
+import { Text } from '../elements';
 import { Rect10 } from '../img';
 import theme from '../Styles/theme';
 import { HiOutlineChevronRight } from 'react-icons/hi';
@@ -15,27 +15,58 @@ import ModalConfirm from '../components/Modal/ModalConfirm';
  */
 
 const Agreement = props => {
-  const [checkBox, setCheckBox] = useState([]);
-  const isAllChecked = checkBox.length === 3;
-  useEffect(() => {
-    props.setChecked(isAllChecked);
-  });
+  const [checkAll, setCheckAll] = useState(false);
+  const [checkA, setCheckA] = useState(false);
+  const [checkB, setCheckB] = useState(false);
+  const [checkC, setCheckC] = useState(false);
 
-  const changeHandler = (checked, id) => {
-    if (checked) {
-      setCheckBox([...checkBox, id]);
+  const checkAllHandelr = () => {
+    if (checkAll === false) {
+      setCheckAll(true);
+      setCheckA(true);
+      setCheckB(true);
+      setCheckC(true);
     } else {
-      setCheckBox(checkBox.filter(x => x !== id));
+      setCheckAll(false);
+      setCheckA(false);
+      setCheckB(false);
+      setCheckC(false);
     }
   };
-  const [allCheck, setAllCheck] = useState([false]);
-  const allChangeHandler = checked => {
-    if (checked) {
-      setAllCheck(true);
+
+  const checkAHandler = () => {
+    if (checkA === false) {
+      setCheckA(true);
     } else {
-      setAllCheck(false);
+      setCheckA(false);
     }
   };
+  const checkBHandler = () => {
+    if (checkB === false) {
+      setCheckB(true);
+    } else {
+      setCheckB(false);
+    }
+  };
+  const checkCHandler = () => {
+    if (checkC === false) {
+      setCheckC(true);
+    } else {
+      setCheckC(false);
+    }
+  };
+
+  useEffect(() => {
+    if (checkA === true && checkB === true && checkC === true) {
+      setCheckAll(true);
+    } else {
+      setCheckAll(false);
+    }
+  }, [checkA, checkB, checkC]);
+
+  useEffect(() => {
+    props.setChecked(checkAll);
+  });
 
   const [modalOpenA, setModalOpenA] = useState(false);
 
@@ -87,10 +118,8 @@ const Agreement = props => {
           <input
             type="checkbox"
             id="checkAll"
-            onChange={e => {
-              allChangeHandler(e.currentTarget.checked);
-            }}
-            checked={allCheck ? true : false}
+            onChange={checkAllHandelr}
+            checked={checkAll}
           />
           <label id="checkAll" htmlFor="checkAll">
             <Text color={theme.color.black} size="16px" bold margin="0px 5px">
@@ -103,13 +132,11 @@ const Agreement = props => {
           <EachCheckWrap>
             <input
               type="checkbox"
-              id="check1"
-              onChange={e => {
-                changeHandler(e.currentTarget.checked, 'check1');
-              }}
-              checked={checkBox.includes('check1') ? true : false}
+              id="checkA"
+              onChange={checkAHandler}
+              checked={checkA}
             ></input>
-            <label id="check1" htmlFor="check1">
+            <label id="checkA" htmlFor="checkA">
               <Text color={theme.color.gray1} size="12px" margin="0px 5px">
                 회원가입 및 운영약관 동의 (필수)
               </Text>
@@ -122,13 +149,11 @@ const Agreement = props => {
           <EachCheckWrap>
             <input
               type="checkbox"
-              id="check2"
-              onChange={e => {
-                changeHandler(e.currentTarget.checked, 'check2');
-              }}
-              checked={checkBox.includes('check2') ? true : false}
+              id="checkB"
+              onChange={checkBHandler}
+              checked={checkB}
             ></input>
-            <label id="check2" htmlFor="check2">
+            <label id="checkB" htmlFor="checkB">
               <Text color={theme.color.gray1} size="12px" margin="0px 5px">
                 개인정보 수집 및 이용 동의 (필수)
               </Text>
@@ -140,13 +165,11 @@ const Agreement = props => {
           <EachCheckWrap>
             <input
               type="checkbox"
-              id="check3"
-              onChange={e => {
-                changeHandler(e.currentTarget.checked, 'check3');
-              }}
-              checked={checkBox.includes('check3') ? true : false}
+              id="checkC"
+              onChange={checkCHandler}
+              checked={checkC}
             ></input>
-            <label id="check3" htmlFor="check3">
+            <label id="checkC" htmlFor="checkC">
               <Text color={theme.color.gray1} size="12px" margin="0px 5px">
                 위치정보 이용약관 동의 (필수)
               </Text>
