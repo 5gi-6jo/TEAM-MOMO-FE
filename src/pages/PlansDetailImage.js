@@ -1,11 +1,11 @@
 // import axios from 'axios';
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Headerbar from '../shared/Headerbar';
 import { Image, Grid } from '../elements';
-import { log_in, trash_2 } from '../img';
+import { trash_2 } from '../img';
 import theme from '../Styles/theme';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { setFooterView } from '../redux/modules/mainsys';
@@ -38,8 +38,10 @@ const PlansDetailImage = () => {
   useEffect(() => {
     dispatch(setFooterView(false));
     return dispatch(setFooterView(true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // eslint-disable-next-line no-unused-vars
   const downloadButton = () => {
     saveAs(props.image, 'image.jpg');
   };

@@ -24,6 +24,7 @@ const AddPlans = props => {
 
   const selectDate = useLocation();
   const plans = useSelector(state => state.plan.plans);
+  // eslint-disable-next-line no-unused-vars
   const lastplan = plans.find(v => v.finished);
   console.log(selectDate.state.time.split('T')[0]);
 
@@ -82,6 +83,7 @@ const AddPlans = props => {
       setTime('00');
       setMinute('00');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log(

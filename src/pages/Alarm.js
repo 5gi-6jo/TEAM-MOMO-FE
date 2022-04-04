@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { deleteToken, getToken } from 'firebase/messaging';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -44,6 +43,7 @@ const Alarm = () => {
     return () => {
       window.removeEventListener('click', handleModalEl);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const FCMsetup = () => {

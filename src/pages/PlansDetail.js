@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { getImage, getOnePlan, setUploadImage } from '../redux/modules/plan';
-import { setFooterView } from '../redux/modules/mainsys.js';
 
 import EditPlans from './EditPlans';
 import Headerbar from '../shared/Headerbar';
@@ -25,10 +24,8 @@ import { FiUpload } from 'react-icons/fi';
 const PlansDetail = props => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const preview = useSelector(state => state.image.preview);
   //리덕스에서 한개의 모임 데이터 받아옴
   const Plan = useSelector(state => state.plan.showplan);
-  const Images = useSelector(state => state.images);
 
   const img = Plan.imageList;
 
@@ -40,6 +37,7 @@ const PlansDetail = props => {
   useEffect(() => {
     console.log('Detail::useEffect');
     dispatch(getOnePlan(planId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleFileInput = e => {
     const files = e.target.files;

@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import styled, { ThemeProvider } from 'styled-components';
 import theme from './Styles/theme';
@@ -22,7 +22,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import EditPlans from './pages/EditPlans';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getUserbyToken } from './redux/modules/user';
 import PlanSetName from './pages/PlanSetName';
 import { getCookie } from './shared/utils/Cookie';
@@ -43,7 +43,6 @@ function App() {
   const istoken = getCookie('token') ? getCookie('token') : false;
   const islogin = useSelector(state => state.user.is_login);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const userNick = useSelector(state => state.user.user_info).nickname;
 
@@ -55,6 +54,7 @@ function App() {
     if (istoken && !islogin) {
       dispatch(getUserbyToken());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [istoken]);
 
   return (

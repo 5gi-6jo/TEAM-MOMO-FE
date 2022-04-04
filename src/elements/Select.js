@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { Text, Grid } from './index';
@@ -11,7 +11,6 @@ const Select = props => {
     placeholder,
     _onChangeTime,
     _onChangeMinute,
-    type,
     islabel,
   } = props;
   const time = Array.from({ length: 24 }, (v, i) => i);
@@ -66,13 +65,6 @@ Select.defaultProps = {
   type: 'text',
   _onChange: () => {},
 };
-
-const ElTextarea = styled.textarea`
-  border: 1px solid #212121;
-  width: 100%;
-  padding: 12px 0px;
-  box-sizing: border-box;
-`;
 
 const ElSelect = styled.select`
   border: 1px solid #c4c4c4;

@@ -40,9 +40,8 @@ tokenURL.interceptors.response.use(
       !originalRequest._retry
     ) {
       console.log('로그인정보를 갱신합니다.');
-      const data = {
-        accessToken: getCookie('token'),
-      };
+
+      // eslint-disable-next-line no-unused-vars
       const { response } = await axios
         .get(`${process.env.REACT_APP_BE_IP_LYW}/users/reissue`, {
           withCredentials: true,

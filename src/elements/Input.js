@@ -95,13 +95,6 @@ Input.defaultProps = {
   _onKeyDown: () => {},
 };
 
-const ElTextarea = styled.textarea`
-  border: 1px solid #212121;
-  width: 100%;
-  padding: 12px 4px;
-  box-sizing: border-box;
-`;
-
 const ElInput = styled.input`
   border: 1px solid #c4c4c4;
   width: 100%;

@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import { getToken, onMessage } from 'firebase/messaging';
+import { getToken } from 'firebase/messaging';
 import { messaging } from '../firebase';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 const FCMtoken = () => {
   let swRegist = null;
+  // eslint-disable-next-line no-unused-vars
   const [Token, setToken] = useState(null);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const FCMtoken = sessionStorage.getItem('FCMtoken') ? false : true;
   if (FCMtoken)
@@ -21,6 +18,7 @@ const FCMtoken = () => {
       swRegist = messaging.swRegistration;
     });
 
+  // eslint-disable-next-line no-unused-vars
   function unsubscribe() {
     swRegist.pushManager
       .getSubscription()

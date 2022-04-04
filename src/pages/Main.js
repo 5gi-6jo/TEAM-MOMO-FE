@@ -41,6 +41,7 @@ const Main = props => {
       setChecktime(moment(time).format('YYYY-MM'));
     }
     return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);
 
   const dayPlan = [];
