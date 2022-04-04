@@ -15,20 +15,20 @@ import styled from 'styled-components';
 
 function MyCalendar(props) {
   const [value, SetValue] = useState(new Date());
-  const [mark, setMark] = useState(['2022-04-05', '2022-04-26']);
+  const [mark, setMark] = useState(['']);
   const dispatch = useDispatch();
   const SearchTime = moment(value).format().split('+')[0];
-  // const Plans = useSelector(state => state.plan.plans);
+  const Plans = useSelector(state => state.plan.plans);
 
   useEffect(() => {
     console.log('Calendar:::useEffect');
   }, [SearchTime]);
 
-  // useEffect(() => {
-  //   for (let i = 0; i < Plans.length; i++) {
-  //     setMark.push(Plans[0].planDate.split('T')[0]);
-  //   }
-  // }, [Plans]);
+  useEffect(() => {
+    for (let i = 0; i < Plans.length; i++) {
+      mark.push(Plans[i].planDate.split('T')[0]);
+    }
+  }, []);
 
   return (
     <React.Fragment>
@@ -69,9 +69,6 @@ function MyCalendar(props) {
 }
 
 // styled components 작성 위치
-// const Test = styled.div`
-//   min-height: 200px;
-// `;
 
 // default props 작성 위치
 MyCalendar.defaultProps = {};
