@@ -2,9 +2,8 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import './Calendar.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setCalendarDay } from '../redux/modules/mainsys';
-import styled from 'styled-components';
 
 /**
  * @param {*} props
@@ -15,6 +14,7 @@ import styled from 'styled-components';
 
 function MyCalendar(props) {
   const [value, SetValue] = useState(new Date());
+  // eslint-disable-next-line no-unused-vars
   const [mark, setMark] = useState(['']);
   const dispatch = useDispatch();
   const SearchTime = moment(value).format().split('+')[0];

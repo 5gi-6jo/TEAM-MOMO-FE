@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { tokenURL, URL } from '../../shared/apis/API';
+import { tokenURL } from '../../shared/apis/API';
 import { MOCK } from '../../shared/apis/plans';
 
 const ismock = false;

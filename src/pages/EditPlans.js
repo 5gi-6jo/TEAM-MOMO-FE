@@ -4,19 +4,12 @@ import styled from 'styled-components';
 import { Button, Grid, Text, Input, Select } from '../elements';
 import { edit, trash_3 } from '../img';
 
-import Headerbar from '../shared/Headerbar';
 import theme from '../Styles/theme';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import {
-  deletePlans,
-  editPlans,
-  setOnePlan,
-  setPlans,
-} from '../redux/modules/plan';
+import { deletePlans, editPlans, setOnePlan } from '../redux/modules/plan';
 
 import { GrClose } from 'react-icons/gr';
-import { FiSettings } from 'react-icons/fi';
 /**
  * @param {*} props
  * @returns 리턴 설명 적어주기
@@ -47,6 +40,7 @@ const EditPlans = props => {
       setTime('00');
       setMinute('00');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -259,11 +253,6 @@ const MainModal = styled.div`
   border-radius: 30px 30px 0px 0px;
 `;
 
-const Main = styled.div`
-  width: 100%;
-  height: 270px;
-  margin-top: 2px;
-`;
 const Icon = styled.div`
   min-width: 24px;
   min-height: 24px;

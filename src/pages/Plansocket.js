@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import SockJS from 'sockjs-client';
 
-import { over } from 'stompjs';
-import theme from '../Styles/theme';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPlanId, setPublicMaps, setPublicChats } from '../redux/modules/map';
-import { useParams } from 'react-router-dom';
-import PlanMap, { sendMyLocation } from './PlanMap';
-import { Button, Input, Image } from '../elements';
+import { setPublicMaps, setPublicChats } from '../redux/modules/map';
+import PlanMap from './PlanMap';
+import { Image } from '../elements';
 import { chatingicon } from '../img';
 import PlanChating from './PlanChating';
 
@@ -34,7 +30,6 @@ const Plansocket = props => {
   const publicChats = useSelector(state => state.map.publicChats);
   const publicMaps = useSelector(state => state.map.publicMaps);
   const MapRef = useRef();
-  const ChatRef = useRef();
   useEffect(() => {
     console.log('planId:::', planId);
     // if (planId) {
@@ -80,16 +75,8 @@ const Plansocket = props => {
     if (payloadData.type === 'MAP' || payloadData.type === 'DEST') {
       dispatch(setPublicMaps(payloadData));
       if (payloadData.type === 'MAP') {
-        const data = {
-          lat: payloadData.lat,
-          lng: payloadData.lng,
-        };
       }
       if (payloadData.type === 'DEST') {
-        const data = {
-          lat: payloadData.destLat,
-          lng: payloadData.destLng,
-        };
       }
     }
   };
@@ -97,6 +84,7 @@ const Plansocket = props => {
     let payloadData = JSON.parse(payload.body);
     console.log('payloadDataMap=', payloadData);
     if (payloadData.chats) {
+      // eslint-disable-next-line array-callback-return
       payloadData.chats.map((chat, index) => {
         console.log(chat, index);
         dispatch(setPublicChats(chat));
@@ -110,6 +98,7 @@ const Plansocket = props => {
     if (payloadData.type === 'MAP' || payloadData.type === 'DEST') {
       dispatch(setPublicMaps(payloadData));
       if (payloadData.type === 'MAP') {
+        // eslint-disable-next-line no-unused-vars
         const data = {
           lat: payloadData.lat,
           lng: payloadData.lng,

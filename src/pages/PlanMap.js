@@ -10,16 +10,14 @@ import React, {
 import styled from 'styled-components';
 import theme from '../Styles/theme';
 import Headerbar from '../shared/Headerbar';
-import { Button } from '../elements';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserName } from '../redux/modules/user.js';
 //카카오 맵
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { Ellipse32, marker, redmarker, trash_3 } from '../img';
+import { Ellipse32, marker, redmarker } from '../img';
 import PlanMapInfo from './PlanMapInfo';
+// eslint-disable-next-line no-unused-vars
 import BiTargetLock from 'react-icons/bi';
 
 /**
@@ -48,7 +46,6 @@ const PlanMap = forwardRef((props, ref) => {
       setPoints(data);
     },
   }));
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const planId = props.planId;
   const stompClient = props.client;
@@ -73,10 +70,8 @@ const PlanMap = forwardRef((props, ref) => {
   };
 
   //소켓관련
-  let sock = useRef({});
   const publicMaps = props.publicMaps;
 
-  const isChating = props.isChating;
   const [info, setInfo] = useState();
   const [position, setPosition] = useState();
   console.log('info', info);
@@ -129,6 +124,7 @@ const PlanMap = forwardRef((props, ref) => {
   useInterval(() => {
     sendMyLocation();
   }, 60000);
+  // eslint-disable-next-line no-unused-vars
   const bounds = useMemo(() => {
     const bounds = new kakao.maps.LatLngBounds();
     if (points) {
@@ -179,6 +175,7 @@ const PlanMap = forwardRef((props, ref) => {
     }
     setPoints([myLocation.center]);
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -294,7 +291,6 @@ const PlanMap = forwardRef((props, ref) => {
 });
 
 // 스타일 컴포넌트 작성 위치
-const StyleComponent = styled.div``;
 const Section = styled.div`
   position: absolute;
   bottom: 0;
@@ -306,14 +302,6 @@ const Section = styled.div`
   /* display: flex; */
   /* justify-content: center; */
   align-items: center;
-`;
-
-const MainModal = styled.div`
-  position: absolute;
-  width: 80%;
-  height: 30%;
-  background-color: white;
-  border-radius: 15px;
 `;
 
 // default props 작성 위치

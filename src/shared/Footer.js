@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Grid from '../elements/Grid';
 import { AiOutlineCalendar } from 'react-icons/ai';
-import { AiOutlineHome } from 'react-icons/ai';
 import { MdOutlinePlace } from 'react-icons/md';
 import { FiBookOpen } from 'react-icons/fi';
 import { BsPerson } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import useIsMount from '../hooks/useIsMount';
 // import theme from '../Styles/theme';
 // theme 색상 적용하기
 
@@ -21,12 +19,9 @@ import useIsMount from '../hooks/useIsMount';
  */
 
 const Footer = props => {
-  const navigate = useNavigate();
   let location = useLocation();
   const [showFooter, setShowFooter] = useState(false);
-  const showplan = useSelector(state => state.plan.showplan);
   const Plans = useSelector(state => state.plan.plans);
-  const isMount = useIsMount();
   let Nowurl = '/NoUrlplan';
 
   let hasurl;
@@ -62,6 +57,7 @@ const Footer = props => {
       setShowFooter(false);
     } else setShowFooter(true);
     return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
   //http://localhost:3000/plan/f5f9f10d-b9f2-4a16-af40-60c1422e7656
   //http://localhost:3000/plan/f5f9f10d-b9f2-4a16-af40-60c1422e7656
@@ -157,14 +153,6 @@ const NavBox = styled.div`
     /* max-width: 422px; */
     transform: translate(22%, -160%);
   }
-`;
-
-//임시
-const ButtonWrap = styled.button`
-  text-align: center;
-  width: 140px;
-  height: 71px;
-  cursor: pointer;
 `;
 
 export default Footer;

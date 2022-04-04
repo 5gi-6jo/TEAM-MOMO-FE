@@ -25,6 +25,7 @@ const Mypage = () => {
   // 조건문 isLogin true
   const [modalOpenInput, setModalOpenInput] = useState(false);
 
+  // eslint-disable-next-line no-unused-vars
   const openModalInput = () => {
     setModalOpenInput(true);
   };

@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import UserApi from '../../shared/apis/userApi';
 import axios from 'axios';
 import { tokenURL, URL } from '../../shared/apis/API';
-import { useNavigate } from 'react-router-dom';
 import { deleteCookie, setCookie } from '../../shared/utils/Cookie';
 // import { useHistory } from 'react-router';
 
@@ -182,7 +180,6 @@ export const userSlice = createSlice({
 
 export const { setUserName } = userSlice.actions;
 export const KakaoLogin = code => {
-  const navigate = useNavigate();
   return function () {
     axios({
       method: 'GET',

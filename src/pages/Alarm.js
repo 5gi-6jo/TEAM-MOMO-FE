@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { deleteToken, getToken } from 'firebase/messaging';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -10,7 +9,6 @@ import { messaging } from '../firebase';
 import { setFCMTokenplan } from '../redux/modules/plan';
 import { setFCMToken } from '../redux/modules/user';
 import Headerbar from '../shared/Headerbar';
-import { getCookie } from '../shared/utils/Cookie';
 import theme from '../Styles/theme';
 
 /**
@@ -45,6 +43,7 @@ const Alarm = () => {
     return () => {
       window.removeEventListener('click', handleModalEl);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const FCMsetup = () => {
