@@ -9,6 +9,7 @@ import { FiBookOpen } from 'react-icons/fi';
 import { BsPerson } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import useIsMount from '../hooks/useIsMount';
 // import theme from '../Styles/theme';
 // theme 색상 적용하기
 
@@ -24,6 +25,18 @@ const Footer = props => {
   let location = useLocation();
   const [showFooter, setShowFooter] = useState(false);
   const showplan = useSelector(state => state.plan.showplan);
+  const Plans = useSelector(state => state.plan.plans);
+  const isMount = useIsMount();
+  let Nowurl = '/NoUrlplan';
+
+  let hasurl;
+
+  if (Plans.length !== 0) {
+    hasurl = Plans.find(v => v.url);
+    if (hasurl.url) {
+      Nowurl = `/plan/${hasurl.url}`;
+    }
+  }
 
   const locationArray = [
     '/',
@@ -46,6 +59,9 @@ const Footer = props => {
     } else setShowFooter(true);
     return;
   }, [location]);
+  //http://localhost:3000/plan/f5f9f10d-b9f2-4a16-af40-60c1422e7656
+  //http://localhost:3000/plan/f5f9f10d-b9f2-4a16-af40-60c1422e7656
+
   return (
     <>
       {showFooter && (
@@ -65,7 +81,7 @@ const Footer = props => {
             </Grid>
             <Grid>
               <NavLink
-                to="/plan/a415ad92-548e-4d6e-b0e0-f7b14b1391e2"
+                to={Nowurl}
                 style={({ isActive }) => ({
                   textDecoration: 'none',
                   color: isActive ? '#F84914' : '#999999',

@@ -27,6 +27,7 @@ import { getUserbyToken } from './redux/modules/user';
 import FCMtoken from './shared/FCMtoken';
 import PlanSetName from './pages/PlanSetName';
 import { getCookie } from './shared/utils/Cookie';
+import NoUrlplan from './pages/NoUrlplan';
 
 function App() {
   const firebaseConfig = {
@@ -91,6 +92,7 @@ function App() {
                   <Route path="/plans" element={<Plans />} />
                   <Route path="/Register" element={<Register />} />
                   <Route path="/Login" element={<Login />} />
+                  <Route path="/NoUrlplan" element={<NoUrlplan />} />
                   <Route
                     path="/plan/:url"
                     element={

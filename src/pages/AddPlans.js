@@ -23,6 +23,8 @@ const AddPlans = props => {
   const dispatch = useDispatch();
 
   const selectDate = useLocation();
+  const plans = useSelector(state => state.plan.plans);
+  const lastplan = plans.find(v => v.finished);
   console.log(selectDate.state.time.split('T')[0]);
 
   //서버로 보낼 데이터들
@@ -42,22 +44,23 @@ const AddPlans = props => {
     dispatch(setDestination(''));
   }
   const date = selectDate.state.time.split('T')[0];
+
   let selectTime = moment(
     date + time.split('시')[0] + minute.split('분')[0],
-    'YYYY MM DD hh:mm',
+    'YYYY-MM-DD HH:mm',
   ).format();
   console.log(selectTime);
   console.log(
-    moment(selectTime, 'YYYY MM DD hh:mm')
+    moment(selectTime, 'YYYY-MM-DD HH:mm')
       .subtract(abled, 'minutes')
-      .format('YYYY MM DD hh:mm'),
+      .format('YYYY-MM-DD HH:mm'),
   );
   console.log(
     -1 *
       moment().diff(
-        moment(selectTime, 'YYYY MM DD hh:mm')
+        moment(selectTime, 'YYYY-MM-DD HH:mm')
           .subtract(abled, 'minutes')
-          .format('YYYY MM DD hh:mm'),
+          .format('YYYY-MM-DD HH:mm'),
         'minutes',
       ),
   );
@@ -222,15 +225,16 @@ const AddPlans = props => {
                 const noticeTime =
                   -1 *
                   moment().diff(
-                    moment(selectTime, 'YYYY MM DD hh:mm')
+                    moment(selectTime, 'YYYY-MM-DD HH:mm')
                       .subtract(abled, 'minutes')
-                      .format('YYYY MM DD hh:mm'),
+                      .format('YYYY-MM-DD HH:mm'),
                     'minutes',
                   );
                 if (noticeTime <= 0) {
                   window.alert('설정한 시간이 현재시간보다 이전시간입니다.');
                   return;
                 }
+
                 const data = {
                   planName: name,
                   destination: address,

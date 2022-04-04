@@ -4,12 +4,9 @@ export const getPlanId = createAsyncThunk(
   'map/getPlanId',
   async (data, { rejectWithValue }) => {
     try {
-      return await URL.get(`/meets/${data}`, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      }).then(response => response.data.data);
+      return await URL.get(`/meets/${data}`).then(
+        response => response.data.data,
+      );
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -24,6 +21,7 @@ export const mapSlice = createSlice({
     planName: '',
     publicMaps: [],
     publicChats: [],
+    url: '',
 
     loading: false,
   },
@@ -51,10 +49,10 @@ export const mapSlice = createSlice({
         state.is_public_send = false;
       }
     },
-    // getOnePlan: (state, action) => {
-    //   console.log(state, action.payload);
-    //   state.plan.data.push(action.payload);
-    // },
+    seturl: (state, action) => {
+      state.url = action.payload;
+    },
+
     setOnePlan: (state, action) => {
       state.showplan = { ...state.showplan, ...action.payload };
     },
