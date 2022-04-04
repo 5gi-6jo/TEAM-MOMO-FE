@@ -30,6 +30,7 @@ const Main = props => {
   const data = {
     date: time,
   };
+  let day = ['일', '월', '화', '수', '목', '금', '토'];
   console.log(Plans);
   console.log(time);
   console.log(user);
@@ -77,11 +78,11 @@ const Main = props => {
         </Text>
       </Grid>
       <Grid padding="0px 20px">
-        <Calendar />
+        <Calendar Plans={Plans} />
       </Grid>
       <Grid padding="10px 20px">
         <Text size="16px">
-          {moment(time).format('MM.DD')} ({moment(time).format('dd')})
+          {moment(time).format('MM.DD')} ({day[moment(time).format('e')]})
         </Text>
       </Grid>
       <PlanList>
@@ -150,6 +151,13 @@ const Main = props => {
           color={theme.color.orange}
         />
       </WriteButton>
+      <button
+        onClick={() => {
+          navigate('/plan/746d0dc9-fcf7-43ab-9e22-e9579696feb2');
+        }}
+      >
+        asdf
+      </button>
     </React.Fragment>
   );
 };

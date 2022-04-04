@@ -99,6 +99,8 @@ function App() {
                     }
                   />
                   <Route path="/Alarm" element={<Alarm />} />
+                  <Route path="/*" element={<NoUrlplan />} />
+
                   {/* <Route
                     path="/planmap/:url"
                     element={

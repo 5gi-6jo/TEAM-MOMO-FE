@@ -18,8 +18,7 @@ function MyCalendar(props) {
   const [mark, setMark] = useState(['']);
   const dispatch = useDispatch();
   const SearchTime = moment(value).format().split('+')[0];
-  const Plans = useSelector(state => state.plan.plans);
-
+  const Plans = props.Plans;
   useEffect(() => {
     console.log('Calendar:::useEffect');
   }, [SearchTime]);
@@ -28,7 +27,7 @@ function MyCalendar(props) {
     for (let i = 0; i < Plans.length; i++) {
       mark.push(Plans[i].planDate.split('T')[0]);
     }
-  }, []);
+  }, [Plans, mark]);
 
   return (
     <React.Fragment>
@@ -38,6 +37,8 @@ function MyCalendar(props) {
           dispatch(setCalendarDay(moment(e).format().split('+')[0]));
         }}
         value={value}
+        //년 월표시 형식
+        formatMonthYear={(locale, date) => moment(date).format('YYYY.MM')}
         // 날짜표기형식 01 => 1
         formatDay={(locale, date) => moment(date).format('D')}
         // 다른 달 날짜 표기

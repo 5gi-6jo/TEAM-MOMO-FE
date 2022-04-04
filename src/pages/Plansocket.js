@@ -96,6 +96,12 @@ const Plansocket = props => {
   const onMessageReceived2 = payload => {
     let payloadData = JSON.parse(payload.body);
     console.log('payloadDataMap=', payloadData);
+    if (payloadData.chats) {
+      payloadData.chats.map((chat, index) => {
+        console.log(chat, index);
+        dispatch(setPublicChats(chat));
+      });
+    }
     if (payloadData.type === 'ENTER' || payloadData.type === 'CHAT') {
       dispatch(setPublicChats(payloadData));
       // sendMyLocation();

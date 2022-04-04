@@ -27,6 +27,20 @@ const RegisterForm = props => {
   const [checked, setChecked] = useState(false);
 
   const Register = () => {
+    if (
+      nickname === '' ||
+      email === '' ||
+      pw === '' ||
+      pwCheck === '' ||
+      !checked
+    ) {
+      window.alert('*표시 내용을 모두 입력해주세요');
+      return;
+    }
+    if (pw !== pwCheck) {
+      window.alert('비밀번호가 같지않습니다');
+      return;
+    }
     const data = {
       email: email,
       nickname: nickname,

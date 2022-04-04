@@ -30,14 +30,15 @@ const Footer = props => {
   let Nowurl = '/NoUrlplan';
 
   let hasurl;
-  console.log(Plans.length);
-  // if (Plans.length !== 0) {
+  console.log(Plans.find(v => v.url));
   if (Plans.length) {
-    hasurl = Plans.find(v => v.url !== '').url
-      ? Plans.find(v => v.url).url
-      : null;
-    if (hasurl) {
-      Nowurl = `/plan/${hasurl}`;
+    if (Plans.find(v => v.url)) {
+      hasurl = Plans.find(v => v.url).url ? Plans.find(v => v.url).url : null;
+      console.log(hasurl);
+
+      if (hasurl) {
+        Nowurl = `/plan/${hasurl}`;
+      }
     }
   }
 
