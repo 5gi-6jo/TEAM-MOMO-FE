@@ -16,7 +16,6 @@ import kakao from './icon/kakao.png';
 import Line4 from './icon/Line4.png';
 import Line6 from './icon/Line6.png';
 
-import Rect10 from './icon/Rectangle10.png';
 import face from './icon/face.png';
 import sparkle from './icon/sparkles.png';
 import dino1 from './icon/dino1.png';
@@ -42,7 +41,6 @@ export {
   momoKor,
   momo,
   kakao,
-  Rect10,
   face,
   sparkle,
   dino1,

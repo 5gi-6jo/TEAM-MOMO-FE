@@ -10,7 +10,6 @@ import { messaging } from '../firebase';
 import { setFCMTokenplan } from '../redux/modules/plan';
 import { setFCMToken } from '../redux/modules/user';
 import Headerbar from '../shared/Headerbar';
-import { getCookie } from '../shared/utils/Cookie';
 import theme from '../Styles/theme';
 
 /**
@@ -133,7 +132,7 @@ const ToggleBtn = styled.button`
   border-radius: 30px;
   border: none;
   cursor: pointer;
-  background-color: ${props => (!props.toggle ? 'none' : '#2DBEB1')};
+  background-color: ${props => (!props.toggle ? '#8C8C8C' : '#2DBEB1')};
   display: flex;
   justify-content: center;
   align-items: center;
