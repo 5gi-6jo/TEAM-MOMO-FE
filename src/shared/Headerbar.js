@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Grid, Text } from '../elements';
+import { Grid, Text } from '../elements';
 import { GrClose } from 'react-icons/gr';
 import { FiSettings } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
@@ -40,6 +40,7 @@ const Headerbar = props => {
 };
 
 // 스타일 컴포넌트 작성 위치
+// eslint-disable-next-line no-unused-vars
 const StyleComponent = styled.div``;
 
 // default props 작성 위치

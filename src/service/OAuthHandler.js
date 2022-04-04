@@ -15,6 +15,7 @@ const OAuthHandler = props => {
       dispatch(userActions.KakaoLogin(code));
     }
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <Spinner />;
