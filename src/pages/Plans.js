@@ -6,6 +6,7 @@ import { Grid, Text } from '../elements';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../Styles/theme';
+import { HiOutlineChevronRight } from 'react-icons/hi';
 
 /**
  * @param {*} props
@@ -51,7 +52,24 @@ const Plans = props => {
                   });
                 }}
               >
-                {plan.planName}
+                <Grid is_Grid>
+                  <Grid>{plan.planName}</Grid>
+                  <Grid>
+                    {plan.planDate.split('T')[1].split(':')[0]}:
+                    {plan.planDate.split('T')[1].split(':')[1]}
+                  </Grid>
+                </Grid>
+                {/* <Grid>{plan.Location}</Grid> */}
+                <Grid
+                  right
+                  onClick={() => {
+                    navigate(`/plansdetail/${plan.planId}`, {
+                      state: plan.planId,
+                    });
+                  }}
+                >
+                  <HiOutlineChevronRight className="right" />
+                </Grid>
               </PlanId>
             </Grid>
           ))
