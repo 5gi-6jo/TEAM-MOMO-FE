@@ -27,12 +27,29 @@ const Agreement = props => {
       setCheckBox(checkBox.filter(x => x !== id));
     }
   };
+  const [allCheck, setAllCheck] = useState([false]);
+  const allChangeHandler = checked => {
+    if (checked) {
+      setAllCheck(true);
+    } else {
+      setAllCheck(false);
+    }
+  };
+  console.log(checkBox.length);
+  console.log(allCheck);
 
   return (
     <React.Fragment>
       <MainWrap>
         <EachCheckWrap>
-          <input type="checkbox" id="checkAll" />
+          <input
+            type="checkbox"
+            id="checkAll"
+            onChange={e => {
+              allChangeHandler(e.currentTarget.checked);
+            }}
+            checked={allCheck ? true : false}
+          />
           <label id="checkAll" htmlFor="checkAll">
             <Text color={theme.color.black} size="16px" bold margin="0px 5px">
               전체 약관 동의
