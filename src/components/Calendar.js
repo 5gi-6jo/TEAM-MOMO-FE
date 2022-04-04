@@ -24,8 +24,10 @@ function MyCalendar(props) {
   }, [SearchTime]);
 
   useEffect(() => {
-    for (let i = 0; i < Plans.length; i++) {
-      mark.push(Plans[i].planDate.split('T')[0]);
+    if (Plans) {
+      for (let i = 0; i < Plans.length; i++) {
+        mark.push(Plans[i].planDate.split('T')[0]);
+      }
     }
   }, [Plans, mark]);
 
