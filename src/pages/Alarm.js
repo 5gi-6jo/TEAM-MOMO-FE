@@ -1,10 +1,15 @@
 import { deleteToken, getToken } from 'firebase/messaging';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 import ModalInput from '../components/Modal/ModalInput';
+import { Grid, Text } from '../elements';
 import { messaging } from '../firebase';
 import { setFCMTokenplan } from '../redux/modules/plan';
 import { setFCMToken } from '../redux/modules/user';
+import Headerbar from '../shared/Headerbar';
+import theme from '../Styles/theme';
 
 /**
  * @param {*} props
@@ -15,6 +20,7 @@ import { setFCMToken } from '../redux/modules/user';
 
 const Alarm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //modal
   const [modalOpen, setModalOpen] = useState(false);
@@ -67,7 +73,10 @@ const Alarm = () => {
     });
   };
   const [FCM, setFCM] = useState(false);
-  const FCMtoggle = () => {
+
+  const [toggle, setToggle] = useState(false);
+  const clickToggle = () => {
+    setToggle(prev => !prev);
     if (!FCM) {
       FCMsetup();
       setFCM(true);
@@ -76,6 +85,7 @@ const Alarm = () => {
       setFCM(false);
     }
   };
+
   return (
     <React.Fragment>
       <button onClick={openModal}>모달팝업버튼</button>
@@ -93,14 +103,55 @@ const Alarm = () => {
       >
         FCM test
       </button>
-      {!FCM ? <div>구독취소</div> : <div>구독</div>}
-      <button onClick={FCMtoggle}>FCM구독 버튼</button>
+      <Headerbar
+        isback
+        text="알림"
+        _onClickClose={() => {
+          navigate('/mypage', { replace: true });
+        }}
+      />
+      <Grid is_flex padding="10px 20px">
+        <Text size="16px" width="50px" bold color={theme.color.gray1}>
+          알림
+        </Text>
+        <Grid padding="20px 0px" right>
+          <ToggleBtn onClick={clickToggle} toggle={toggle}>
+            <ToggleCircle toggle={toggle}></ToggleCircle>
+          </ToggleBtn>
+        </Grid>
+      </Grid>
     </React.Fragment>
   );
 };
 
 // styled components 작성 위치
-
+const ToggleBtn = styled.button`
+  width: 60px;
+  height: 30px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  background-color: ${props => (!props.toggle ? 'none' : '#2DBEB1')};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease-in-out;
+`;
+const ToggleCircle = styled.div`
+  background-color: white;
+  width: 25px;
+  height: 25px;
+  border-radius: 50px;
+  position: absolute;
+  left: 79.5%;
+  transition: all 0.5s ease-in-out;
+  ${props =>
+    props.toggle &&
+    css`
+      transform: translate(25px, 0);
+      transition: all 0.5s ease-in-out;
+    `}
+`;
 // default props 작성 위치
 Alarm.defaultProps = {};
 

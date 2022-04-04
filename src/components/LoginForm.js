@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import Button from '../elements/Button';
 import { login, setFCMToken } from '../redux/modules/user';
 import { Grid, Input } from '../elements';
@@ -14,7 +13,6 @@ import theme from '../Styles/theme';
  */
 
 const LoginForm = props => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');

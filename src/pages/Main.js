@@ -34,8 +34,6 @@ const Main = props => {
   console.log(time);
   console.log(user);
 
-  // console.log(Plans[0].planDate);
-
   useEffect(() => {
     if (moment(time).format('YYYY-MM') !== checktime) {
       dispatch(getPlans(data));
@@ -43,6 +41,13 @@ const Main = props => {
     }
     return;
   }, [time]);
+
+  const dayPlan = [];
+  for (let i = 0; i < Plans.length; i++) {
+    if (moment(time).format('YYYY-MM-DD') === Plans[i].planDate.split('T')[0]) {
+      dayPlan.push(Plans[i]);
+    }
+  }
 
   const textInput = useRef();
   const copy = () => {
@@ -80,7 +85,7 @@ const Main = props => {
         </Text>
       </Grid>
       <PlanList>
-        {Plans.length === 0 ? (
+        {dayPlan.length === 0 ? (
           <Grid is_flex center padding="10px">
             <DinoImg src={dino1} />
             <AlignLeft>
@@ -92,45 +97,45 @@ const Main = props => {
             </AlignLeft>
           </Grid>
         ) : (
-          Plans.map(
-            (plan, index) => (
-              console.log(plan),
-              (
-                <Grid is_flex key={index}>
-                  <PlanId
-                    key={`plans=${plan.planId}`}
-                    onClick={() => {
-                      navigate(`/plansdetail/${plan.planId}`, {
-                        state: plan.planId,
-                      });
-                    }}
-                  >
-                    {plan.planDate}
-                    {plan.planName}
-                  </PlanId>
-                  {plan.url && (
-                    <PlanUrl
-                      onClick={() => {
-                        copy();
-                        // modal실행
-                      }}
-                    >
-                      <CopyText>
-                        <input
-                          type="text"
-                          value={plan.url}
-                          ref={textInput}
-                          readOnly
-                        ></input>
-                      </CopyText>
-                      {plan.url}
-                      <FiLink size="28px" />
-                    </PlanUrl>
-                  )}
+          dayPlan.map((plan, index) => (
+            <Grid is_flex key={index}>
+              <PlanId
+                key={`plans=${plan.planId}`}
+                onClick={() => {
+                  navigate(`/plansdetail/${plan.planId}`, {
+                    state: plan.planId,
+                  });
+                }}
+              >
+                <Grid is_Grid>
+                  <Grid>
+                    {plan.planDate.split('T')[1].split(':')[0]}:
+                    {plan.planDate.split('T')[1].split(':')[1]}
+                  </Grid>
+                  <Grid>{plan.planName}</Grid>
                 </Grid>
-              )
-            ),
-          )
+              </PlanId>
+              {plan.url && (
+                <PlanUrl
+                  onClick={() => {
+                    copy();
+                    // modal실행
+                  }}
+                >
+                  <CopyText>
+                    <input
+                      type="text"
+                      value={plan.url}
+                      ref={textInput}
+                      readOnly
+                    ></input>
+                  </CopyText>
+                  {plan.url}
+                  <FiLink size="28px" />
+                </PlanUrl>
+              )}
+            </Grid>
+          ))
         )}
       </PlanList>
       <div style={{ padding: '20px' }}></div>
@@ -185,7 +190,7 @@ const PlanId = styled.div`
   margin: 10px 0px;
   padding: 10px;
   width: 200px;
-  height: 30px;
+  height: 40px;
   color: white;
   background-color: ${theme.color.green};
   border-radius: 10px;
@@ -212,12 +217,12 @@ const WriteButton = styled.div`
 `;
 
 const CopyText = styled.div`
-  /* position: absolute;
+  position: absolute;
   width: 0px;
   height: 0px;
   bottom: 0;
   left: 0;
-  opacity: 0; */
+  opacity: 0;
 `;
 
 const AlignLeft = styled.div`

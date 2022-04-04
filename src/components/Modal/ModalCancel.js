@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Grid, Text } from '../../elements';
+import theme from '../../Styles/theme';
 
 const ModalCancel = props => {
-  const { open, close, title, contents, _onChange, is_Cancel } = props;
+  const { open, close, title, contents, _onChange } = props;
   return (
     <>
       <div className={open ? 'openModal modal' : 'modal'}>
@@ -11,10 +13,15 @@ const ModalCancel = props => {
             <MainModal>
               <ModalPopup>
                 <ModalText>
-                  <div>
-                    <div>{title}</div>
-                    <div>{contents}</div>
-                  </div>
+                  <Grid padding="20px">
+                    <Text size="14px" color={theme.color.gray4}>
+                      {title}
+                    </Text>
+                    <div style={{ padding: '5px' }}></div>
+                    <Text size="11px" color={theme.color.gray4}>
+                      {contents}
+                    </Text>
+                  </Grid>
                 </ModalText>
                 <ModalButton>
                   <ModalButtonCancel className="close" onClick={close}>
@@ -54,7 +61,7 @@ const Section = styled.div`
 const MainModal = styled.div`
   position: absolute;
   width: 80%;
-  height: 30%;
+  height: 25%;
   background-color: white;
   border-radius: 15px;
 `;
@@ -67,6 +74,13 @@ const ModalText = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome , Safari , Opera */
+  }
+  white-space: pre-line;
 `;
 const ModalButton = styled.div`
   display: flex;
