@@ -42,6 +42,14 @@ const Main = props => {
     return;
   }, [time]);
 
+  const dayPlan = [];
+  for (let i = 0; i < Plans.length; i++) {
+    if (moment(time).format('YYYY-MM-DD') === Plans[i].planDate.split('T')[0]) {
+      dayPlan.push(Plans[i]);
+    }
+  }
+
+  console.log(dayPlan);
   const textInput = useRef();
   const copy = () => {
     const el = textInput.current;
@@ -78,7 +86,7 @@ const Main = props => {
         </Text>
       </Grid>
       <PlanList>
-        {Plans.length === 0 ? (
+        {dayPlan.length === 0 ? (
           <Grid is_flex center padding="10px">
             <DinoImg src={dino1} />
             <AlignLeft>
@@ -90,7 +98,7 @@ const Main = props => {
             </AlignLeft>
           </Grid>
         ) : (
-          Plans.map(
+          dayPlan.map(
             (plan, index) => (
               console.log(plan),
               (
