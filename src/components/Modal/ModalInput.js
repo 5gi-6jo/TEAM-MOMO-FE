@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Grid } from '../../elements';
+import { Grid, Text } from '../../elements';
+import theme from '../../Styles/theme';
 
 const ModalInput = props => {
   const { open, close, title, contents, _onChange, setNickname } = props;
@@ -13,8 +14,14 @@ const ModalInput = props => {
               <ModalPopup>
                 <ModalText>
                   <Grid padding="20px">
-                    {title}
-                    {contents}
+                    <Text size="14px" color={theme.color.gray4}>
+                      {title}
+                    </Text>
+                    <div style={{ padding: '5px' }}></div>
+                    <Text size="11px" color={theme.color.gray4}>
+                      {contents}
+                    </Text>
+                    <div style={{ padding: '5px' }}></div>
                     <input
                       onChange={e => {
                         setNickname(e.target.value);
@@ -60,7 +67,7 @@ const Section = styled.div`
 const MainModal = styled.div`
   position: absolute;
   width: 80%;
-  height: 30%;
+  height: 25%;
   background-color: white;
   border-radius: 15px;
 `;

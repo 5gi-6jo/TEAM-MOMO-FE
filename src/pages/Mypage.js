@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Grid, Text } from '../elements';
 import Header from '../shared/Header';
 import { useNavigate } from 'react-router-dom';
 import { HiOutlineChevronRight } from 'react-icons/hi';
 import theme from '../Styles/theme';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import ModalInput from '../components/Modal/ModalInput';
+import ModalCancel from '../components/Modal/ModalCancel';
+import { setUserName } from '../redux/modules/user';
 
 /**
  * @param {*} props
@@ -14,18 +17,62 @@ import { useSelector } from 'react-redux';
  * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
  */
 
-const Mypage = ({ isLogin }) => {
+const Mypage = () => {
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user_info);
 
+  // member modal
+  // 조건문 isLogin true
+  const [modalOpenInput, setModalOpenInput] = useState(false);
+
+  const openModalInput = () => {
+    setModalOpenInput(true);
+  };
+  const closeModalInput = () => {
+    setModalOpenInput(false);
+  };
+  const dispatch = useDispatch();
+  const inputRef = useRef();
+
+  // guest modal
+  const [modalOpenCancel, setModalOpenCancel] = useState(false);
+
+  const openModalCancel = () => {
+    setModalOpenCancel(true);
+  };
+  const closeModalCancel = () => {
+    setModalOpenCancel(false);
+  };
+
   const Logout = () => {
+    // logout function
     navigate('/');
-    //로그아웃 실행함수
   };
 
   return (
     <React.Fragment>
       <Header />
+      {/* 조건문 isLogin true */}
+      <ModalInput
+        open={modalOpenInput}
+        close={closeModalInput}
+        title="닉네임 설정"
+        contents="사용하실 닉네임을 입력해주세요."
+        _onChange={() => {
+          dispatch(setUserName(inputRef.current.value));
+        }}
+      ></ModalInput>
+
+      {/* 조건문 isLogin false */}
+      <ModalCancel
+        open={modalOpenCancel}
+        close={closeModalCancel}
+        title="로그인"
+        contents="로그인 시 이용가능한 서비스입니다."
+        _onChange={() => {
+          navigate('/');
+        }}
+      ></ModalCancel>
       <Grid is_flex padding="20px">
         <Text size="14px" bold>
           마이페이지
@@ -45,12 +92,20 @@ const Mypage = ({ isLogin }) => {
         </div>
       </Grid>
       <UserHandler>
-        <div //modal
-        >
+        {/* 조건문 isLogin true */}
+        {/* <div onClick={openModalInput}>
+          <Text color={theme.color.gray4} size="13px">
+            닉네임 설정
+          </Text>
+        </div> */}
+
+        {/* 조건문 isLogin false */}
+        <div onClick={openModalCancel}>
           <Text color={theme.color.gray4} size="13px">
             닉네임 설정
           </Text>
         </div>
+
         {/* 조건문 isLogin true */}
         {/* <div style={{ padding: '5px' }}></div>
         <div onClick={Logout}>
@@ -58,11 +113,12 @@ const Mypage = ({ isLogin }) => {
             로그아웃
           </Text>
         </div> */}
+
         {/* 조건문 isLogin false */}
         <div style={{ padding: '5px' }}></div>
         <div
           onClick={() => {
-            navigate('/login', { replace: true });
+            navigate('/', { replace: true });
           }}
         >
           <Text color={theme.color.gray4} size="13px">
