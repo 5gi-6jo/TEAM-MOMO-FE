@@ -103,13 +103,15 @@ const Alarm = () => {
         }}
       />
       <Grid is_flex padding="10px 20px">
-        <Text size="16px" width="50px" bold color={theme.color.gray1}>
-          알림
-        </Text>
-        <Grid padding="20px 0px" right>
-          <ToggleBtn onClick={clickToggle} toggle={toggle}>
-            <ToggleCircle toggle={toggle}></ToggleCircle>
-          </ToggleBtn>
+        <Grid left>
+          <Text size="16px" width="50px" bold color={theme.color.gray1}>
+            알림
+          </Text>
+          <ToggleBox>
+            <ToggleBtn onClick={clickToggle} toggle={toggle}>
+              <ToggleCircle toggle={toggle}></ToggleCircle>
+            </ToggleBtn>
+          </ToggleBox>
         </Grid>
       </Grid>
       <button onClick={openModal}>모달팝업버튼</button>
@@ -132,6 +134,13 @@ const Alarm = () => {
 };
 
 // styled components 작성 위치
+const ToggleBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  padding: 20px 0px;
+`;
 const ToggleBtn = styled.button`
   width: 60px;
   height: 30px;
@@ -150,7 +159,7 @@ const ToggleCircle = styled.div`
   height: 25px;
   border-radius: 50px;
   position: absolute;
-  left: 83%;
+  left: 7%;
   transition: all 0.5s ease-in-out;
   ${props =>
     props.toggle &&
