@@ -185,20 +185,17 @@ export const KakaoLogin = code => {
       method: 'GET',
       url: `https://seoultaste.click/users/kakao/callback?code=${code}`,
     })
-      .then(response => {
-        console.log(response); // 토큰이 넘어올 것임
+      .then(res => {
+        console.log(res);
 
-        const ACCESS_TOKEN = response.data.accessToken;
-
-        // localStorage.setItem('token', ACCESS_TOKEN);
-
+        const ACCESS_TOKEN = res.data.accessToken;
         setCookie('token', ACCESS_TOKEN, 1);
 
-        window.location.assign('/main');
+        console.log(res.headers.authorization);
+        return res.headers.authorization;
       })
       .catch(err => {
         console.log('소셜로그인 에러', err);
-        window.location.assign('/');
       });
   };
 };
