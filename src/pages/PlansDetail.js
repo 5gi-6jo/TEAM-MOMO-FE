@@ -110,8 +110,11 @@ const PlansDetail = props => {
 
       {showModal && (
         <EditPlans
+          planDate={Plan.planDate}
           planName={Plan.planName}
           des={Plan.destination}
+          lat={Plan.lat}
+          lng={Plan.lng}
           show={showModal}
           id={planId}
           setshow={setShowModal}

@@ -4,6 +4,7 @@ import Calendar from 'react-calendar';
 import './Calendar.css';
 import { useDispatch } from 'react-redux';
 import { setCalendarDay } from '../redux/modules/mainsys';
+import useIsMount from '../hooks/useIsMount';
 
 /**
  * @param {*} props
@@ -19,17 +20,25 @@ function MyCalendar(props) {
   const dispatch = useDispatch();
   const SearchTime = moment(value).format().split('+')[0];
   const Plans = props.Plans;
-  useEffect(() => {
-    console.log('Calendar:::useEffect');
-  }, [SearchTime]);
+  // useEffect(() => {
+  //   console.log('Calendar:::useEffect');
+  // }, [SearchTime, Plans]);
 
+  const ismount = useIsMount();
   useEffect(() => {
-    if (Plans) {
-      for (let i = 0; i < Plans.length; i++) {
-        mark.push(Plans[i].planDate.split('T')[0]);
+    // if (Plans) {
+    //   for (let i = 0; i < Plans.length; i++) {
+    //     mark.push(Plans[i].planDate.split('T')[0]);
+    //   }
+    // }
+    if (ismount.current) {
+      if (Plans) {
+        Plans.map(plan =>
+          setMark(prev => [...prev, plan.planDate.split('T')[0]]),
+        );
       }
     }
-  }, [Plans, mark]);
+  }, [ismount, Plans]);
 
   return (
     <React.Fragment>
@@ -55,9 +64,10 @@ function MyCalendar(props) {
         // 특정 날짜에 표시
         tileContent={({ date, view }) => {
           let isDot = [];
-          if (mark.find(x => x === moment(date).format('YYYY-MM-DD'))) {
-            isDot.push(<div className="dot"></div>);
-          }
+          if (mark)
+            if (mark.find(x => x === moment(date).format('YYYY-MM-DD'))) {
+              isDot.push(<div className="dot"></div>);
+            }
           return (
             <>
               <div className="flex justify-center items-center absoluteDiv">
