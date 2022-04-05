@@ -124,51 +124,54 @@ const Main = props => {
                   </Grid>
                 </DeActive>
               ) : (
-                <PlanEach>
-                  <Active
-                    key={`plans=${plan.planId}`}
-                    onClick={() => {
-                      navigate(`/plansdetail/${plan.planId}`, {
-                        state: plan.planId,
-                      });
-                    }}
-                  >
-                    {plan.url ? (
-                      <Grid is_flex>
-                        <Grid>
-                          {plan.planDate.split('T')[1].split(':')[0]}:
-                          {plan.planDate.split('T')[1].split(':')[1]}
-                        </Grid>
-                        <Grid>{plan.planName}</Grid>
-                      </Grid>
-                    ) : (
-                      <Grid is_Grid>
-                        <Grid>
-                          {plan.planDate.split('T')[1].split(':')[0]}:
-                          {plan.planDate.split('T')[1].split(':')[1]}
-                        </Grid>
-                        <Grid>{plan.planName}</Grid>
-                      </Grid>
-                    )}
-                  </Active>
-                  {plan.url && (
-                    <PlanUrl
+                (console.log(plan),
+                (
+                  <PlanEach>
+                    <Active
+                      key={`plans=${plan.planId}`}
                       onClick={() => {
-                        copy();
+                        navigate(`/plansdetail/${plan.planId}`, {
+                          state: plan.planId,
+                        });
                       }}
                     >
-                      <CopyText>
-                        <input
-                          type="text"
-                          value={plan.url}
-                          ref={textInput}
-                          readOnly
-                        ></input>
-                      </CopyText>
-                      <FiLink size="30px" />
-                    </PlanUrl>
-                  )}
-                </PlanEach>
+                      {plan.url ? (
+                        <Grid is_flex>
+                          <Grid>
+                            {plan.planDate.split('T')[1].split(':')[0]}:
+                            {plan.planDate.split('T')[1].split(':')[1]}
+                          </Grid>
+                          <Grid>{plan.planName}</Grid>
+                        </Grid>
+                      ) : (
+                        <Grid is_Grid>
+                          <Grid>
+                            {plan.planDate.split('T')[1].split(':')[0]}:
+                            {plan.planDate.split('T')[1].split(':')[1]}
+                          </Grid>
+                          <Grid>{plan.planName}</Grid>
+                        </Grid>
+                      )}
+                    </Active>
+                    {plan.url && (
+                      <PlanUrl
+                        onClick={() => {
+                          copy();
+                        }}
+                      >
+                        <CopyText>
+                          <input
+                            type="text"
+                            value={plan.url}
+                            ref={textInput}
+                            readOnly
+                          ></input>
+                        </CopyText>
+                        <FiLink size="30px" />
+                      </PlanUrl>
+                    )}
+                  </PlanEach>
+                ))
               )}
             </Grid>
           ))

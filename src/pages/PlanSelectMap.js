@@ -125,9 +125,11 @@ const PlanSelectMap = props => {
                         // map.setBounds(bounds);
                       }}
                     >
-                      <Text bold>{point.place_name}</Text>
+                      <Text size={'16px'}>{point.place_name}</Text>
                       {/* <p style={{ color: 'green' }}>{point.address_name}</p> */}
-                      <Text>{point.address_name}</Text>
+                      <Text size={'11px'} color={theme.color.gray4}>
+                        {point.address_name}
+                      </Text>
                     </Grid>
                     <hr style={{ color: '#E0E0E0' }} />
                   </div>

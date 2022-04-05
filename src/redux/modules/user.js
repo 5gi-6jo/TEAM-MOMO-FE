@@ -60,11 +60,12 @@ export const logout = createAsyncThunk(
     };
     try {
       return await tokenURL.post(`/users/logout`, data).then(response => {
-        window.location.assign('/');
         deleteCookie('token');
+        setTimeout(() => window.location.assign('/'), 1000);
       });
     } catch (error) {
       window.alert(error.response.data.message);
+      deleteCookie('token');
 
       console.log(error);
       return rejectWithValue(error.response);
@@ -188,16 +189,19 @@ export const KakaoLogin = code => {
       .then(response => {
         console.log(response); // 토큰이 넘어올 것임
 
-        const ACCESS_TOKEN = response.data.accessToken;
+        const ACCESS_TOKEN = response.headers.authorization;
 
         // localStorage.setItem('token', ACCESS_TOKEN);
+        console.log(ACCESS_TOKEN);
 
         setCookie('token', ACCESS_TOKEN, 1);
 
-        window.location.assign('/main');
+        debugger;
       })
       .catch(err => {
         console.log('소셜로그인 에러', err);
+        // debugger;
+
         window.location.assign('/');
       });
   };

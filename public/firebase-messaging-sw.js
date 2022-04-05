@@ -40,9 +40,10 @@ self.addEventListener('notificationclick', function (event) {
   event.notification.close();
   event.waitUntil(
     self.clients.openWindow(
-      `https://momo-cbc21.web.app/plan/${
-        event.notification.body.split('!\n')[1]
-      }`,
+      `https://modumoyeo.com/main`,
+      // /plan/${
+      //   event.notification.body.split('!\n')[1]
+      // }`,
     ),
     // self.clients.openWindow(event.notification.data.url),
   );

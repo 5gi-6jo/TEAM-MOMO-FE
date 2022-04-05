@@ -10,12 +10,12 @@ function getCookie(name) {
 function setCookie(name, value, exp = 5) {
   const date = new Date();
   date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
-  document.cookie = `${name}=${value}; expires=${date.toUTCString}`;
+  document.cookie = `${name}=${value}; path=/; expires=${date.toUTCString}`;
 }
 
 function deleteCookie(name) {
   const date = new Date('1000-01-01').toUTCString();
-  document.cookie = `${name}=; expires=${date}`;
+  document.cookie = `${name}=;  path=/;expires=${date}`;
 }
 
 export { getCookie, setCookie, deleteCookie };

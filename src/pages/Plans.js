@@ -7,6 +7,9 @@ import styled from 'styled-components';
 import theme from '../Styles/theme';
 import { HiOutlineChevronRight } from 'react-icons/hi';
 import { tokenURL } from '../shared/apis/API';
+import useIsMount from '../hooks/useIsMount';
+import { useDispatch, useSelector } from 'react-redux';
+import { setrecords } from '../redux/modules/plan';
 
 /**
  * @param {*} props
@@ -17,15 +20,21 @@ import { tokenURL } from '../shared/apis/API';
 
 const Plans = props => {
   const navigate = useNavigate();
-  const [record, setRecord] = useState([]);
-
+  // const [record, setRecord] = useState([]);
+  const isMount = useIsMount();
+  const dispatch = useDispatch();
+  const record = useSelector(state => state.plan.recordslist);
+  console.log(record);
   useEffect(() => {
-    tokenURL.get(`/records?pageNumber=0`).then(res => {
-      console.log(res);
-      console.log(res.data.data);
-      setRecord(res.data.data);
-    });
-  }, [record]);
+    dispatch(setrecords());
+    if (isMount.current) {
+    }
+    // tokenURL.get(`/records?pageNumber=0`).then(res => {
+    //   console.log(res);
+    //   console.log(res.data.data);
+    //   setRecord(res.data.data);
+    // });
+  }, [isMount]);
 
   return (
     <React.Fragment>
@@ -37,7 +46,7 @@ const Plans = props => {
       </Grid>
       <hr />
       <PlanList>
-        {!Plans ? (
+        {!record ? (
           <Grid>
             <Grid center padding="160px 0px">
               <Text size="16px" color={theme.color.gray3}>
@@ -52,57 +61,47 @@ const Plans = props => {
           </Grid>
         ) : (
           record.map((plan, index) => (
-            <Grid is_flex key={index}>
-              {plan.finished && (
-                <PlanId
-                  key={`plans=${plan.planId}`}
+            <PlanId
+              style={{
+                backgroundColor: plan.finished
+                  ? theme.color.gray3
+                  : theme.color.green,
+              }}
+              key={index}
+              onClick={() => {
+                navigate(`/plansdetail/${plan.planId}`, {
+                  state: plan.planId,
+                });
+              }}
+            >
+              <div style={{ flex: '1 1 0%' }}>
+                <TextBox>
+                  {plan.planName}
+                  <SpanBox style={{ marginLeft: '6px' }}>
+                    {plan.planDate.split('T')[0].split('-')[0].split('0')[1]}
+                    {plan.planDate.split('T')[0].split('-')[1]}
+                    {plan.planDate.split('T')[0].split('-')[2]}
+                  </SpanBox>
+                </TextBox>
+                <div>
+                  <DestBox>{plan.destination}</DestBox>
+                </div>
+              </div>
+
+              {/* <Grid
+                  right
                   onClick={() => {
                     navigate(`/plansdetail/${plan.planId}`, {
                       state: plan.planId,
                     });
                   }}
-                >
-                  <Grid is_flex>
-                    <Grid padding="10px">
-                      <PlanName>
-                        <div>
-                          <Text size="18px" color={theme.color.white}>
-                            {plan.planName}
-                          </Text>
-                        </div>
-                        <div>
-                          <Text size="12px" color={theme.color.white}>
-                            {
-                              plan.planDate
-                                .split('T')[0]
-                                .split('-')[0]
-                                .split('0')[1]
-                            }
-                            {plan.planDate.split('T')[0].split('-')[1]}
-                            {plan.planDate.split('T')[0].split('-')[2]}
-                          </Text>
-                        </div>
-                      </PlanName>
-                      <Grid padding="0px 10px">
-                        <Text size="12px" color={theme.color.white}>
-                          {plan.destination}
-                        </Text>
-                      </Grid>
-                    </Grid>
-                    <Grid
-                      right
-                      onClick={() => {
-                        navigate(`/plansdetail/${plan.planId}`, {
-                          state: plan.planId,
-                        });
-                      }}
-                    >
-                      <HiOutlineChevronRight className="right" size="20px" />
-                    </Grid>
-                  </Grid>
-                </PlanId>
-              )}
-            </Grid>
+                ></Grid> */}
+              <HiOutlineChevronRight
+                className="right"
+                size="20px"
+                color={theme.color.white}
+              />
+            </PlanId>
           ))
         )}
       </PlanList>
@@ -133,18 +132,38 @@ const PlanList = styled.div`
 `;
 
 const PlanId = styled.div`
-  margin: 10px 0px;
-  padding: 10px;
+  /* margin: 10px 0px;
+  display: flex;
   width: 100%;
-  height: 60px;
-  color: ${theme.color.white};
-  background-color: ${theme.color.green};
-  border-radius: 10px;
+  height: 83.48px;
+  border-radius: 15px; */
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+  min-height: 83.48px;
+  border-radius: 15px;
+  align-items: center;
+  margin: 22.5px 0px;
 `;
 
-const PlanName = styled.div`
-  display: flex;
-  justify-content: space-evenly;
+const TextBox = styled.div`
+  font-size: 14px;
+  text-align: left;
+  color: ${theme.color.white};
+  font-weight: 700;
+`;
+const SpanBox = styled.span`
+  font-size: 8px;
+  font-weight: 400;
+`;
+
+const DestBox = styled.p`
+  line-height: 12px;
+  font-size: 8px;
+  color: ${theme.color.white};
+  text-align: left;
 `;
 
 // default props 작성 위치

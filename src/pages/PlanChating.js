@@ -199,7 +199,7 @@ const SenderInner = styled.div`
 
 const Sender = styled.div`
   color: ${theme.color.black};
-  font-size: 1rem;
+  font-size: 0.8rem;
 `;
 
 const Sendercontent = styled.p`
@@ -212,7 +212,7 @@ const Sendercontent = styled.p`
   color: rgba(255, 255, 255, 0.7);
 
   color: ${theme.color.white};
-  font-size: '14px';
+  font-size: 16px;
   font-weight: 500;
   text-align: left;
   word-break: break-all;
@@ -234,7 +234,7 @@ const ReceiverInner = styled.div`
 `;
 const Receiver = styled.div`
   color: ${theme.color.black};
-  font-size: 1rem;
+  font-size: 0.8rem;
 `;
 const Receiv = styled.div`
   font-weight: 500;
@@ -246,7 +246,7 @@ const Receiv = styled.div`
   color: rgba(255, 255, 255, 0.7);
 
   color: ${theme.color.realblack};
-  font-size: '14px';
+  font-size: 16px;
   font-weight: 500;
   text-align: left;
   word-break: break-all;

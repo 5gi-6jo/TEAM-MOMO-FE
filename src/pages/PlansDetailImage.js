@@ -124,8 +124,11 @@ const PlansDetailImage = () => {
           }}
           _onClick={() => {
             console.log('trash_2');
-
-            dispatch(deleteImage(props.imageId));
+            const data = {
+              planId: props.planId,
+              imageId: props.imageId,
+            };
+            dispatch(deleteImage(data));
             navigate(`/plansdetail/${props.planId}`, { state: props.planId });
           }}
         >

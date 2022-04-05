@@ -73,9 +73,11 @@ export const deletePlans = createAsyncThunk(
   'plan/deletePlans',
   async (data, { rejectWithValue }) => {
     try {
-      return await tokenURL.delete(`/plans/${data.id}`).then(res => {
-        return data.id;
-      });
+      return await tokenURL
+        .delete(`/plans/${data.planId}/images/${data.imageId}`)
+        .then(res => {
+          return data.imageId;
+        });
     } catch (error) {
       console.log(error);
       window.alert(error.response.data.message);
@@ -154,12 +156,27 @@ export const setFCMTokenplan = createAsyncThunk(
     }
   },
 );
+export const setrecords = createAsyncThunk(
+  'plan/reCords',
+  async (_, { rejectWithValue }) => {
+    try {
+      return await tokenURL
+        .get(`/records?pageNumber=0`)
+        .then(res => res.data.data);
+    } catch (error) {
+      console.log(error);
+
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 export const planSlice = createSlice({
   name: 'plan',
   initialState: {
     plans: [],
     showplan: [],
     images: [],
+    recordslist: [],
   },
   reducers: {
     // getPlans: (state, action) => {
@@ -170,9 +187,12 @@ export const planSlice = createSlice({
     //   console.log(state, action.payload);
     //   state.plan.data.push(action.payload);
     // },
-    setOnePlan: (state, action) => {
-      state.showplan = { ...state.showplan, ...action.payload };
+    setDeleteOnePlan: (state, action) => {
+      state.showplan = [];
     },
+    // setOnePlan: (state, action) => {
+    //   state.showplan = { ...state.showplan, ...action.payload };
+    // },
   },
   extraReducers: builder => {
     builder
@@ -203,6 +223,9 @@ export const planSlice = createSlice({
           e => e.imageId !== action.payload,
         );
       })
+      .addCase(setrecords.fulfilled, (state, action) => {
+        state.recordslist = action.payload;
+      })
       .addCase(setFCMTokenplan.fulfilled, (state, action) => {});
 
     // [getPlansAxios.fulfiled]: (state, action) => {
@@ -217,6 +240,6 @@ export const planSlice = createSlice({
     // },
   },
 });
-export const { setOnePlan } = planSlice.actions;
+export const { setOnePlan, setDeleteOnePlan } = planSlice.actions;
 
 export default planSlice.reducer;
