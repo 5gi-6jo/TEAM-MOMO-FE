@@ -24,7 +24,6 @@ const Plans = props => {
   const isMount = useIsMount();
   const dispatch = useDispatch();
   const record = useSelector(state => state.plan.recordslist);
-  console.log(record);
   useEffect(() => {
     dispatch(setrecords());
     if (isMount.current) {

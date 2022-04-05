@@ -40,7 +40,6 @@ const PlansDetail = props => {
 
   //부모에서 넘겨받을때 모임 아이디를 받음
   const planId = useLocation().state;
-  console.log(Plan);
   useEffect(() => {
     console.log('Detail::useEffect');
     dispatch(getOnePlan(planId));
@@ -113,7 +112,7 @@ const PlansDetail = props => {
         _accept="image/x-png,image/jpeg"
         _onChange={handleFileInput}
         onClick={() => {
-          console.log('button');
+          // console.log('button');
         }}
       >
         <FiUpload size="24px" />

@@ -19,7 +19,6 @@ const PlanChating = props => {
   const setIsChating = props.setIsChating;
   const publicChats = props.publicChats;
   const scrollRef = useRef();
-  console.log('userData', userData, 'publicChats', publicChats);
   useEffect(() => {
     scrollToBottom();
     return () => {
@@ -30,7 +29,6 @@ const PlanChating = props => {
     const { scrollHeight, clientHeight } = scrollRef.current;
     scrollRef.current.scrollTop = scrollHeight - clientHeight;
   };
-  console.log(scrollRef);
 
   //메시지 내용 추가함수
   const handleMessage = event => {
@@ -39,7 +37,6 @@ const PlanChating = props => {
   };
   //보내기 버튼
   const sendMessage = () => {
-    console.log(' 메시지 보내기 클릭!');
     if (stompClient) {
       let chatMessage = {
         sender: props.usernick,
@@ -47,7 +44,7 @@ const PlanChating = props => {
         planId: props.planId,
         type: 'CHAT',
       };
-      console.log(' 내가 보낸 메시지 ==', chatMessage);
+      // console.log(' 내가 보낸 메시지 ==', chatMessage);
 
       stompClient.send('/maps/chat.send', {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, content: '' });
@@ -67,7 +64,6 @@ const PlanChating = props => {
             is_Edit
             text={`${props.planName} 채팅방`}
             _onClickClose={() => {
-              console.log('asdfsad');
               setIsChating(false);
             }}
             _onClickEdit={() => {}}
@@ -107,7 +103,7 @@ const PlanChating = props => {
                   <ButtonImagePlus
                     src={plusbutton}
                     _onClick={() => {
-                      console.log('plus');
+                      // console.log('plus');
                     }}
                   ></ButtonImagePlus>
                   <InputText

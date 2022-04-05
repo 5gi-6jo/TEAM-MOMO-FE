@@ -31,9 +31,9 @@ const Main = props => {
     date: time,
   };
   let day = ['일', '월', '화', '수', '목', '금', '토'];
-  console.log(Plans);
-  console.log(time);
-  console.log(user);
+  // console.log(Plans);
+  // console.log(time);
+  // console.log(user);
 
   useEffect(() => {
     if (moment(time).format('YYYY-MM') !== checktime) {
@@ -124,54 +124,51 @@ const Main = props => {
                   </Grid>
                 </DeActive>
               ) : (
-                (console.log(plan),
-                (
-                  <PlanEach>
-                    <Active
-                      key={`plans=${plan.planId}`}
+                <PlanEach>
+                  <Active
+                    key={`plans=${plan.planId}`}
+                    onClick={() => {
+                      navigate(`/plansdetail/${plan.planId}`, {
+                        state: plan.planId,
+                      });
+                    }}
+                  >
+                    {plan.url ? (
+                      <Grid is_flex>
+                        <Grid>
+                          {plan.planDate.split('T')[1].split(':')[0]}:
+                          {plan.planDate.split('T')[1].split(':')[1]}
+                        </Grid>
+                        <Grid>{plan.planName}</Grid>
+                      </Grid>
+                    ) : (
+                      <Grid is_Grid>
+                        <Grid>
+                          {plan.planDate.split('T')[1].split(':')[0]}:
+                          {plan.planDate.split('T')[1].split(':')[1]}
+                        </Grid>
+                        <Grid>{plan.planName}</Grid>
+                      </Grid>
+                    )}
+                  </Active>
+                  {plan.url && (
+                    <PlanUrl
                       onClick={() => {
-                        navigate(`/plansdetail/${plan.planId}`, {
-                          state: plan.planId,
-                        });
+                        copy();
                       }}
                     >
-                      {plan.url ? (
-                        <Grid is_flex>
-                          <Grid>
-                            {plan.planDate.split('T')[1].split(':')[0]}:
-                            {plan.planDate.split('T')[1].split(':')[1]}
-                          </Grid>
-                          <Grid>{plan.planName}</Grid>
-                        </Grid>
-                      ) : (
-                        <Grid is_Grid>
-                          <Grid>
-                            {plan.planDate.split('T')[1].split(':')[0]}:
-                            {plan.planDate.split('T')[1].split(':')[1]}
-                          </Grid>
-                          <Grid>{plan.planName}</Grid>
-                        </Grid>
-                      )}
-                    </Active>
-                    {plan.url && (
-                      <PlanUrl
-                        onClick={() => {
-                          copy();
-                        }}
-                      >
-                        <CopyText>
-                          <input
-                            type="text"
-                            value={plan.url}
-                            ref={textInput}
-                            readOnly
-                          ></input>
-                        </CopyText>
-                        <FiLink size="30px" />
-                      </PlanUrl>
-                    )}
-                  </PlanEach>
-                ))
+                      <CopyText>
+                        <input
+                          type="text"
+                          value={plan.url}
+                          ref={textInput}
+                          readOnly
+                        ></input>
+                      </CopyText>
+                      <FiLink size="30px" />
+                    </PlanUrl>
+                  )}
+                </PlanEach>
               )}
             </Grid>
           ))

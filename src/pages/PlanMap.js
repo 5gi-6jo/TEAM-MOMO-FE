@@ -33,7 +33,7 @@ const PlanMap = forwardRef((props, ref) => {
       sendMyLocation();
     },
     setDestpoint(payload) {
-      console.log('payload', payload.lat, payload.lng);
+      // console.log('payload', payload.lat, payload.lng);
       // setPoints(prev => ({
       //   ...prev,
       //   lat: parseFloat(payload.lat),
@@ -109,7 +109,6 @@ const PlanMap = forwardRef((props, ref) => {
         type: 'MAP',
         planId: planId,
       };
-      console.log(' 위치보내기 ==', chatMessage);
 
       stompClient.send('/maps/map.send', {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, lat: '', lng: '' });
@@ -223,7 +222,6 @@ const PlanMap = forwardRef((props, ref) => {
                         size: { width: 33, height: 41 },
                       }}
                       onClick={() => {
-                        console.log('clickclickclickclick');
                         setInfo(true);
                         setPosition({
                           lat: chat.lat,
@@ -241,7 +239,6 @@ const PlanMap = forwardRef((props, ref) => {
                         size: { width: 33, height: 41 },
                       }}
                       onClick={() => {
-                        console.log('clickclickclickclick');
                         setInfo(true);
                         setPosition({
                           lat: chat.lat,

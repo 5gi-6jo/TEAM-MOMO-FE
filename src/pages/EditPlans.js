@@ -26,12 +26,10 @@ const EditPlans = props => {
   const [time, setTime] = useState('');
   const [minute, setMinute] = useState('');
 
-  console.log(props.planDate);
   let selectTime = moment(
     props.planDate + time.split('시')[0] + minute.split('분')[0],
     'YYYY-MM-DD h:mm',
   ).format();
-  console.log(props.des);
   const timerButton = e => {
     let minutestr = parseInt(e.target.value);
     setabled(minutestr);
@@ -61,7 +59,6 @@ const EditPlans = props => {
                 color={theme.color.gray2}
                 cursor="pointer"
                 onClick={() => {
-                  console.log('false');
                   props.setshow(false);
                 }}
               />
@@ -80,7 +77,6 @@ const EditPlans = props => {
 
                 <Icon
                   onClick={() => {
-                    console.log('deleteicon');
                     const data = {
                       id: props.id,
                     };
@@ -235,7 +231,6 @@ const EditPlans = props => {
                     noticeTime: abled,
                   };
                   props.setshow(false);
-                  console.log(data);
 
                   dispatch(editPlans(data));
                   dispatch(setOnePlan(data));

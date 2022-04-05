@@ -11,7 +11,6 @@ export const getPlans = createAsyncThunk(
 
       // console.log(sessionStorage.getItem('token').split('Bearer ')[1]);
       return await tokenURL.get(`/plans?date=${data.date}`).then(response => {
-        console.log(response);
         return response.data.data;
       });
     } catch (error) {
@@ -58,7 +57,7 @@ export const editPlans = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       return await tokenURL.put(`/plans/${data.id}`, data).then(res => {
-        console.log(res);
+        return res;
         // setOnePlan(data);
       });
     } catch (error) {
@@ -112,7 +111,7 @@ export const getImage = createAsyncThunk(
   async (planId, { rejectWithValue }) => {
     try {
       return await tokenURL.get(`/plans/${planId}/images`).then(res => {
-        console.log(res);
+        return res;
       });
     } catch (error) {
       console.log(error);
@@ -125,9 +124,7 @@ export const deleteImage = createAsyncThunk(
   'plan/deleteImage',
   async (imageId, { rejectWithValue }) => {
     try {
-      console.log(imageId);
       return await tokenURL.delete(`/images/${imageId}`).then(res => {
-        console.log(res);
         return imageId;
       });
     } catch (error) {
@@ -205,13 +202,9 @@ export const planSlice = createSlice({
       .addCase(deletePlans.fulfilled, (state, action) => {
         state.showplan = null;
         // console.log(state.plans[1].planId);
-        console.log(action.payload);
-        console.log(state.plans.filter(e => e.planId !== action.payload));
         state.plans = state.plans.filter(e => e.planId !== action.payload);
       })
       .addCase(setUploadImage.fulfilled, (state, action) => {
-        console.log(state, action.payload);
-
         state.showplan.imageList = state.showplan.imageList.concat(
           action.payload,
         );

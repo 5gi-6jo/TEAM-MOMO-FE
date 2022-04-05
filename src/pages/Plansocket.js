@@ -51,19 +51,17 @@ const Plansocket = props => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log('publicChats', publicChats, 'publicMaps', publicMaps);
   const connect = () => {
-    console.log('planId', planId);
     console.log('connet');
     client.connect({ id: planId }, onConnected, onError);
     sock.addEventListener('open', () => {
-      console.log('Connected to Browser!!!😀');
+      // console.log('Connected to Browser!!!😀');
     });
     // sock.addEventListener('message', message => {
     //   console.log('Got this:', message, '😀');
     // });
     sock.addEventListener('close', () => {
-      console.log('Disconnected to Server😀');
+      // console.log('Disconnected to Server😀');
     });
   };
   //연결
@@ -74,7 +72,7 @@ const Plansocket = props => {
     client.subscribe(`/topic/map/${planId}`, onMessageReceived2, onError);
 
     userJoin();
-    console.log('연결 / 구독 / 유저 입장');
+    // console.log('연결 / 구독 / 유저 입장');
   };
   const onMessageReceived = payload => {
     //일로 안불러와짐
@@ -94,11 +92,10 @@ const Plansocket = props => {
   };
   const onMessageReceived2 = payload => {
     let payloadData = JSON.parse(payload.body);
-    console.log('payloadDataMap=', payloadData);
+    // console.log('payloadDataMap=', payloadData);
     if (payloadData.chats) {
       // eslint-disable-next-line array-callback-return
       payloadData.chats.map((chat, index) => {
-        console.log(chat, index);
         dispatch(setPublicChats(chat));
       });
     }
@@ -122,13 +119,12 @@ const Plansocket = props => {
           lat: payloadData.destLat,
           lng: payloadData.destLng,
         };
-        console.log('DEST', data);
         MapRef.current.setDestpoint(data);
       }
     }
   };
   const onError = err => {
-    console.log('Error', err);
+    // console.log('Error', err);
   };
 
   const userJoin = () => {
