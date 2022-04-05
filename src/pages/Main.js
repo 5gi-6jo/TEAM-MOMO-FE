@@ -55,6 +55,7 @@ const Main = props => {
     }
   }
 
+  const url = 'www.modumoyeo.com/' + Plans.url;
   const textInput = useRef();
   const copy = () => {
     const el = textInput.current;
@@ -131,7 +132,7 @@ const Main = props => {
                   <CopyText>
                     <input
                       type="text"
-                      value={plan.url}
+                      value={url}
                       ref={textInput}
                       readOnly
                     ></input>

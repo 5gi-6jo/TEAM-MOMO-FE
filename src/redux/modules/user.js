@@ -185,20 +185,20 @@ export const KakaoLogin = code => {
       method: 'GET',
       url: `https://seoultaste.click/users/kakao/callback?code=${code}`,
     })
-      .then(res => {
-        console.log(res); // 토큰이 넘어올 것임
+      .then(response => {
+        console.log(response); // 토큰이 넘어올 것임
 
-        const ACCESS_TOKEN = res.data.accessToken;
+        const ACCESS_TOKEN = response.data.accessToken;
 
-        localStorage.setItem('token', ACCESS_TOKEN); //예시로 로컬에 저장함
+        // localStorage.setItem('token', ACCESS_TOKEN);
 
-        // navigate('/main', { replace: true }); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
-        window.location.href = 'https://momo-cbc21.web.app/main';
+        setCookie('token', ACCESS_TOKEN, 1);
+
+        window.location.assign('/main');
       })
       .catch(err => {
         console.log('소셜로그인 에러', err);
-
-        // navigate('/login', { replace: true }); // 로그인 실패하면 로그인화면으로 돌려보냄
+        window.location.assign('/');
       });
   };
 };
