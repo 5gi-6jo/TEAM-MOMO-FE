@@ -183,13 +183,6 @@ const Main = props => {
           color={theme.color.orange}
         />
       </WriteButton>
-      <button
-        onClick={() => {
-          navigate('/plan/2158424a-be8a-49f3-b67e-d6c0aceb04c8');
-        }}
-      >
-        asdf
-      </button>
     </React.Fragment>
   );
 };
