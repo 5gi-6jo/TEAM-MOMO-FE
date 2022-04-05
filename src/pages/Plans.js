@@ -18,6 +18,12 @@ import { HiOutlineChevronRight } from 'react-icons/hi';
 const Plans = props => {
   const navigate = useNavigate();
   const Plans = useSelector(state => state.plan.plans);
+
+  const compareTime = planTime => {
+    const nowTime = new Date().getTime();
+    const checkTime = Date.parse(planTime);
+    return checkTime - nowTime < 0 ? 'Active' : '';
+  };
   return (
     <React.Fragment>
       <Header />
@@ -44,34 +50,38 @@ const Plans = props => {
         ) : (
           Plans.map(plan => (
             <Grid is_flex>
-              <PlanId
-                key={`plans=${plan.planId}`}
-                onClick={() => {
-                  navigate(`/plansdetail/${plan.planId}`, {
-                    state: plan.planId,
-                  });
-                }}
-              >
-                <Grid is_Grid center heightCenter>
-                  <Grid>{plan.planName}</Grid>
-                  <Text size="14px" color={theme.color.white}>
-                    {plan.planDate.split('T')[0].split('-')[0].split('0')[1]}
-                    {plan.planDate.split('T')[0].split('-')[1]}
-                    {plan.planDate.split('T')[0].split('-')[2]}
-                  </Text>
-                  {/* <Grid>{plan.Location}</Grid> */}
-                  <Grid
-                    right
-                    onClick={() => {
-                      navigate(`/plansdetail/${plan.planId}`, {
-                        state: plan.planId,
-                      });
-                    }}
-                  >
-                    <HiOutlineChevronRight className="right" />
+              {compareTime(plan.planDate) ? (
+                <PlanId
+                  key={`plans=${plan.planId}`}
+                  onClick={() => {
+                    navigate(`/plansdetail/${plan.planId}`, {
+                      state: plan.planId,
+                    });
+                  }}
+                >
+                  <Grid is_Grid center heightCenter>
+                    <Grid>{plan.planName}</Grid>
+                    <Text size="14px" color={theme.color.white}>
+                      {plan.planDate.split('T')[0].split('-')[0].split('0')[1]}
+                      {plan.planDate.split('T')[0].split('-')[1]}
+                      {plan.planDate.split('T')[0].split('-')[2]}
+                    </Text>
+                    {/* <Grid>{plan.Location}</Grid> */}
+                    <Grid
+                      right
+                      onClick={() => {
+                        navigate(`/plansdetail/${plan.planId}`, {
+                          state: plan.planId,
+                        });
+                      }}
+                    >
+                      <HiOutlineChevronRight className="right" />
+                    </Grid>
                   </Grid>
-                </Grid>
-              </PlanId>
+                </PlanId>
+              ) : (
+                ''
+              )}
             </Grid>
           ))
         )}

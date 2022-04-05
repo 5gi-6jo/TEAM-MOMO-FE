@@ -54,13 +54,12 @@ const Main = props => {
       }
     }
   }
-
-  const url = 'www.modumoyeo.com/' + Plans.url;
   const textInput = useRef();
   const copy = () => {
     const el = textInput.current;
     el.select();
-    document.execCommand('copy');
+    let url = 'https://modumoyeo.com/plan/' + el.value;
+    navigator.clipboard.writeText(url);
   };
 
   const compareTime = planTime => {
@@ -113,22 +112,42 @@ const Main = props => {
           dayPlan.map((plan, index) => (
             <Grid is_flex key={index}>
               {compareTime(plan.planDate) ? (
-                <Active
-                  key={`plans=${plan.planId}`}
-                  onClick={() => {
-                    navigate(`/plansdetail/${plan.planId}`, {
-                      state: plan.planId,
-                    });
-                  }}
-                >
-                  <Grid is_Grid>
-                    <Grid>
-                      {plan.planDate.split('T')[1].split(':')[0]}:
-                      {plan.planDate.split('T')[1].split(':')[1]}
+                <PlanEach>
+                  <Active
+                    key={`plans=${plan.planId}`}
+                    onClick={() => {
+                      navigate(`/plansdetail/${plan.planId}`, {
+                        state: plan.planId,
+                      });
+                    }}
+                  >
+                    <Grid is_Grid>
+                      <Grid>
+                        {plan.planDate.split('T')[1].split(':')[0]}:
+                        {plan.planDate.split('T')[1].split(':')[1]}
+                      </Grid>
+                      <Grid>{plan.planName}</Grid>
                     </Grid>
-                    <Grid>{plan.planName}</Grid>
-                  </Grid>
-                </Active>
+                  </Active>
+                  {plan.url && (
+                    <PlanUrl
+                      onClick={() => {
+                        copy();
+                      }}
+                    >
+                      <CopyText>
+                        <input
+                          type="text"
+                          value={plan.url}
+                          ref={textInput}
+                          readOnly
+                        ></input>
+                      </CopyText>
+                      {plan.url}
+                      <FiLink size="28px" />
+                    </PlanUrl>
+                  )}
+                </PlanEach>
               ) : (
                 <DeActive
                   key={`plans=${plan.planId}`}
@@ -146,25 +165,6 @@ const Main = props => {
                     <Grid>{plan.planName}</Grid>
                   </Grid>
                 </DeActive>
-              )}
-              {plan.url && (
-                <PlanUrl
-                  onClick={() => {
-                    copy();
-                    // modal실행
-                  }}
-                >
-                  <CopyText>
-                    <input
-                      type="text"
-                      value={url}
-                      ref={textInput}
-                      readOnly
-                    ></input>
-                  </CopyText>
-                  {plan.url}
-                  <FiLink size="28px" />
-                </PlanUrl>
               )}
             </Grid>
           ))
@@ -226,10 +226,15 @@ const PlanList = styled.div`
   }
 `;
 
+const PlanEach = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
 const Active = styled.div`
   margin: 10px 0px;
   padding: 10px;
-  width: 200px;
+  width: 100%;
   height: 40px;
   color: white;
   background-color: ${theme.color.green};
@@ -239,7 +244,7 @@ const Active = styled.div`
 const DeActive = styled.div`
   margin: 10px 0px;
   padding: 10px;
-  width: 200px;
+  width: 100%;
   height: 40px;
   color: white;
   background-color: ${theme.color.gray5};
@@ -247,10 +252,10 @@ const DeActive = styled.div`
 `;
 
 const PlanUrl = styled.div`
-  margin: 10px 0px;
+  margin: 10px 0px 10px 10px;
   padding: 10px;
-  width: 45px;
-  height: 30px;
+  width: 25%;
+  height: 40px;
   color: white;
   background-color: ${theme.color.green};
   border-radius: 10px;
