@@ -50,7 +50,7 @@ const RegisterForm = props => {
 
     dispatch(register(data));
     navigate('/Login');
-    console.log(data);
+    // console.log(data);
   };
   return (
     <Grid padding="10px">

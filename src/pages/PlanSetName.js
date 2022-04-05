@@ -14,13 +14,10 @@ const PlanSetName = props => {
   const [modal, setModal] = useState(false);
   const inputRef = useRef();
   const userNick = useSelector(state => state.user.user_info).nickname;
-  console.log('props.userNick', props.userNick, 'userNick', userNick);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    console.log('PlanSetName:::didmount');
     if (!userNick && !props.userNick) {
-      console.log('닉없음');
       setModal(true);
     }
     //필요한가?
@@ -28,7 +25,6 @@ const PlanSetName = props => {
     //   dispatch(setUserName(props.userNick));
     // }
     return () => {
-      console.log('undidmount:::::::::::::::::');
       // client.unsubscribe();
       // client.disconnect();
       // dispatch(setSoketClear());

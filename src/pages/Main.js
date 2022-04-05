@@ -31,9 +31,9 @@ const Main = props => {
     date: time,
   };
   let day = ['일', '월', '화', '수', '목', '금', '토'];
-  console.log(Plans);
-  console.log(time);
-  console.log(user);
+  // console.log(Plans);
+  // console.log(time);
+  // console.log(user);
 
   useEffect(() => {
     if (moment(time).format('YYYY-MM') !== checktime) {

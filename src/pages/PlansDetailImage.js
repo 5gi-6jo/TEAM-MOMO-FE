@@ -34,7 +34,6 @@ const PlansDetailImage = () => {
   const backimage = props.Plan.imageList[imageidx - 1];
   const forwardimage = props.Plan.imageList[imageidx + 1];
 
-  console.log(props);
   useEffect(() => {
     dispatch(setFooterView(false));
     return dispatch(setFooterView(true));
@@ -53,7 +52,7 @@ const PlansDetailImage = () => {
           navigate(`/plansdetail/${props.planId}`, { state: props.planId });
         }}
         _onClickEdit={() => {
-          console.log('Edit');
+          // console.log('Edit');
         }}
       />
       <ImageDiv>
@@ -123,9 +122,11 @@ const PlansDetailImage = () => {
             justifyContent: 'center',
           }}
           _onClick={() => {
-            console.log('trash_2');
-
-            dispatch(deleteImage(props.imageId));
+            const data = {
+              planId: props.planId,
+              imageId: props.imageId,
+            };
+            dispatch(deleteImage(data));
             navigate(`/plansdetail/${props.planId}`, { state: props.planId });
           }}
         >
