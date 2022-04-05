@@ -1,11 +1,11 @@
 // import axios from 'axios';
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Headerbar from '../shared/Headerbar';
 import { Image, Grid } from '../elements';
-import { log_in, trash_2 } from '../img';
+import { trash_2 } from '../img';
 import theme from '../Styles/theme';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { setFooterView } from '../redux/modules/mainsys';
@@ -34,12 +34,13 @@ const PlansDetailImage = () => {
   const backimage = props.Plan.imageList[imageidx - 1];
   const forwardimage = props.Plan.imageList[imageidx + 1];
 
-  console.log(props);
   useEffect(() => {
     dispatch(setFooterView(false));
     return dispatch(setFooterView(true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // eslint-disable-next-line no-unused-vars
   const downloadButton = () => {
     saveAs(props.image, 'image.jpg');
   };
@@ -51,7 +52,7 @@ const PlansDetailImage = () => {
           navigate(`/plansdetail/${props.planId}`, { state: props.planId });
         }}
         _onClickEdit={() => {
-          console.log('Edit');
+          // console.log('Edit');
         }}
       />
       <ImageDiv>
@@ -66,7 +67,7 @@ const PlansDetailImage = () => {
             size="46px"
             color={theme.color.white}
             onClick={() => {
-              navigate(`/plansdetail/${props.planId}/images`, {
+              navigate(`/plansdetail/images/${props.planId}`, {
                 state: {
                   Plan: props.Plan,
                   planId: props.planId,
@@ -87,7 +88,7 @@ const PlansDetailImage = () => {
             size="46px"
             color={theme.color.white}
             onClick={() => {
-              navigate(`/plansdetail/${props.planId}/images`, {
+              navigate(`/plansdetail/images/${props.planId}`, {
                 state: {
                   Plan: props.Plan,
                   planId: props.planId,
@@ -100,7 +101,7 @@ const PlansDetailImage = () => {
         )}
       </ImageDiv>
       <Wrap>
-        <Grid
+        {/* <Grid
           center
           is_cursor
           addStyle={{
@@ -111,7 +112,7 @@ const PlansDetailImage = () => {
           _onClick={downloadButton}
         >
           <Icon src={log_in} />
-        </Grid>
+        </Grid> */}
         <Grid
           center
           is_cursor
@@ -121,9 +122,11 @@ const PlansDetailImage = () => {
             justifyContent: 'center',
           }}
           _onClick={() => {
-            console.log('trash_2');
-
-            dispatch(deleteImage(props.imageId));
+            const data = {
+              planId: props.planId,
+              imageId: props.imageId,
+            };
+            dispatch(deleteImage(data));
             navigate(`/plansdetail/${props.planId}`, { state: props.planId });
           }}
         >
@@ -138,7 +141,7 @@ const PlansDetailImage = () => {
 const StyleComponent = styled.div``; // eslint-disable-line no-unused-vars
 const ImageDiv = styled.div`
   width: 100%;
-  height: 80vh;
+  height: calc(100% - 90px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,14 +153,13 @@ const Icon = styled.div`
   min-height: 36px;
   background-image: url(${props => props.src});
   background-repeat: no-repeat;
-  margin-right: 12px;
 `;
 const Wrap = styled.div`
   width: 100%;
   height: 46px;
   position: absolute;
-  bottom: 2.6%;
-  left: 0;
+  bottom: 0%;
+  right: 0;
   display: flex;
   justify-content: space-evenly;
   background-color: ${theme.color.realblack};

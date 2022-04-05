@@ -23,7 +23,9 @@ const AddPlans = props => {
   const dispatch = useDispatch();
 
   const selectDate = useLocation();
-  console.log(selectDate.state.time.split('T')[0]);
+  const plans = useSelector(state => state.plan.plans);
+  // eslint-disable-next-line no-unused-vars
+  const lastplan = plans.find(v => v.finished);
 
   //서버로 보낼 데이터들
   const [abled, setabled] = useState('');
@@ -42,11 +44,19 @@ const AddPlans = props => {
     dispatch(setDestination(''));
   }
   const date = selectDate.state.time.split('T')[0];
+
   let selectTime = moment(
     date + time.split('시')[0] + minute.split('분')[0],
-    'YYYY MM DD hh:mm',
+    'YYYY-MM-DD HH:mm',
   ).format();
-  console.log(selectTime);
+  const a =
+    -1 *
+    moment().diff(
+      moment(selectTime, 'YYYY MM DD hh:mm')
+        .subtract(abled, 'minutes')
+        .format('YYYY MM DD hh:mm'),
+      'minutes',
+    );
   const timerButton = e => {
     let minutestr = parseInt(e.target.value);
     setabled(minutestr);
@@ -56,6 +66,7 @@ const AddPlans = props => {
       setTime('00');
       setMinute('00');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -87,7 +98,7 @@ const AddPlans = props => {
               labelColor={theme.color.gray1}
               labelText="장소*"
               placeholder="장소를 입력해주세요."
-              _onChlick={() => {
+              _onClick={() => {
                 setShowMap(true);
               }}
               value={address}
@@ -149,11 +160,29 @@ const AddPlans = props => {
               <Grid is_flex>
                 <Button
                   margin="6px 7px 6px 0px "
+                  abled={abled === 45}
+                  _onClick={timerButton}
+                  value={45}
+                >
+                  45분 전
+                </Button>
+                <Button
+                  margin="6px 0px 6px 7px "
                   abled={abled === 60}
                   _onClick={timerButton}
                   value={60}
                 >
                   1시간 전
+                </Button>
+              </Grid>
+              <Grid is_flex>
+                <Button
+                  margin="6px 7px 6px 0px "
+                  abled={abled === 90}
+                  _onClick={timerButton}
+                  value={90}
+                >
+                  1시간 30분 전
                 </Button>
                 <Button
                   margin="6px 0px 6px 7px "
@@ -162,24 +191,6 @@ const AddPlans = props => {
                   value={120}
                 >
                   2시간 전
-                </Button>
-              </Grid>
-              <Grid is_flex>
-                <Button
-                  margin="6px 7px 6px 0px "
-                  abled={abled === 1440}
-                  _onClick={timerButton}
-                  value={1440}
-                >
-                  1일 전
-                </Button>
-                <Button
-                  margin="6px 0px 6px 7px "
-                  abled={abled === 2880}
-                  _onClick={timerButton}
-                  value={2880}
-                >
-                  2일 전
                 </Button>
               </Grid>
             </Grid>
@@ -192,9 +203,33 @@ const AddPlans = props => {
                   : true
               }
               // is_disabled={
-              //   nameRef === '' || desRef === '' || timeRef === '' ? true : false
+              //   name === '' || address === '' || time === '' || abled === ''
+              //     ? false
+              //     : true
               // }
               _onClick={() => {
+                //노티스 시간 계산
+                const noticeTime =
+                  -1 *
+                  moment().diff(
+                    moment(selectTime, 'YYYY-MM-DD HH:mm')
+                      .subtract(abled, 'minutes')
+                      .format('YYYY-MM-DD HH:mm'),
+                    'minutes',
+                  );
+                if (noticeTime <= 0) {
+                  window.alert('설정한 시간이 현재시간보다 이전시간입니다.');
+                  return;
+                }
+                if (
+                  name === '' || address === '' || time === '' || abled === ''
+                    ? true
+                    : false
+                ) {
+                  window.alert('*표시 내용을 모두 입력해주세요');
+                  return;
+                }
+
                 const data = {
                   planName: name,
                   destination: address,

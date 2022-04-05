@@ -1,29 +1,41 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import RegisterForm from '../components/RegisterForm';
+import Headerbar from '../shared/Headerbar';
+
+/**
+ * @param {*} props
+ * @returns 리턴 설명 적어주기
+ * @역할 무엇을 위한 컴포넌트인지 적어주기
+ * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
+ */
 
 const Register = ({ isLogin }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isLogin) {
-      alert('이미 로그인이 되어있습니다.');
-      navigate('/', { replace: true });
+      //modal
+      navigate('/main', { replace: true });
     }
   });
 
   return (
-    <>
-      <Title>회원가입</Title>
+    <React.Fragment>
+      <Headerbar
+        text="회원가입"
+        _onClickClose={() => {
+          navigate('/Login', { replace: true });
+        }}
+      />
       <RegisterForm />
-    </>
+    </React.Fragment>
   );
 };
 
-const Title = styled.h1`
-  font-size: 1.5rem;
-  margin: 1em 0;
-`;
+// styled components 작성 위치
+
+// default props 작성 위치
+Register.defaultProps = {};
 
 export default Register;

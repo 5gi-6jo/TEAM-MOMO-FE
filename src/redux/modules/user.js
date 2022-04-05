@@ -1,143 +1,196 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import UserApi from '../../shared/apis/userApi';
 import axios from 'axios';
-import { URL } from '../../shared/apis/API';
-// import { useNavigate } from 'react-router-dom';
+import { tokenURL, URL } from '../../shared/apis/API';
+import { deleteCookie, setCookie } from '../../shared/utils/Cookie';
 // import { useHistory } from 'react-router';
 
-const Userapi = new UserApi();
-export const setFCMTokenAxios = createAsyncThunk(
-  'plan/setFCMTokenAxios',
-  async ({ registerData, navigate }) => {
-    console.log(registerData);
-    await Userapi.setFCMToken({ registerData, navigate });
+export const register = createAsyncThunk(
+  'user/register',
+  async (data, { rejectWithValue }) => {
+    try {
+      return await URL.post(`/users/signup`, data).then(response => response);
+    } catch (error) {
+      window.alert(error.response.data.message);
+
+      console.log(error);
+      return rejectWithValue(error.response);
+    }
   },
 );
 
-export const sighupAxios = createAsyncThunk(
-  'user/sighupAxios',
-  async ({ registerData, navigate }) => {
-    await Userapi.signUp({ registerData, navigate });
+export const login = createAsyncThunk(
+  'user/login',
+  async (data, { rejectWithValue }) => {
+    try {
+      // const navigate = useNavigate();
+      return await URL.post(`/users/login`, data, {
+        withCredentials: true,
+      }).then(response => {
+        setCookie('token', response.headers.authorization, 1);
+        // sessionStorage.setItem('token', response.headers.authorization);
+        setTimeout(() => {});
+        window.location.assign('/main');
+
+        return response.data.data;
+      });
+    } catch (error) {
+      console.log(error);
+      window.alert(error.response.data.message);
+
+      return rejectWithValue(error.response);
+    }
   },
 );
 
-export const signinAxios = createAsyncThunk(
-  'user/sighinAxios',
-  async ({ loginData, navigate }, { dispatch }) => {
-    const userData = await Userapi.signIn({ loginData, navigate });
-    console.log(loginData);
-    console.log(userData.data.data);
+export const logout2 = createAsyncThunk('user/logout', async () => {
+  sessionStorage.removeItem('token');
+  sessionStorage.removeItem('nickname');
+  deleteCookie('token');
+});
+
+export const logout = createAsyncThunk(
+  'user/logout',
+  async (_, { rejectWithValue }) => {
     const data = {
-      email: loginData.email,
-      nickname: userData.data.data.nickname,
+      data: '',
     };
-    console.log(data);
-    dispatch(setUserToSession(data));
-    // navigate('/', { replace: true });
+    try {
+      return await tokenURL.post(`/users/logout`, data).then(response => {
+        deleteCookie('token');
+        setTimeout(() => window.location.assign('/'), 1000);
+      });
+    } catch (error) {
+      window.alert(error.response.data.message);
+      deleteCookie('token');
 
-    return data;
+      console.log(error);
+      return rejectWithValue(error.response);
+    }
+  },
+);
+
+// const Userapi = new UserApi();
+// export const setFCMTokenAxios = createAsyncThunk(
+//   'plan/setFCMTokenAxios',
+//   async ({ registerData, navigate }) => {
+//     console.log(registerData);
+//     await Userapi.setFCMToken({ registerData, navigate });
+//   },
+// );
+export const setFCMToken = createAsyncThunk(
+  'plan/setFCMToken',
+  async (data, { rejectWithValue }) => {
+    try {
+      return await tokenURL
+        .post(`/users/devices`, data)
+        .then(response => response.data.data);
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
   },
 );
 
 export const getUserbyToken = createAsyncThunk(
   'user/getUserbyToken',
-  async ({ navigate }, { dispatch }) => {
-    const Data = await Userapi.getUserbyToken({ navigate });
-    return Data.data.data;
+  async (_, { rejectWithValue }) => {
+    try {
+      return await tokenURL
+        .get(`/users`, { withCredentials: true })
+        .then(response => {
+          return response.data.data;
+        });
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
   },
 );
-
-export const logoutAxios = createAsyncThunk(
-  'user/logoutAxios',
-  async ({ navigate }, { dispatch }) => {
-    dispatch(deleteUserFromSession());
-    navigate('/', { replace: true });
-    return true;
-  },
-);
-
-export const KakaoLogin = code => {
-  // const navigate = useNavigate();
-  return function ({ navigate }) {
-    axios({
-      method: 'GET',
-      url: `https://seoultaste.click/users/kakao/callback?code=${code}`,
-    })
-      .then(res => {
-        console.log(res); // 토큰이 넘어올 것임
-
-        const ACCESS_TOKEN = res.data.accessToken;
-
-        localStorage.setItem('token', ACCESS_TOKEN); //예시로 로컬에 저장함
-
-        // navigate('/main', { replace: true }); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
-      })
-      .catch(err => {
-        console.log('소셜로그인 에러', err);
-
-        // navigate('/login', { replace: true }); // 로그인 실패하면 로그인화면으로 돌려보냄
-      });
-  };
-};
-
-const actionCreators = { KakaoLogin };
-export { actionCreators };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
     user_info: {
-      username: null,
-      userid: null,
+      nickname: '',
     },
     is_login: false,
+    loginError: '',
+    registerError: '',
+    isLoggedin: false,
   },
-
   reducers: {
-    setUserToSession: (state, action) => {
-      state.user_info = action.payload;
-    },
     setUserName: (state, action) => {
-      state.user_info.username = action.payload;
-    },
-    getUser: (state, action) => {
-      state.is_login = true;
-    },
-    deleteUserFromSession: (state, action) => {
-      sessionStorage.removeItem('token');
-      sessionStorage.removeItem('username');
-      sessionStorage.removeItem('userId');
+      state.user_info.nickname = action.payload;
     },
   },
-  extraReducers: {
-    [sighupAxios.fulfilled]: (state, action) => {
-      // state = state;
-    },
-    [signinAxios.fulfilled]: (state, action) => {
-      state.is_login = true;
-    },
-    [logoutAxios.fulfilled]: (state, action) => {
-      if (action.payload) {
+  extraReducers: builder => {
+    builder
+      //회원가입
+      .addCase(register.pending, state => {
+        state.registerDone = false;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.registerDone = true;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.registerDone = false;
+        state.registerError = action.payload;
+      })
+      //로그인
+      .addCase(login.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.user_info = action.payload;
+        state.isLoading = false;
+        state.isLoggedin = true;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = true;
+        state.loginError = action.payload;
+      })
+      // 로그아웃
+      .addCase(logout.fulfilled, state => {
+        const user_info = {
+          nickname: '',
+        };
+        state.user_info = user_info;
         state.is_login = false;
-      }
-      alert('로그아웃 완료');
-    },
-    [getUserbyToken.fulfilled]: (state, action) => {
-      state.is_login = true;
-      state.user_info = action.payload;
-    },
-    [setFCMTokenAxios.fulfilled]: (state, action) => {
-      // state = state;
-    },
+        state.isLoggedin = false;
+      })
+      .addCase(setFCMToken.fulfilled, (state, action) => {})
+      .addCase(getUserbyToken.fulfilled, (state, action) => {
+        state.is_login = true;
+        state.user_info = action.payload;
+      });
   },
 });
 
-export const {
-  setUserToSession,
-  setMyFCMToken,
-  setUserName,
-  getUser,
-  deleteUserFromSession,
-} = userSlice.actions;
+export const { setUserName } = userSlice.actions;
+export const KakaoLogin = code => {
+  return function () {
+    axios({
+      method: 'GET',
+      url: `https://seoultaste.click/users/kakao/callback?code=${code}`,
+    })
+      .then(response => {
+        const ACCESS_TOKEN = response.headers.authorization;
+
+        // localStorage.setItem('token', ACCESS_TOKEN);
+
+        setCookie('token', ACCESS_TOKEN, 1);
+
+        debugger;
+      })
+      .catch(err => {
+        console.log('소셜로그인 에러', err);
+        // debugger;
+
+        window.location.assign('/');
+      });
+  };
+};
+const actionCreators = { KakaoLogin };
+export { actionCreators };
 
 export default userSlice.reducer;

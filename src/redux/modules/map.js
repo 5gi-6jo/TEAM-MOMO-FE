@@ -4,12 +4,9 @@ export const getPlanId = createAsyncThunk(
   'map/getPlanId',
   async (data, { rejectWithValue }) => {
     try {
-      return await URL.get(`/meets/${data}`, {
-        headers: {
-          Authorization: sessionStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      }).then(response => response.data.data.planId);
+      return await URL.get(`/meets/${data}`).then(
+        response => response.data.data,
+      );
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
@@ -21,9 +18,12 @@ export const mapSlice = createSlice({
   name: 'map',
   initialState: {
     planId: '',
-    showplan: [],
-    images: [],
+    planName: '',
     publicMaps: [],
+    publicChats: [],
+    url: '',
+
+    loading: false,
   },
   reducers: {
     setPublicMaps: (state, action) => {
@@ -36,26 +36,44 @@ export const mapSlice = createSlice({
       } else {
         state.publicMaps.push(action.payload);
       }
-      console.log('index', index);
 
       // if (index !== -1) {
       //   state.publicChats.push(action.payload);
       // } else state.publicMaps[index] = action.payload;
     },
-    // getOnePlan: (state, action) => {
-    //   console.log(state, action.payload);
-    //   state.plan.data.push(action.payload);
-    // },
+    setPublicChats: (state, action) => {
+      if (!state.is_public_send) {
+        state.is_public_send = true;
+        state.publicChats.push(action.payload);
+        state.is_public_send = false;
+      }
+    },
+    setSoketClear: (state, action) => {
+      state.publicChats = [];
+      state.publicMaps = [];
+    },
+    seturl: (state, action) => {
+      state.url = action.payload;
+    },
+
     setOnePlan: (state, action) => {
       state.showplan = { ...state.showplan, ...action.payload };
     },
   },
   extraReducers: builder => {
-    builder.addCase(getPlanId.fulfilled, (state, action) => {
-      state.planId = action.payload;
-    });
+    builder
+      .addCase(getPlanId.pending, (state, action) => {
+        state.loading = true;
+      })
+
+      .addCase(getPlanId.fulfilled, (state, action) => {
+        state.planId = action.payload.planId;
+        state.planName = action.payload.planeName;
+        state.loading = false;
+      });
   },
 });
-export const { setPublicMaps } = mapSlice.actions;
+export const { setPublicMaps, setSoketClear, setPublicChats } =
+  mapSlice.actions;
 
 export default mapSlice.reducer;

@@ -17,9 +17,11 @@ const Input = props => {
     is_float,
     _type,
     _accept,
-    ref,
-    _onChlick,
+    _ref,
+    _onClick,
+    _onKeyDown,
     value,
+    width,
   } = props;
 
   if (is_float) {
@@ -52,10 +54,10 @@ const Input = props => {
         </Text>
         <ElInput
           type={type}
-          ref={ref}
+          ref={_ref}
           placeholder={placeholder}
           onChange={_onChange}
-          onClick={_onChlick}
+          onClick={_onClick}
           value={value}
         />
       </Grid>
@@ -67,9 +69,11 @@ const Input = props => {
       <Grid>
         <ElInput
           type={type}
-          ref={ref}
+          ref={_ref}
+          onKeyDown={_onKeyDown}
           placeholder={placeholder}
           onChange={_onChange}
+          width={width}
         />
       </Grid>
     </React.Fragment>
@@ -84,16 +88,12 @@ Input.defaultProps = {
   placeholder: '텍스트를 입력해주세요.',
   type: 'text',
   is_float: false,
+  width: '',
+  height: '',
   _onChange: () => {},
-  _onChlick: () => {},
+  _onClick: () => {},
+  _onKeyDown: () => {},
 };
-
-const ElTextarea = styled.textarea`
-  border: 1px solid #212121;
-  width: 100%;
-  padding: 12px 4px;
-  box-sizing: border-box;
-`;
 
 const ElInput = styled.input`
   border: 1px solid #c4c4c4;

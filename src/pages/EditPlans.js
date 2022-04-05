@@ -4,19 +4,12 @@ import styled from 'styled-components';
 import { Button, Grid, Text, Input, Select } from '../elements';
 import { edit, trash_3 } from '../img';
 
-import Headerbar from '../shared/Headerbar';
 import theme from '../Styles/theme';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import {
-  deletePlans,
-  editPlans,
-  setOnePlan,
-  setPlans,
-} from '../redux/modules/plan';
+import { deletePlans, editPlans, setOnePlan } from '../redux/modules/plan';
 
 import { GrClose } from 'react-icons/gr';
-import { FiSettings } from 'react-icons/fi';
 /**
  * @param {*} props
  * @returns 리턴 설명 적어주기
@@ -24,20 +17,19 @@ import { FiSettings } from 'react-icons/fi';
  * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
  */
 
-const AddPlans = props => {
+const EditPlans = props => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [abled, setabled] = useState('');
-  const [name, setName] = useState('');
+  const [name, setName] = useState(props.planName);
   const [contenst, setContenst] = useState('');
   const [time, setTime] = useState('');
   const [minute, setMinute] = useState('');
 
   let selectTime = moment(
-    time.split('시')[0] + minute.split('분')[0],
-    'h:mm',
+    props.planDate + time.split('시')[0] + minute.split('분')[0],
+    'YYYY-MM-DD h:mm',
   ).format();
-
   const timerButton = e => {
     let minutestr = parseInt(e.target.value);
     setabled(minutestr);
@@ -47,6 +39,7 @@ const AddPlans = props => {
       setTime('00');
       setMinute('00');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -66,7 +59,6 @@ const AddPlans = props => {
                 color={theme.color.gray2}
                 cursor="pointer"
                 onClick={() => {
-                  console.log('false');
                   props.setshow(false);
                 }}
               />
@@ -85,7 +77,6 @@ const AddPlans = props => {
 
                 <Icon
                   onClick={() => {
-                    console.log('deleteicon');
                     const data = {
                       id: props.id,
                     };
@@ -103,6 +94,7 @@ const AddPlans = props => {
                 labelColor={theme.color.gray1}
                 labelText="모임 이름*"
                 placeholder="모임 이름을 입력해주세요."
+                value={name}
                 _onChange={e => {
                   setName(e.target.value);
                 }}
@@ -165,11 +157,29 @@ const AddPlans = props => {
                 <Grid is_flex>
                   <Button
                     margin="6px 7px 6px 0px "
+                    abled={abled === 45}
+                    _onClick={timerButton}
+                    value={45}
+                  >
+                    45분 전
+                  </Button>
+                  <Button
+                    margin="6px 0px 6px 7px "
                     abled={abled === 60}
                     _onClick={timerButton}
                     value={60}
                   >
                     1시간 전
+                  </Button>
+                </Grid>
+                <Grid is_flex>
+                  <Button
+                    margin="6px 7px 6px 0px "
+                    abled={abled === 90}
+                    _onClick={timerButton}
+                    value={90}
+                  >
+                    1시간 30분 전
                   </Button>
                   <Button
                     margin="6px 0px 6px 7px "
@@ -178,24 +188,6 @@ const AddPlans = props => {
                     value={120}
                   >
                     2시간 전
-                  </Button>
-                </Grid>
-                <Grid is_flex>
-                  <Button
-                    margin="6px 7px 6px 0px "
-                    abled={abled === 1440}
-                    _onClick={timerButton}
-                    value={1440}
-                  >
-                    1일 전
-                  </Button>
-                  <Button
-                    margin="6px 0px 6px 7px "
-                    abled={abled === 2880}
-                    _onClick={timerButton}
-                    value={2880}
-                  >
-                    2일 전
                   </Button>
                 </Grid>
               </Grid>
@@ -209,24 +201,42 @@ const AddPlans = props => {
                 //   nameRef === '' || desRef === '' || timeRef === '' ? true : false
                 // }
                 _onClick={() => {
+                  const noticeTime =
+                    -1 *
+                    moment().diff(
+                      moment(selectTime, 'YYYY-MM-DD HH:mm')
+                        .subtract(abled, 'minutes')
+                        .format('YYYY-MM-DD HH:mm'),
+                      'minutes',
+                    );
+                  if (noticeTime <= 0) {
+                    window.alert('설정한 시간이 현재시간보다 이전시간입니다.');
+                    return;
+                  }
+                  if (
+                    name === '' || time === '' || abled === '' ? true : false
+                  ) {
+                    window.alert('*표시 내용을 모두 입력해주세요');
+                    return;
+                  }
+
                   const data = {
                     id: props.id,
                     planName: name,
                     contents: contenst,
-                    destination: props.des.address,
-                    lat: props.des.lat,
-                    lng: props.des.lng,
+                    destination: props.des,
+                    lat: props.lat,
+                    lng: props.lng,
                     planDate: selectTime.split('+')[0],
                     noticeTime: abled,
                   };
                   props.setshow(false);
-                  console.log(data);
 
                   dispatch(editPlans(data));
                   dispatch(setOnePlan(data));
                 }}
               >
-                모임 추가하기
+                모임 수정하기
               </Button>
             </Grid>
           </Grid>
@@ -258,11 +268,6 @@ const MainModal = styled.div`
   border-radius: 30px 30px 0px 0px;
 `;
 
-const Main = styled.div`
-  width: 100%;
-  height: 270px;
-  margin-top: 2px;
-`;
 const Icon = styled.div`
   min-width: 24px;
   min-height: 24px;
@@ -272,6 +277,6 @@ const Icon = styled.div`
 `;
 
 // default props 작성 위치
-AddPlans.defaultProps = {};
+EditPlans.defaultProps = {};
 
-export default AddPlans;
+export default EditPlans;

@@ -1,137 +1,141 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import Button from '../elements/Button';
-import { sighupAxios } from '../redux/modules/user';
-import { checkEmail, checkNickname, checkPW } from '../shared/functions';
+import { register } from '../redux/modules/user';
+import { Grid, Input } from '../elements';
+import Agreement from './Agreement';
+import theme from '../Styles/theme';
+import { useNavigate } from 'react-router-dom';
+
+/**
+ * @param {*} props
+ * @returns 리턴 설명 적어주기
+ * @역할 무엇을 위한 컴포넌트인지 적어주기
+ * @필수값 컴포넌트 사용을 위해 어떤 props가 필요한지 명시해주기
+ */
 
 const RegisterForm = props => {
-  const navigate = useNavigate();
-  const emailRef = useRef();
-  const nicknameRef = useRef();
-  const pwRef = useRef();
-  const pwCheckRef = useRef();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const onRegist = e => {
-    e.preventDefault();
+  const [email, setEmail] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [pw, setPw] = useState('');
+  const [pwCheck, setPwCheck] = useState('');
 
-    const email = emailRef.current.value;
-    const nickname = nicknameRef.current.value;
-    const pw = pwRef.current.value;
-    const pwCheck = pwCheckRef.current.value;
+  // checkbox
+  const [checked, setChecked] = useState(false);
 
-    if (!checkEmail(email).res) {
-      emailRef.current.focus();
-      alert(checkEmail(email).msg);
+  const Register = () => {
+    if (
+      nickname === '' ||
+      email === '' ||
+      pw === '' ||
+      pwCheck === '' ||
+      !checked
+    ) {
+      window.alert('*표시 내용을 모두 입력해주세요');
       return;
     }
-
-    if (!checkNickname(nickname).res) {
-      nicknameRef.current.focus();
-      alert(checkNickname(nickname).msg);
+    if (pw !== pwCheck) {
+      window.alert('비밀번호가 같지않습니다');
       return;
     }
-
-    if (!checkPW(pw, pwCheck, nickname).res) {
-      if (checkPW(pw, pwCheck, nickname).focus === 'pwRef') {
-        pwRef.current.focus();
-      } else if (checkPW(pw, pwCheck, nickname).focus === 'pwCheckRef') {
-        pwCheckRef.current.focus();
-      }
-      alert(checkPW(pw, pwCheck, nickname).msg);
-      return;
-    }
-
-    const registerData = {
+    const data = {
       email: email,
       nickname: nickname,
       password: pw,
       checkPassword: pwCheck,
     };
 
-    dispatch(sighupAxios({ registerData, navigate }));
+    dispatch(register(data));
+    navigate('/Login');
+    // console.log(data);
   };
-
   return (
-    <Form onSubmit={onRegist}>
-      <Box>
-        <Label htmlFor="이메일">이메일</Label>
-        <Input ref={emailRef} type="text" placeholder="이메일을 입력하세요" />
-      </Box>
-      <Box>
-        <Label htmlFor="닉네임">
-          닉네임
-          <LabelDesc>
-            알파벳 대소문자, 숫자로 이루어진 최소 3자 이상으로 입력해주세요
-          </LabelDesc>
-        </Label>
+    <Grid padding="10px">
+      <Grid padding="10px">
         <Input
-          ref={nicknameRef}
+          islabel
+          labelBold
+          labelColor={theme.color.gray1}
+          labelText="이메일 주소 (아이디)*"
+          placeholder="이메일을 입력하세요"
           type="text"
+          _onChange={e => {
+            setEmail(e.target.value);
+          }}
+          value={email}
+        />
+      </Grid>
+      <Grid padding="10px">
+        <Input
+          islabel
+          labelBold
+          labelColor={theme.color.gray1}
+          labelText="닉네임*"
           placeholder="닉네임을 입력하세요"
+          type="text"
+          _onChange={e => {
+            setNickname(e.target.value);
+          }}
+          value={nickname}
         />
-      </Box>
-      <Box>
-        <Label htmlFor="비밀번호">
-          비밀번호
-          <LabelDesc>
-            닉네임과 연관되지 않게 최소 4자 이상으로 입력해주세요
-          </LabelDesc>
-        </Label>
+      </Grid>
+      <Grid padding="10px">
         <Input
-          ref={pwRef}
-          type="password"
+          islabel
+          labelBold
+          labelColor={theme.color.gray1}
+          labelText="비밀번호*"
           placeholder="비밀번호를 입력하세요"
-        />
-      </Box>
-      <Box>
-        <Label htmlFor="비밀번호 확인">비밀번호 확인</Label>
-        <Input
-          ref={pwCheckRef}
           type="password"
-          placeholder="비밀번호를 다시 입력하세요"
+          _onChange={e => {
+            setPw(e.target.value);
+          }}
+          value={pw}
         />
-      </Box>
-      <Info>* 이메일, 닉네임은 필수기입사항입니다.</Info>
-      <Button name={'회원가입하기'} />
-    </Form>
+      </Grid>
+      <Grid padding="10px">
+        <Input
+          islabel
+          labelBold
+          labelColor={theme.color.gray1}
+          labelText="비밀번호 확인*"
+          placeholder="비밀번호를 다시 입력하세요"
+          type="password"
+          _onChange={e => {
+            setPwCheck(e.target.value);
+          }}
+          value={pwCheck}
+        />
+      </Grid>
+      <Agreement checked={checked} setChecked={setChecked} />
+      <Grid padding="10px">
+        <Button
+          is_green={
+            nickname === '' ||
+            email === '' ||
+            pw === '' ||
+            pwCheck === '' ||
+            !checked
+              ? false
+              : true
+          }
+          name={'회원가입하기'}
+          width="100%"
+          heignt="40px"
+          type="button"
+          _onClick={Register}
+        />
+      </Grid>
+    </Grid>
   );
 };
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
+// styled components 작성 위치
 
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0.5em 0;
-`;
-
-const Label = styled.label`
-  font-size: 0.7rem;
-  font-weight: bold;
-  margin-bottom: 0.2em;
-`;
-
-const LabelDesc = styled.span`
-  margin-left: 1em;
-  font-size: 0.5rem;
-  font-weight: 300;
-  color: blue;
-`;
-
-const Input = styled.input`
-  font-size: 1rem;
-  padding: 0.3em 0.1em;
-`;
-
-const Info = styled.p`
-  font-size: 0.5rem;
-  color: blue;
-`;
+// default props 작성 위치
+RegisterForm.defaultProps = {};
 
 export default RegisterForm;
