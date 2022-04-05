@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setPublicMaps, setPublicChats } from '../redux/modules/map.js';
+import {
+  setPublicMaps,
+  setPublicChats,
+  setSoketClear,
+  getPlanId,
+} from '../redux/modules/map.js';
 import PlanMap from './PlanMap.js';
 import { Image } from '../elements';
 import { chatingicon } from '../img';
@@ -16,7 +21,7 @@ import PlanChating from './PlanChating.js';
  */
 
 const Plansocket = props => {
-  const planId = props.planId;
+  let planId = props.planId;
   const planName = props.planName;
   const sock = props.sock;
   const client = props.client;
@@ -30,19 +35,27 @@ const Plansocket = props => {
   const publicChats = useSelector(state => state.map.publicChats);
   const publicMaps = useSelector(state => state.map.publicMaps);
   const MapRef = useRef();
+
   useEffect(() => {
-    console.log('planId:::', planId);
     // if (planId) {
     //   console.log('planID있음');
+
     connect();
+
     return () => {
-      //나갈때 접속 해제할지?
-      // client.disconnect();
+      if (client.connected) {
+        client.unsubscribe();
+        client.disconnect();
+        dispatch(setSoketClear());
+      }
     };
-    // }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  console.log('publicChats', publicChats, 'publicMaps', publicMaps);
   const connect = () => {
-    client.connect({}, onConnected, onError);
+    console.log('planId', planId);
+    console.log('connet');
+    client.connect({ id: planId }, onConnected, onError);
     sock.addEventListener('open', () => {
       console.log('Connected to Browser!!!😀');
     });
@@ -65,20 +78,19 @@ const Plansocket = props => {
   };
   const onMessageReceived = payload => {
     //일로 안불러와짐
-    let payloadData = JSON.parse(payload.body);
-    console.log('payloadDataChat=', payloadData);
-    if (payloadData.type === 'ENTER' || payloadData.type === 'CHAT') {
-      dispatch(setPublicChats(payloadData));
-      // sendMyLocation();
-    }
-
-    if (payloadData.type === 'MAP' || payloadData.type === 'DEST') {
-      dispatch(setPublicMaps(payloadData));
-      if (payloadData.type === 'MAP') {
-      }
-      if (payloadData.type === 'DEST') {
-      }
-    }
+    // let payloadData = JSON.parse(payload.body);
+    // console.log('payloadDataChat=', payloadData);
+    // if (payloadData.type === 'ENTER' || payloadData.type === 'CHAT') {
+    //   dispatch(setPublicChats(payloadData));
+    //   // sendMyLocation();
+    // }
+    // if (payloadData.type === 'MAP' || payloadData.type === 'DEST') {
+    //   dispatch(setPublicMaps(payloadData));
+    //   if (payloadData.type === 'MAP') {
+    //   }
+    //   if (payloadData.type === 'DEST') {
+    //   }
+    // }
   };
   const onMessageReceived2 = payload => {
     let payloadData = JSON.parse(payload.body);
@@ -92,7 +104,7 @@ const Plansocket = props => {
     }
     if (payloadData.type === 'ENTER' || payloadData.type === 'CHAT') {
       dispatch(setPublicChats(payloadData));
-      // sendMyLocation();
+      // if (MapRef.current) MapRef.current.sendMyLocation();
     }
 
     if (payloadData.type === 'MAP' || payloadData.type === 'DEST') {
@@ -105,8 +117,7 @@ const Plansocket = props => {
         };
       }
       if (payloadData.type === 'DEST') {
-        console.log('MapRef');
-        MapRef.current.sendMyLocationfun();
+        if (MapRef.current) MapRef.current.sendMyLocationfun();
         const data = {
           lat: payloadData.destLat,
           lng: payloadData.destLng,
