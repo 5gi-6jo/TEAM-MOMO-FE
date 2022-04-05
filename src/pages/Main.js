@@ -54,18 +54,13 @@ const Main = props => {
       }
     }
   }
+
   const textInput = useRef();
   const copy = () => {
     const el = textInput.current;
     el.select();
     let url = 'https://modumoyeo.com/plan/' + el.value;
     navigator.clipboard.writeText(url);
-  };
-
-  const compareTime = planTime => {
-    const nowTime = new Date().getTime();
-    const checkTime = Date.parse(planTime);
-    return checkTime - nowTime > 0 ? 'Active' : '';
   };
 
   return (
@@ -111,7 +106,24 @@ const Main = props => {
         ) : (
           dayPlan.map((plan, index) => (
             <Grid is_flex key={index}>
-              {compareTime(plan.planDate) ? (
+              {plan.finished ? (
+                <DeActive
+                  key={`plans=${plan.planId}`}
+                  onClick={() => {
+                    navigate(`/plansdetail/${plan.planId}`, {
+                      state: plan.planId,
+                    });
+                  }}
+                >
+                  <Grid is_Grid>
+                    <Grid>
+                      {plan.planDate.split('T')[1].split(':')[0]}:
+                      {plan.planDate.split('T')[1].split(':')[1]}
+                    </Grid>
+                    <Grid>{plan.planName}</Grid>
+                  </Grid>
+                </DeActive>
+              ) : (
                 <PlanEach>
                   <Active
                     key={`plans=${plan.planId}`}
@@ -148,23 +160,6 @@ const Main = props => {
                     </PlanUrl>
                   )}
                 </PlanEach>
-              ) : (
-                <DeActive
-                  key={`plans=${plan.planId}`}
-                  onClick={() => {
-                    navigate(`/plansdetail/${plan.planId}`, {
-                      state: plan.planId,
-                    });
-                  }}
-                >
-                  <Grid is_Grid>
-                    <Grid>
-                      {plan.planDate.split('T')[1].split(':')[0]}:
-                      {plan.planDate.split('T')[1].split(':')[1]}
-                    </Grid>
-                    <Grid>{plan.planName}</Grid>
-                  </Grid>
-                </DeActive>
               )}
             </Grid>
           ))

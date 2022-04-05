@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../shared/Header';
 import { dino2 } from '../img';
-import { useSelector } from 'react-redux';
 import { Grid, Text } from '../elements';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../Styles/theme';
 import { HiOutlineChevronRight } from 'react-icons/hi';
-import axios from 'axios';
-import { getCookie } from '../shared/utils/Cookie';
 import { tokenURL } from '../shared/apis/API';
 
 /**
@@ -20,21 +17,16 @@ import { tokenURL } from '../shared/apis/API';
 
 const Plans = props => {
   const navigate = useNavigate();
-  const Plans = useSelector(state => state.plan.plans);
+  const [record, setRecord] = useState([]);
 
-  let n = 0;
-  const recordsbutton = async () => {
-    await tokenURL.get(`/records?pageNumber=${n}`).then(res => {
+  useEffect(() => {
+    tokenURL.get(`/records?pageNumber=0`).then(res => {
       console.log(res);
+      console.log(res.data.data);
+      setRecord(res.data.data);
     });
-    n++;
-  };
+  }, [record]);
 
-  const compareTime = planTime => {
-    const nowTime = new Date().getTime();
-    const checkTime = Date.parse(planTime);
-    return checkTime - nowTime < 0 ? 'Active' : '';
-  };
   return (
     <React.Fragment>
       <Header />
@@ -59,9 +51,9 @@ const Plans = props => {
             </DinoImgDiv>
           </Grid>
         ) : (
-          Plans.map((plan, index) => (
+          record.map((plan, index) => (
             <Grid is_flex key={index}>
-              {compareTime(plan.planDate) ? (
+              {plan.finished && (
                 <PlanId
                   key={`plans=${plan.planId}`}
                   onClick={() => {
@@ -77,7 +69,7 @@ const Plans = props => {
                       {plan.planDate.split('T')[0].split('-')[1]}
                       {plan.planDate.split('T')[0].split('-')[2]}
                     </Text>
-                    {/* <Grid>{plan.Location}</Grid> */}
+                    <Grid>{plan.destination}</Grid>
                     <Grid
                       right
                       onClick={() => {
@@ -90,13 +82,10 @@ const Plans = props => {
                     </Grid>
                   </Grid>
                 </PlanId>
-              ) : (
-                ''
               )}
             </Grid>
           ))
         )}
-        <button onClick={recordsbutton}>asdf</button>
       </PlanList>
     </React.Fragment>
   );
