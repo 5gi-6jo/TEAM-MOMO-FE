@@ -86,7 +86,7 @@ const Main = props => {
       <Grid padding="0px 20px">
         <Calendar Plans={Plans} />
       </Grid>
-      <Grid padding="0px 20px">
+      <Grid padding="5px 20px">
         <Text size="16px" bold color={theme.color.gray1}>
           {moment(time).format('MM.DD')} ({day[moment(time).format('e')]})
         </Text>
@@ -214,7 +214,7 @@ const DinoImg = styled.img`
 `;
 
 const PlanList = styled.div`
-  padding: 10px 30px;
+  padding: 0px 30px;
   text-align: center;
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
