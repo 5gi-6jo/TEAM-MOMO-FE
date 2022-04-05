@@ -86,8 +86,8 @@ const Main = props => {
       <Grid padding="0px 20px">
         <Calendar Plans={Plans} />
       </Grid>
-      <Grid padding="10px 20px">
-        <Text size="16px">
+      <Grid padding="0px 20px">
+        <Text size="16px" bold color={theme.color.gray1}>
           {moment(time).format('MM.DD')} ({day[moment(time).format('e')]})
         </Text>
       </Grid>
@@ -133,13 +133,23 @@ const Main = props => {
                       });
                     }}
                   >
-                    <Grid is_Grid>
-                      <Grid>
-                        {plan.planDate.split('T')[1].split(':')[0]}:
-                        {plan.planDate.split('T')[1].split(':')[1]}
+                    {plan.url ? (
+                      <Grid is_flex>
+                        <Grid>
+                          {plan.planDate.split('T')[1].split(':')[0]}:
+                          {plan.planDate.split('T')[1].split(':')[1]}
+                        </Grid>
+                        <Grid>{plan.planName}</Grid>
                       </Grid>
-                      <Grid>{plan.planName}</Grid>
-                    </Grid>
+                    ) : (
+                      <Grid is_Grid>
+                        <Grid>
+                          {plan.planDate.split('T')[1].split(':')[0]}:
+                          {plan.planDate.split('T')[1].split(':')[1]}
+                        </Grid>
+                        <Grid>{plan.planName}</Grid>
+                      </Grid>
+                    )}
                   </Active>
                   {plan.url && (
                     <PlanUrl
@@ -155,8 +165,7 @@ const Main = props => {
                           readOnly
                         ></input>
                       </CopyText>
-                      {plan.url}
-                      <FiLink size="28px" />
+                      <FiLink size="30px" />
                     </PlanUrl>
                   )}
                 </PlanEach>
@@ -206,6 +215,7 @@ const DinoImg = styled.img`
 
 const PlanList = styled.div`
   padding: 10px 30px;
+  text-align: center;
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -234,19 +244,20 @@ const DeActive = styled.div`
   padding: 10px;
   width: 100%;
   height: 40px;
-  color: white;
-  background-color: ${theme.color.gray5};
+  color: ${theme.color.gray4};
+  background-color: #f8f8f8;
   border-radius: 10px;
 `;
 
 const PlanUrl = styled.div`
   margin: 10px 0px 10px 10px;
   padding: 10px;
-  width: 25%;
+  width: 30%;
   height: 40px;
   color: white;
   background-color: ${theme.color.green};
   border-radius: 10px;
+  text-align: center;
 `;
 
 const WriteButton = styled.div`

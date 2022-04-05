@@ -62,14 +62,33 @@ const Plans = props => {
                     });
                   }}
                 >
-                  <Grid is_Grid center heightCenter>
-                    <Grid>{plan.planName}</Grid>
-                    <Text size="14px" color={theme.color.white}>
-                      {plan.planDate.split('T')[0].split('-')[0].split('0')[1]}
-                      {plan.planDate.split('T')[0].split('-')[1]}
-                      {plan.planDate.split('T')[0].split('-')[2]}
-                    </Text>
-                    <Grid>{plan.destination}</Grid>
+                  <Grid is_flex>
+                    <Grid padding="10px">
+                      <PlanName>
+                        <div>
+                          <Text size="18px" color={theme.color.white}>
+                            {plan.planName}
+                          </Text>
+                        </div>
+                        <div>
+                          <Text size="12px" color={theme.color.white}>
+                            {
+                              plan.planDate
+                                .split('T')[0]
+                                .split('-')[0]
+                                .split('0')[1]
+                            }
+                            {plan.planDate.split('T')[0].split('-')[1]}
+                            {plan.planDate.split('T')[0].split('-')[2]}
+                          </Text>
+                        </div>
+                      </PlanName>
+                      <Grid padding="0px 10px">
+                        <Text size="12px" color={theme.color.white}>
+                          {plan.destination}
+                        </Text>
+                      </Grid>
+                    </Grid>
                     <Grid
                       right
                       onClick={() => {
@@ -78,7 +97,7 @@ const Plans = props => {
                         });
                       }}
                     >
-                      <HiOutlineChevronRight className="right" />
+                      <HiOutlineChevronRight className="right" size="20px" />
                     </Grid>
                   </Grid>
                 </PlanId>
@@ -104,6 +123,7 @@ const DinoImgDiv = styled.div`
 
 const PlanList = styled.div`
   padding: 10px 30px;
+  text-align: center;
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -115,11 +135,16 @@ const PlanList = styled.div`
 const PlanId = styled.div`
   margin: 10px 0px;
   padding: 10px;
-  width: 300px;
+  width: 100%;
   height: 60px;
   color: ${theme.color.white};
   background-color: ${theme.color.green};
   border-radius: 10px;
+`;
+
+const PlanName = styled.div`
+  display: flex;
+  justify-content: space-evenly;
 `;
 
 // default props 작성 위치
