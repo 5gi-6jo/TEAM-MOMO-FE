@@ -33,19 +33,12 @@
   cursor: pointer;
 }
 .react-calendar__navigation {
-  display: flex;
-  width: 240px;
-  height: 20px;
-
-  /* 올기면 복잡해져서 냅둠 */
-  /* position: absolute; */
-  /* right: -5%; */
-  /* top: 17%; */
-  width: 80%;
-
+  display:flex;
+  margin-left: 50%;
+  margin-bottom: 5px;
 }
 .react-calendar__navigation button {
-  width: 30px;
+  width: 50px;
   background: none;
 
   font-family: 'Lato';
