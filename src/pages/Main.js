@@ -63,6 +63,12 @@ const Main = props => {
     document.execCommand('copy');
   };
 
+  const compareTime = planTime => {
+    const nowTime = new Date().getTime();
+    const checkTime = Date.parse(planTime);
+    return checkTime - nowTime > 0 ? 'Active' : '';
+  };
+
   return (
     <React.Fragment>
       <Header />
@@ -106,22 +112,41 @@ const Main = props => {
         ) : (
           dayPlan.map((plan, index) => (
             <Grid is_flex key={index}>
-              <PlanId
-                key={`plans=${plan.planId}`}
-                onClick={() => {
-                  navigate(`/plansdetail/${plan.planId}`, {
-                    state: plan.planId,
-                  });
-                }}
-              >
-                <Grid is_Grid>
-                  <Grid>
-                    {plan.planDate.split('T')[1].split(':')[0]}:
-                    {plan.planDate.split('T')[1].split(':')[1]}
+              {compareTime(plan.planDate) ? (
+                <Active
+                  key={`plans=${plan.planId}`}
+                  onClick={() => {
+                    navigate(`/plansdetail/${plan.planId}`, {
+                      state: plan.planId,
+                    });
+                  }}
+                >
+                  <Grid is_Grid>
+                    <Grid>
+                      {plan.planDate.split('T')[1].split(':')[0]}:
+                      {plan.planDate.split('T')[1].split(':')[1]}
+                    </Grid>
+                    <Grid>{plan.planName}</Grid>
                   </Grid>
-                  <Grid>{plan.planName}</Grid>
-                </Grid>
-              </PlanId>
+                </Active>
+              ) : (
+                <DeActive
+                  key={`plans=${plan.planId}`}
+                  onClick={() => {
+                    navigate(`/plansdetail/${plan.planId}`, {
+                      state: plan.planId,
+                    });
+                  }}
+                >
+                  <Grid is_Grid>
+                    <Grid>
+                      {plan.planDate.split('T')[1].split(':')[0]}:
+                      {plan.planDate.split('T')[1].split(':')[1]}
+                    </Grid>
+                    <Grid>{plan.planName}</Grid>
+                  </Grid>
+                </DeActive>
+              )}
               {plan.url && (
                 <PlanUrl
                   onClick={() => {
@@ -145,6 +170,7 @@ const Main = props => {
           ))
         )}
       </PlanList>
+
       <div style={{ padding: '20px' }}></div>
 
       <WriteButton>
@@ -200,13 +226,23 @@ const PlanList = styled.div`
   }
 `;
 
-const PlanId = styled.div`
+const Active = styled.div`
   margin: 10px 0px;
   padding: 10px;
   width: 200px;
   height: 40px;
   color: white;
   background-color: ${theme.color.green};
+  border-radius: 10px;
+`;
+
+const DeActive = styled.div`
+  margin: 10px 0px;
+  padding: 10px;
+  width: 200px;
+  height: 40px;
+  color: white;
+  background-color: ${theme.color.gray5};
   border-radius: 10px;
 `;
 
