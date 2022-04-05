@@ -164,7 +164,7 @@ const Mypage = () => {
         <Grid
           right
           _onClick={() => {
-            navigate('/alarm');
+            navigate('/alarm', { state: { user: user } });
           }}
         >
           <HiOutlineChevronRight className="right" />

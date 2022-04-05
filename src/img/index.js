@@ -9,6 +9,7 @@ import plusbutton from './icon/plusbutton.webp';
 import sendbutton from './icon/sendbutton.webp';
 import marker from './icon/marker.png';
 import redmarker from './icon/redmarker.png';
+import star from './icon/star.png';
 
 import momoKor from './icon/momoKor.png';
 import momo from './icon/momo.png';
@@ -47,6 +48,7 @@ export {
   dino2,
   marker,
   redmarker,
+  star,
   //틀
   frame,
   backImg2,
