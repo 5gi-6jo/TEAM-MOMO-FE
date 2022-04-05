@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../Styles/theme';
 import { HiOutlineChevronRight } from 'react-icons/hi';
+import axios from 'axios';
+import { getCookie } from '../shared/utils/Cookie';
+import { tokenURL } from '../shared/apis/API';
 
 /**
  * @param {*} props
@@ -18,6 +21,14 @@ import { HiOutlineChevronRight } from 'react-icons/hi';
 const Plans = props => {
   const navigate = useNavigate();
   const Plans = useSelector(state => state.plan.plans);
+
+  let n = 0;
+  const recordsbutton = async () => {
+    await tokenURL.get(`/records?pageNumber=${n}`).then(res => {
+      console.log(res);
+    });
+    n++;
+  };
 
   const compareTime = planTime => {
     const nowTime = new Date().getTime();
@@ -34,7 +45,7 @@ const Plans = props => {
       </Grid>
       <hr />
       <PlanList>
-        {Plans.length === 0 ? (
+        {!Plans ? (
           <Grid>
             <Grid center padding="160px 0px">
               <Text size="16px" color={theme.color.gray3}>
@@ -48,8 +59,8 @@ const Plans = props => {
             </DinoImgDiv>
           </Grid>
         ) : (
-          Plans.map(plan => (
-            <Grid is_flex>
+          Plans.map((plan, index) => (
+            <Grid is_flex key={index}>
               {compareTime(plan.planDate) ? (
                 <PlanId
                   key={`plans=${plan.planId}`}
@@ -85,6 +96,7 @@ const Plans = props => {
             </Grid>
           ))
         )}
+        <button onClick={recordsbutton}>asdf</button>
       </PlanList>
     </React.Fragment>
   );
