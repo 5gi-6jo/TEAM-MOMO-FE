@@ -35,12 +35,11 @@
   cursor: pointer;
 }
 .react-calendar__navigation {
-  display: flex;
-  margin-left: 50%;
-  margin-bottom: 5px;
+  display:flex;
+  height: 30px;
 }
 .react-calendar__navigation button {
-  width: 50px;
+  width: 100px;
   background: none;
 
   font-family: 'Lato';
