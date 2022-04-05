@@ -61,7 +61,8 @@ const PlanSetName = props => {
                 </div>
               </ModalText>
               <ModalButton>
-                <ModalButtonCencel>취소</ModalButtonCencel>
+                {/* 취소 삭제 */}
+                {/* <ModalButtonCencel>취소</ModalButtonCencel> */}
                 <ModalButtonOk
                   onClick={() => {
                     dispatch(setUserName(inputRef.current.value));
@@ -135,10 +136,11 @@ const ModalButton = styled.div`
 `;
 const ModalButtonOk = styled.div`
   height: 40px;
-  width: 50%;
+  width: 100%;
   text-align: center;
   cursor: pointer;
   border: 1px solid #9e9e9e;
+  border-radius: 0px 0px 15px 15px;
 `;
 const ModalButtonCencel = styled.div`
   height: 40px;

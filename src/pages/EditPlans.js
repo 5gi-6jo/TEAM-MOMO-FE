@@ -26,11 +26,12 @@ const EditPlans = props => {
   const [time, setTime] = useState('');
   const [minute, setMinute] = useState('');
 
+  console.log(props.planDate);
   let selectTime = moment(
-    time.split('시')[0] + minute.split('분')[0],
-    'h:mm',
+    props.planDate + time.split('시')[0] + minute.split('분')[0],
+    'YYYY-MM-DD h:mm',
   ).format();
-
+  console.log(props.des);
   const timerButton = e => {
     let minutestr = parseInt(e.target.value);
     setabled(minutestr);
@@ -160,11 +161,29 @@ const EditPlans = props => {
                 <Grid is_flex>
                   <Button
                     margin="6px 7px 6px 0px "
+                    abled={abled === 45}
+                    _onClick={timerButton}
+                    value={45}
+                  >
+                    45분 전
+                  </Button>
+                  <Button
+                    margin="6px 0px 6px 7px "
                     abled={abled === 60}
                     _onClick={timerButton}
                     value={60}
                   >
                     1시간 전
+                  </Button>
+                </Grid>
+                <Grid is_flex>
+                  <Button
+                    margin="6px 7px 6px 0px "
+                    abled={abled === 90}
+                    _onClick={timerButton}
+                    value={90}
+                  >
+                    1시간 30분 전
                   </Button>
                   <Button
                     margin="6px 0px 6px 7px "
@@ -173,24 +192,6 @@ const EditPlans = props => {
                     value={120}
                   >
                     2시간 전
-                  </Button>
-                </Grid>
-                <Grid is_flex>
-                  <Button
-                    margin="6px 7px 6px 0px "
-                    abled={abled === 1440}
-                    _onClick={timerButton}
-                    value={1440}
-                  >
-                    1일 전
-                  </Button>
-                  <Button
-                    margin="6px 0px 6px 7px "
-                    abled={abled === 2880}
-                    _onClick={timerButton}
-                    value={2880}
-                  >
-                    2일 전
                   </Button>
                 </Grid>
               </Grid>
@@ -204,13 +205,32 @@ const EditPlans = props => {
                 //   nameRef === '' || desRef === '' || timeRef === '' ? true : false
                 // }
                 _onClick={() => {
+                  const noticeTime =
+                    -1 *
+                    moment().diff(
+                      moment(selectTime, 'YYYY-MM-DD HH:mm')
+                        .subtract(abled, 'minutes')
+                        .format('YYYY-MM-DD HH:mm'),
+                      'minutes',
+                    );
+                  if (noticeTime <= 0) {
+                    window.alert('설정한 시간이 현재시간보다 이전시간입니다.');
+                    return;
+                  }
+                  if (
+                    name === '' || time === '' || abled === '' ? true : false
+                  ) {
+                    window.alert('*표시 내용을 모두 입력해주세요');
+                    return;
+                  }
+
                   const data = {
                     id: props.id,
                     planName: name,
                     contents: contenst,
-                    destination: props.des.address,
-                    lat: props.des.lat,
-                    lng: props.des.lng,
+                    destination: props.des,
+                    lat: props.lat,
+                    lng: props.lng,
                     planDate: selectTime.split('+')[0],
                     noticeTime: abled,
                   };

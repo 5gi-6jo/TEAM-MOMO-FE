@@ -66,6 +66,7 @@ const PlanSelectMap = props => {
     setKeyword(inputref.current.value);
   };
 
+  console.log(datas);
   return (
     <>
       <Section>
@@ -89,7 +90,7 @@ const PlanSelectMap = props => {
               }}
             ></InputDest>
             <Search onClick={inputdatabutton}>
-              <BiSearch size={'15px'} />
+              {/* <BiSearch size={'15px'} /> */}
             </Search>
           </Grid>
 
@@ -124,12 +125,11 @@ const PlanSelectMap = props => {
                         // map.setBounds(bounds);
                       }}
                     >
-                      <p style={{ color: 'black' }}>{point.place_name}</p>
+                      <Text bold>{point.place_name}</Text>
                       {/* <p style={{ color: 'green' }}>{point.address_name}</p> */}
-                      <p style={{ color: 'black' }}>
-                        {point.road_address_name}
-                      </p>
+                      <Text>{point.address_name}</Text>
                     </Grid>
+                    <hr style={{ color: '#E0E0E0' }} />
                   </div>
                 ))}
             </Grid>

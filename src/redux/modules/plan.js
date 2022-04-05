@@ -142,7 +142,7 @@ export const setFCMTokenplan = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     const newdata = {
       ...data,
-      planId: 20,
+      planId: 118,
     };
     try {
       return await tokenURL

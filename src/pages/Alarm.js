@@ -1,7 +1,7 @@
 import { deleteToken, getToken } from 'firebase/messaging';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import ModalInput from '../components/Modal/ModalInput';
 import { Grid, Text } from '../elements';
@@ -9,6 +9,7 @@ import { messaging } from '../firebase';
 import { setFCMTokenplan } from '../redux/modules/plan';
 import { setFCMToken } from '../redux/modules/user';
 import Headerbar from '../shared/Headerbar';
+import { getCookie, setCookie } from '../shared/utils/Cookie';
 import theme from '../Styles/theme';
 
 /**
@@ -19,9 +20,11 @@ import theme from '../Styles/theme';
  */
 
 const Alarm = () => {
+  const user = useLocation().state.user;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log(user);
   //modal
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -50,10 +53,9 @@ const Alarm = () => {
     getToken(messaging, {
       vapidKey: process.env.REACT_APP_VAPID_KEY,
     }).then(token => {
-      console.log('token', token);
-      sessionStorage.setItem('FCMtoken', token);
+      setCookie('FCMtoken', token, 20);
       const data = {
-        token: sessionStorage.getItem('FCMtoken'),
+        token: getCookie('FCMtoken'),
       };
 
       dispatch(setFCMToken(data));
@@ -65,7 +67,7 @@ const Alarm = () => {
     }).then(token => {
       deleteToken(messaging).then(() => {
         console.log('deleteFCMtoken');
-        sessionStorage.deleteToken('FCMtoken');
+        deleteToken('FCMtoken');
         const data = {
           token: '',
         };
@@ -73,9 +75,13 @@ const Alarm = () => {
       });
     });
   };
-  const [FCM, setFCM] = useState(false);
+  const [FCM, setFCM] = useState(
+    user.noticeAllowed ? user.noticeAllowed : false,
+  );
 
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(
+    user.noticeAllowed ? user.noticeAllowed : false,
+  );
   const clickToggle = () => {
     setToggle(prev => !prev);
     if (!FCM) {
@@ -97,13 +103,15 @@ const Alarm = () => {
         }}
       />
       <Grid is_flex padding="10px 20px">
-        <Text size="16px" width="50px" bold color={theme.color.gray1}>
-          알림
-        </Text>
-        <Grid padding="20px 0px" right>
-          <ToggleBtn onClick={clickToggle} toggle={toggle}>
-            <ToggleCircle toggle={toggle}></ToggleCircle>
-          </ToggleBtn>
+        <Grid left>
+          <Text size="16px" width="50px" bold color={theme.color.gray1}>
+            알림
+          </Text>
+          <ToggleBox>
+            <ToggleBtn onClick={clickToggle} toggle={toggle}>
+              <ToggleCircle toggle={toggle}></ToggleCircle>
+            </ToggleBtn>
+          </ToggleBox>
         </Grid>
       </Grid>
       <button onClick={openModal}>모달팝업버튼</button>
@@ -126,6 +134,13 @@ const Alarm = () => {
 };
 
 // styled components 작성 위치
+const ToggleBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  padding: 20px 0px;
+`;
 const ToggleBtn = styled.button`
   width: 60px;
   height: 30px;
@@ -144,7 +159,7 @@ const ToggleCircle = styled.div`
   height: 25px;
   border-radius: 50px;
   position: absolute;
-  left: 79.5%;
+  left: 7%;
   transition: all 0.5s ease-in-out;
   ${props =>
     props.toggle &&
