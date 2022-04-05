@@ -58,7 +58,7 @@ const PlansDetail = props => {
         is_Edit
         text="나의 모임"
         _onClickClose={() => {
-          navigate(-1); //뒤로가기 버튼으로 변경
+          navigate('/main'); //뒤로가기 버튼으로 변경
         }}
         _onClickEdit={() => {
           setShowModal(true);
