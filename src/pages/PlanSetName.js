@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { getPlanId } from '../redux/modules/map.js';
+import { getPlanId, setSoketClear } from '../redux/modules/map.js';
 import { setUserName } from '../redux/modules/user.js';
 import Plansocket from './Plansocket.js';
 
@@ -27,6 +27,12 @@ const PlanSetName = props => {
     // else {
     //   dispatch(setUserName(props.userNick));
     // }
+    return () => {
+      console.log('undidmount:::::::::::::::::');
+      // client.unsubscribe();
+      // client.disconnect();
+      // dispatch(setSoketClear());
+    };
   });
   const path = useParams(); //path주소 받아오기 랜덤URL
   useEffect(() => {
@@ -71,8 +77,9 @@ const PlanSetName = props => {
           </MainModal>
         </Section>
       )}
-      {userNick && (
+      {userNick && planId && (
         <Plansocket
+          path={path}
           userNick={userNick}
           planId={planId}
           planName={planName}

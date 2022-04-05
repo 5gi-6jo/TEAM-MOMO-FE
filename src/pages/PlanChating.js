@@ -72,7 +72,7 @@ const PlanChating = props => {
             }}
             _onClickEdit={() => {}}
           ></Headerbar>
-          {userData.connected && (
+          {userData.connected && publicChats && (
             <Page ref={scrollRef}>
               {publicChats.map((chat, index) => (
                 <div key={index}>

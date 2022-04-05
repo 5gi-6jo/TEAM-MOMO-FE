@@ -75,14 +75,11 @@ const PlanMap = forwardRef((props, ref) => {
 
   const [info, setInfo] = useState();
   const [position, setPosition] = useState();
-  console.log('info', info);
-  console.log('position', position);
   const [userData, setUserData] = useState({
     sender: '',
     connected: false,
     content: '',
   });
-  console.log(publicMaps);
   useEffect(() => {
     return () => {};
   }, [publicMaps]);
@@ -99,8 +96,6 @@ const PlanMap = forwardRef((props, ref) => {
   });
   const [points, setPoints] = useState();
 
-  console.log('points', points);
-  console.log('publicMaps', publicMaps);
   //위치보내기
   const sendMyLocation = () => {
     console.log('위치보내기!');
@@ -124,7 +119,7 @@ const PlanMap = forwardRef((props, ref) => {
   //내위치 반복 보내기
   useInterval(() => {
     sendMyLocation();
-  }, 60000);
+  }, 3000);
   // eslint-disable-next-line no-unused-vars
   const bounds = useMemo(() => {
     const bounds = new kakao.maps.LatLngBounds();
@@ -203,7 +198,7 @@ const PlanMap = forwardRef((props, ref) => {
         style={{
           // 지도의 크기
           width: '100%',
-          height: 'calc(100% - 46px)',
+          height: 'calc(90%)',
         }}
         level={3} // 지도의 확대 레벨
         onCreate={setMap}
@@ -294,10 +289,10 @@ const PlanMap = forwardRef((props, ref) => {
 // 스타일 컴포넌트 작성 위치
 const Section = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: 5%;
   box-sizing: border-box;
   width: 100%;
-  height: 10%;
+  height: 15%;
   z-index: 99;
   background-color: ${theme.color.white};
   /* display: flex; */

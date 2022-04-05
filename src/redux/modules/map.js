@@ -49,6 +49,10 @@ export const mapSlice = createSlice({
         state.is_public_send = false;
       }
     },
+    setSoketClear: (state, action) => {
+      state.publicChats = [];
+      state.publicMaps = [];
+    },
     seturl: (state, action) => {
       state.url = action.payload;
     },
@@ -70,6 +74,7 @@ export const mapSlice = createSlice({
       });
   },
 });
-export const { setPublicMaps, setPublicChats } = mapSlice.actions;
+export const { setPublicMaps, setSoketClear, setPublicChats } =
+  mapSlice.actions;
 
 export default mapSlice.reducer;
