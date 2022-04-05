@@ -1,9 +1,9 @@
 // elements
-import Grid from './Grid';
-import Button from './Button';
-import Image from './Image';
-import Input from './Input';
-import Text from './Text';
-import Select from './Select';
+import Grid from './Grid.js';
+import Button from './Button.js';
+import Image from './Image.js';
+import Input from './Input.js';
+import Text from './Text.js';
+import Select from './Select.js';
 
 export { Grid, Input, Image, Text, Select, Button };

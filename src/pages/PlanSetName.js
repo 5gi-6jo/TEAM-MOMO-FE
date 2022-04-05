@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { getPlanId } from '../redux/modules/map';
-import { setUserName } from '../redux/modules/user';
-import Plansocket from './Plansocket';
+import { getPlanId } from '../redux/modules/map.js';
+import { setUserName } from '../redux/modules/user.js';
+import Plansocket from './Plansocket.js';
 
 import SockJS from 'sockjs-client';
 
@@ -58,8 +58,6 @@ const PlanSetName = props => {
                 <ModalButtonCencel>취소</ModalButtonCencel>
                 <ModalButtonOk
                   onClick={() => {
-                    // if (props.guestNick !== '') setModal(false);
-                    // props.setGuestNick(inputRef.current.value);
                     dispatch(setUserName(inputRef.current.value));
                     setModal(false);
                     // handleUsername();
@@ -143,4 +141,6 @@ const ModalButtonCencel = styled.div`
   border: 1px solid #9e9e9e;
 `;
 
+// default props 작성 위치
+PlanSetName.defaultProps = { islogin: false, userNick: '' };
 export default PlanSetName;

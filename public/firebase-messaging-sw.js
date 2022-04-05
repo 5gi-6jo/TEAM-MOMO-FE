@@ -1,12 +1,13 @@
-self.addEventListener('install', e => {
-  console.log('서비스워커 install함!', e);
-});
-self.addEventListener('activate', e => {
-  console.log('서비스워커 activate 시작됨!', e);
-});
-self.addEventListener('fetch', e => {
-  // console.log("데이터 요청!(fetch)", e.request);
-});
+/* eslint-disable no-restricted-globals */
+// self.addEventListener('install', e => {
+//   console.log('서비스워커 install함!', e);
+// });
+// self.addEventListener('activate', e => {
+//   console.log('서비스워커 activate 시작됨!', e);
+// });
+// self.addEventListener('fetch', e => {
+//   // console.log("데이터 요청!(fetch)", e.request);
+// });
 
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {

@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setPublicMaps, setPublicChats } from '../redux/modules/map';
-import PlanMap from './PlanMap';
+import { setPublicMaps, setPublicChats } from '../redux/modules/map.js';
+import PlanMap from './PlanMap.js';
 import { Image } from '../elements';
 import { chatingicon } from '../img';
-import PlanChating from './PlanChating';
+import PlanChating from './PlanChating.js';
 
 /**
  * @param {*} props

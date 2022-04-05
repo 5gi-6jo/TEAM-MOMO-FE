@@ -158,7 +158,10 @@ const Main = props => {
       </WriteButton>
       <button
         onClick={() => {
-          navigate('/plan/2158424a-be8a-49f3-b67e-d6c0aceb04c8');
+          navigate('/plan/2158424a-be8a-49f3-b67e-d6c0aceb04c8', {
+            replace: true,
+          });
+          // window.location.assign('/plan/2158424a-be8a-49f3-b67e-d6c0aceb04c8');
         }}
       >
         asdf

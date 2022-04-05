@@ -8,15 +8,15 @@ import React, {
   useState,
 } from 'react';
 import styled from 'styled-components';
-import theme from '../Styles/theme';
-import Headerbar from '../shared/Headerbar';
+import theme from '../Styles/theme.js';
+import Headerbar from '../shared/Headerbar.js';
 
 import { useNavigate } from 'react-router-dom';
 
 //카카오 맵
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { Ellipse32, marker, redmarker } from '../img';
-import PlanMapInfo from './PlanMapInfo';
+import PlanMapInfo from './PlanMapInfo.js';
 // eslint-disable-next-line no-unused-vars
 import BiTargetLock from 'react-icons/bi';
 
@@ -46,6 +46,7 @@ const PlanMap = forwardRef((props, ref) => {
       setPoints(data);
     },
   }));
+  // const PlanMap = props => {
   const navigate = useNavigate();
   const planId = props.planId;
   const stompClient = props.client;
