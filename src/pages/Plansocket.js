@@ -90,7 +90,7 @@ const Plansocket = props => {
   const onMessageReceived2 = payload => {
     let payloadData = JSON.parse(payload.body);
     // console.log('payloadDataMap=', payloadData);
-    if (payloadData.chats) {
+    if (payloadData.chats && payloadData.sender === usernick) {
       // eslint-disable-next-line array-callback-return
       payloadData.chats.map((chat, index) => {
         dispatch(setPublicChats(chat));

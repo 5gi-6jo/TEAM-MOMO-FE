@@ -51,13 +51,13 @@ const OAuthHandler = props => {
           // console.log(ACCESS_TOKEN);
 
           setCookie('token', ACCESS_TOKEN, 1);
-          // dispatch(getUserbyToken()).then(res => navigate('/main'));
+          dispatch(getUserbyToken()).then(res => navigate('/main'));
         })
         .catch(err => {
           console.log('소셜로그인 에러', err);
           // debugger;
 
-          // window.location.assign('/');
+          window.location.assign('/');
         });
 
       // dispatch(userActions.KakaoLogin(code));

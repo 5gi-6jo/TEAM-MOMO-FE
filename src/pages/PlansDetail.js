@@ -33,9 +33,8 @@ const PlansDetail = props => {
   const isMount = useIsMount();
   //리덕스에서 한개의 모임 데이터 받아옴
   const Plan = useSelector(state => state.plan.showplan);
-
   const img = Plan.imageList;
-
+  // console.log(Plan);
   const [showModal, setShowModal] = useState('');
 
   //부모에서 넘겨받을때 모임 아이디를 받음
