@@ -7,7 +7,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux/configureStore';
 import GlobalStyle from './Styles/GlobalStyle';
+import ReactGA4 from 'react-ga4';
+const ga4_id = 'G-1L80CC7R8C';
 
+//구글 애널리틱스
+ReactGA4.initialize(ga4_id);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
