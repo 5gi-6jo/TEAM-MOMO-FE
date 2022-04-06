@@ -11,6 +11,7 @@ import { face, sparkle, dino1 } from '../img';
 import { IoIosAddCircle } from 'react-icons/io';
 import { FiLink } from 'react-icons/fi';
 import theme from '../Styles/theme';
+import { getCookie } from '../shared/utils/Cookie';
 
 /**
  * @param {*} props
@@ -96,7 +97,7 @@ const Main = props => {
           <Grid is_flex center padding="10px">
             <DinoImg src={dino1} />
             <AlignLeft>
-              <Text size="16px" color={theme.color.gray3}>
+              <Text size="14px" color={theme.color.gray3}>
                 모임이 없습니다
                 <br />
                 모임을 추가해보세요!
@@ -181,7 +182,13 @@ const Main = props => {
         <IoIosAddCircle
           className="WriteButton"
           onClick={() => {
-            navigate('/edit', { state: { time } });
+            const isCookie = getCookie('token') ? getCookie('token') : false;
+            if (isCookie) {
+              navigate('/edit', { state: { time } });
+            } else {
+              window.alert('로그인이 필요합니다.');
+              navigate('/login');
+            }
           }}
           size="60"
           color={theme.color.orange}

@@ -167,7 +167,7 @@ const FramePhone = styled.div`
   @media ${theme.device.tablet} {
     transform: translate(50%, -50%);
     position: fixed;
-    width: 35rem;
+    width: 33rem;
     height: 100%;
     max-width: 768px;
     min-width: 360px;
@@ -200,7 +200,7 @@ const View = styled.div`
   top: 50%;
   transform: translate(50%, -50%); */
   @media ${theme.device.laptop} {
-    width: 35rem;
+    width: 21rem;
 
     height: 83.5%;
 

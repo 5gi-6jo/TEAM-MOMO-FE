@@ -176,15 +176,19 @@ const Mypage = () => {
             navigate('/mypage');
           }}
         >
-          <Text size="18px" bold margin="0px">
-            피드백 보내기
-          </Text>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSduVwRbs2Mf0K7o9zQbPw1QGmn9iS-PUtnnY-gSfJ_scvgLbA/viewform?usp=sf_link">
+            <Text size="16px" bold margin="0px">
+              피드백 보내기
+            </Text>
+          </a>
         </div>
         <div></div>
         <Grid
           right
           _onClick={() => {
-            navigate('/mypage');
+            window.location.assign(
+              'https://docs.google.com/forms/d/e/1FAIpQLSduVwRbs2Mf0K7o9zQbPw1QGmn9iS-PUtnnY-gSfJ_scvgLbA/viewform?usp=sf_link',
+            );
           }}
         >
           <HiOutlineChevronRight className="right" />

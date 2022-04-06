@@ -10,6 +10,7 @@ import { tokenURL } from '../shared/apis/API';
 import useIsMount from '../hooks/useIsMount';
 import { useDispatch, useSelector } from 'react-redux';
 import { setrecords } from '../redux/modules/plan';
+import { getCookie } from '../shared/utils/Cookie';
 
 /**
  * @param {*} props
@@ -24,6 +25,8 @@ const Plans = props => {
   const isMount = useIsMount();
   const dispatch = useDispatch();
   const record = useSelector(state => state.plan.recordslist);
+  const isCookie = getCookie('token') ? getCookie('token') : false;
+
   useEffect(() => {
     dispatch(setrecords());
     if (isMount.current) {
@@ -35,6 +38,33 @@ const Plans = props => {
     // });
   }, [isMount]);
 
+  if (!isCookie) {
+    return (
+      <React.Fragment>
+        <Header />
+        <Grid is_flex padding="20px">
+          <Text size="14px" bold>
+            추억
+          </Text>
+        </Grid>
+        <hr />
+        <PlanList>
+          <Grid>
+            <Grid center padding="160px 0px">
+              <Text size="16px" color={theme.color.gray3}>
+                모임을 만들어
+                <br />
+                소중한 추억을 쌓아보세요
+              </Text>
+            </Grid>
+            <DinoImgDiv>
+              <DinoImg src={dino2} />
+            </DinoImgDiv>
+          </Grid>
+        </PlanList>
+      </React.Fragment>
+    );
+  }
   return (
     <React.Fragment>
       <Header />
