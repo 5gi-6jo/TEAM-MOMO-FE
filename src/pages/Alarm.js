@@ -24,7 +24,6 @@ const Alarm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(user);
   //modal
   const [modalOpen, setModalOpen] = useState(false);
 

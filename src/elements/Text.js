@@ -71,6 +71,7 @@ const DefaultText = styled.p`
   ${props => (props.overf ? `overflow:auto` : '')};
   ${props => (props.textoverf ? 'text-overflow: ellipsis' : '')};
   ${props => (props.ws ? `white-space: ${props.ws}` : '')};
+
   cursor: ${props => props.cursor};
   letter-spacing: -1px;
 `;

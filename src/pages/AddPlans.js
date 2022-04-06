@@ -26,7 +26,6 @@ const AddPlans = props => {
   const plans = useSelector(state => state.plan.plans);
   // eslint-disable-next-line no-unused-vars
   const lastplan = plans.find(v => v.finished);
-  console.log(selectDate.state.time.split('T')[0]);
 
   //서버로 보낼 데이터들
   const [abled, setabled] = useState('');
@@ -50,21 +49,6 @@ const AddPlans = props => {
     date + time.split('시')[0] + minute.split('분')[0],
     'YYYY-MM-DD HH:mm',
   ).format();
-  console.log(selectTime);
-  console.log(
-    moment(selectTime, 'YYYY-MM-DD HH:mm')
-      .subtract(abled, 'minutes')
-      .format('YYYY-MM-DD HH:mm'),
-  );
-  console.log(
-    -1 *
-      moment().diff(
-        moment(selectTime, 'YYYY-MM-DD HH:mm')
-          .subtract(abled, 'minutes')
-          .format('YYYY-MM-DD HH:mm'),
-        'minutes',
-      ),
-  );
   const a =
     -1 *
     moment().diff(
@@ -73,7 +57,6 @@ const AddPlans = props => {
         .format('YYYY MM DD hh:mm'),
       'minutes',
     );
-  console.log(a >= 0);
   const timerButton = e => {
     let minutestr = parseInt(e.target.value);
     setabled(minutestr);
@@ -86,9 +69,6 @@ const AddPlans = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(
-    name === '' || address === '' || time === '' || abled === '' ? false : true,
-  );
   return (
     <React.Fragment>
       <Grid>

@@ -17,7 +17,6 @@ const PlanSelectMap = props => {
   const [datas, setDatas] = useState(); //리스트 검색 시 들어오는 데이터
   const [isInput, setIsInput] = useState(false); //인풋 눌럿는지 체크
   const [isdata, setIsData] = useState(false);
-  console.log('isdata', isdata);
   const [selectlist, setSelectlist] = useState({
     //리스트 클릭시 들어갈 데이터
     position: {
@@ -66,7 +65,6 @@ const PlanSelectMap = props => {
     setKeyword(inputref.current.value);
   };
 
-  console.log(datas);
   return (
     <>
       <Section>
@@ -82,7 +80,6 @@ const PlanSelectMap = props => {
             <InputDest
               ref={inputref}
               onChange={e => {
-                console.log(e.target.value);
                 setKeyword(e.target.value);
               }}
               onClick={() => {
@@ -125,9 +122,11 @@ const PlanSelectMap = props => {
                         // map.setBounds(bounds);
                       }}
                     >
-                      <Text bold>{point.place_name}</Text>
+                      <Text size={'16px'}>{point.place_name}</Text>
                       {/* <p style={{ color: 'green' }}>{point.address_name}</p> */}
-                      <Text>{point.address_name}</Text>
+                      <Text size={'11px'} color={theme.color.gray4}>
+                        {point.address_name}
+                      </Text>
                     </Grid>
                     <hr style={{ color: '#E0E0E0' }} />
                   </div>

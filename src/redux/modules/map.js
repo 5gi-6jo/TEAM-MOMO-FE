@@ -36,7 +36,6 @@ export const mapSlice = createSlice({
       } else {
         state.publicMaps.push(action.payload);
       }
-      console.log('index', index);
 
       // if (index !== -1) {
       //   state.publicChats.push(action.payload);

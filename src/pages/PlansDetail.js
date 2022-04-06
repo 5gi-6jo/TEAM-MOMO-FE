@@ -3,13 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { getImage, getOnePlan, setUploadImage } from '../redux/modules/plan';
+import {
+  getImage,
+  getOnePlan,
+  setDeleteOnePlan,
+  setUploadImage,
+} from '../redux/modules/plan';
 
 import EditPlans from './EditPlans';
 import Headerbar from '../shared/Headerbar';
 import { Grid, Input, Text } from '../elements';
 import theme from '../Styles/theme';
 import { FiUpload } from 'react-icons/fi';
+import useIsMount from '../hooks/useIsMount';
 // import { logger } from '../shared/utils';
 
 // const writeIcon = '../img/review_write.png';
@@ -24,6 +30,7 @@ import { FiUpload } from 'react-icons/fi';
 const PlansDetail = props => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isMount = useIsMount();
   //리덕스에서 한개의 모임 데이터 받아옴
   const Plan = useSelector(state => state.plan.showplan);
 
@@ -33,10 +40,12 @@ const PlansDetail = props => {
 
   //부모에서 넘겨받을때 모임 아이디를 받음
   const planId = useLocation().state;
-  console.log(Plan);
   useEffect(() => {
     console.log('Detail::useEffect');
     dispatch(getOnePlan(planId));
+    return () => {
+      dispatch(setDeleteOnePlan());
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleFileInput = e => {
@@ -51,6 +60,7 @@ const PlansDetail = props => {
     const data = { files, planId };
     dispatch(setUploadImage(data));
     dispatch(getImage(planId));
+    dispatch(getOnePlan(planId));
   };
   return (
     <>
@@ -58,7 +68,7 @@ const PlansDetail = props => {
         is_Edit
         text="나의 모임"
         _onClickClose={() => {
-          navigate(-1); //뒤로가기 버튼으로 변경
+          navigate('/main'); //뒤로가기 버튼으로 변경
         }}
         _onClickEdit={() => {
           setShowModal(true);
@@ -102,7 +112,7 @@ const PlansDetail = props => {
         _accept="image/x-png,image/jpeg"
         _onChange={handleFileInput}
         onClick={() => {
-          console.log('button');
+          // console.log('button');
         }}
       >
         <FiUpload size="24px" />

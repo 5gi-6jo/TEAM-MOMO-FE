@@ -23,15 +23,11 @@ export const login = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       // const navigate = useNavigate();
-      console.log('test1', data);
       return await URL.post(`/users/login`, data, {
         withCredentials: true,
       }).then(response => {
-        console.log(response);
-        console.log('test2');
         setCookie('token', response.headers.authorization, 1);
         // sessionStorage.setItem('token', response.headers.authorization);
-        console.log('test1');
         setTimeout(() => {});
         window.location.assign('/main');
 
@@ -60,11 +56,12 @@ export const logout = createAsyncThunk(
     };
     try {
       return await tokenURL.post(`/users/logout`, data).then(response => {
-        window.location.assign('/');
         deleteCookie('token');
+        setTimeout(() => window.location.assign('/'), 1000);
       });
     } catch (error) {
       window.alert(error.response.data.message);
+      deleteCookie('token');
 
       console.log(error);
       return rejectWithValue(error.response);
@@ -101,8 +98,6 @@ export const getUserbyToken = createAsyncThunk(
       return await tokenURL
         .get(`/users`, { withCredentials: true })
         .then(response => {
-          console.log(response);
-
           return response.data.data;
         });
     } catch (error) {
@@ -135,7 +130,6 @@ export const userSlice = createSlice({
         state.registerDone = false;
       })
       .addCase(register.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.registerDone = true;
       })
       .addCase(register.rejected, (state, action) => {
@@ -144,20 +138,14 @@ export const userSlice = createSlice({
       })
       //로그인
       .addCase(login.pending, state => {
-        console.log('pending');
-
         state.isLoading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
-        console.log('fullfilled');
-
         state.user_info = action.payload;
         state.isLoading = false;
         state.isLoggedin = true;
       })
       .addCase(login.rejected, (state, action) => {
-        console.log('rejected');
-
         state.isLoading = true;
         state.loginError = action.payload;
       })
@@ -185,17 +173,20 @@ export const KakaoLogin = code => {
       method: 'GET',
       url: `https://seoultaste.click/users/kakao/callback?code=${code}`,
     })
-      .then(res => {
-        console.log(res);
+      .then(response => {
+        const ACCESS_TOKEN = response.headers.authorization;
 
-        const ACCESS_TOKEN = res.data.accessToken;
+        // localStorage.setItem('token', ACCESS_TOKEN);
+
         setCookie('token', ACCESS_TOKEN, 1);
 
-        console.log(res.headers.authorization);
-        return res.headers.authorization;
+        debugger;
       })
       .catch(err => {
         console.log('소셜로그인 에러', err);
+        // debugger;
+
+        window.location.assign('/');
       });
   };
 };

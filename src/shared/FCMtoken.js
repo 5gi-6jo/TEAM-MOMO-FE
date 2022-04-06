@@ -12,7 +12,6 @@ const FCMtoken = () => {
     getToken(messaging, {
       vapidKey: process.env.REACT_APP_VAPID_KEY,
     }).then(token => {
-      console.log('token', token);
       setToken(token);
       sessionStorage.setItem('FCMtoken', token);
       swRegist = messaging.swRegistration;
