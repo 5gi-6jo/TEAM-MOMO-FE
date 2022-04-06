@@ -3,8 +3,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import ModalConfirm from '../components/Modal/ModalConfirm';
 import ModalInput from '../components/Modal/ModalInput';
-import { Grid, Text } from '../elements';
+import { Button, Grid, Text } from '../elements';
 import { messaging } from '../firebase';
 import { setFCMTokenplan } from '../redux/modules/plan';
 import { setFCMToken } from '../redux/modules/user';
@@ -49,10 +50,18 @@ const Alarm = () => {
   }, []);
 
   const FCMsetup = () => {
+    if (Notification.permission !== 'granted') {
+      // window.alert('브라우저 알림을 활성화해주세요');
+      setModalOpen(true);
+      return;
+    }
     getToken(messaging, {
       vapidKey: process.env.REACT_APP_VAPID_KEY,
     }).then(token => {
       setCookie('FCMtoken', token, 20);
+      setModalOpen(true);
+
+      // console.log(token);
       const data = {
         token: getCookie('FCMtoken'),
       };
@@ -60,20 +69,20 @@ const Alarm = () => {
       dispatch(setFCMToken(data));
     });
   };
-  const FCMremove = () => {
-    getToken(messaging, {
-      vapidKey: process.env.REACT_APP_VAPID_KEY,
-    }).then(token => {
-      deleteToken(messaging).then(() => {
-        console.log('deleteFCMtoken');
-        deleteToken('FCMtoken');
-        const data = {
-          token: '',
-        };
-        dispatch(setFCMToken(data));
-      });
-    });
-  };
+  // const FCMremove = () => {
+  //   getToken(messaging, {
+  //     vapidKey: process.env.REACT_APP_VAPID_KEY,
+  //   }).then(token => {
+  //     deleteToken(messaging).then(() => {
+  //       console.log('deleteFCMtoken');
+  //       deleteToken('FCMtoken');
+  //       const data = {
+  //         token: '',
+  //       };
+  //       dispatch(setFCMToken(data));
+  //     });
+  //   });
+  // };
   const [FCM, setFCM] = useState(
     user.noticeAllowed ? user.noticeAllowed : false,
   );
@@ -87,7 +96,7 @@ const Alarm = () => {
       FCMsetup();
       setFCM(true);
     } else {
-      FCMremove();
+      // FCMremove();
       setFCM(false);
     }
   };
@@ -103,31 +112,45 @@ const Alarm = () => {
       />
       <Grid is_flex padding="10px 20px">
         <Grid left>
-          <Text size="16px" width="50px" bold color={theme.color.gray1}>
-            알림
-          </Text>
-          <ToggleBox>
+          <Grid width="50%">
+            <Text size="16px" width="50px" bold color={theme.color.gray1}>
+              알림
+            </Text>
+          </Grid>
+          <Grid>
+            <Button
+              is_green
+              _onClick={() => {
+                FCMsetup();
+              }}
+            >
+              이 디바이스로 알림 받기
+            </Button>
+          </Grid>
+          {/* <ToggleBox>
             <ToggleBtn onClick={clickToggle} toggle={toggle}>
               <ToggleCircle toggle={toggle}></ToggleCircle>
             </ToggleBtn>
-          </ToggleBox>
+          </ToggleBox> */}
         </Grid>
       </Grid>
-      <button onClick={openModal}>모달팝업버튼</button>
-      <ModalInput
-        open={modalOpen}
-        close={closeModal}
-        title="팝업창제목"
-        contents="팝업창내용"
-        // _onChange={실행시킬함수}
-      ></ModalInput>
-      <button
+      {/* <button onClick={openModal}>모달팝업버튼</button> */}
+      {modalOpen && (
+        <ModalConfirm
+          open={modalOpen}
+          close={closeModal}
+          title="알림"
+          contents="디바이스 알림 변경!"
+          // _onChange={실행시킬함수}
+        ></ModalConfirm>
+      )}
+      {/* <button
         onClick={() => {
           dispatch(setFCMTokenplan());
         }}
       >
         FCM test
-      </button>
+      </button> */}
     </React.Fragment>
   );
 };

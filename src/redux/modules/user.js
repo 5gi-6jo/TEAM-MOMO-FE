@@ -94,6 +94,19 @@ export const setFCMToken = createAsyncThunk(
     }
   },
 );
+export const isFCMToken = createAsyncThunk(
+  'plan/isFCMToken',
+  async (data, { rejectWithValue }) => {
+    try {
+      return await tokenURL
+        .post(`/users/alarms`, data)
+        .then(response => response.data.data);
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 export const getUserbyToken = createAsyncThunk(
   'user/getUserbyToken',
@@ -163,6 +176,7 @@ export const userSlice = createSlice({
         state.isLoggedin = false;
       })
       .addCase(setFCMToken.fulfilled, (state, action) => {})
+      .addCase(isFCMToken.fulfilled, (state, action) => {})
       .addCase(getUserbyToken.fulfilled, (state, action) => {
         state.is_login = true;
         state.user_info = action.payload;

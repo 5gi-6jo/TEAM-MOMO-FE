@@ -42,7 +42,7 @@ const Footer = props => {
     '/edit',
     '/Login',
     '/Register',
-    `/plansdetail/images/:id`,
+    `/plansdetail/images/`,
     `/plan/`, //지도
   ];
   useEffect(() => {
@@ -52,6 +52,14 @@ const Footer = props => {
       //지도 URL로 인해 else if 추가
       locationArray.indexOf(
         window.location.pathname.split('/plan/')[0] + '/plan/',
+      ) !== -1
+    ) {
+      setShowFooter(false);
+    } else if (
+      //이미지 디테일 URL로 인해 else if 추가
+      locationArray.indexOf(
+        window.location.pathname.split('/plansdetail/images/')[0] +
+          '/plansdetail/images/',
       ) !== -1
     ) {
       setShowFooter(false);
