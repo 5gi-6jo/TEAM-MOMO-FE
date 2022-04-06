@@ -37,9 +37,6 @@ const Plansocket = props => {
   const MapRef = useRef();
 
   useEffect(() => {
-    // if (planId) {
-    //   console.log('planID있음');
-
     connect();
 
     return () => {

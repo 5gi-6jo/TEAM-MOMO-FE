@@ -49,7 +49,7 @@ const RegisterForm = props => {
     };
 
     dispatch(register(data));
-    navigate('/Login');
+    // navigate('/Login');
     // console.log(data);
   };
   return (

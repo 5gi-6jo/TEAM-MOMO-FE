@@ -18,7 +18,7 @@ const NoUrlplan = props => {
       <Header />
       <Grid is_flex padding="20px">
         <Text size="14px" bold>
-          추억
+          지도
         </Text>
       </Grid>
       <hr />

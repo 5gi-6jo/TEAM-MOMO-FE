@@ -97,7 +97,7 @@ const Main = props => {
           <Grid is_flex center padding="10px">
             <DinoImg src={dino1} />
             <AlignLeft>
-              <Text size="16px" color={theme.color.gray3}>
+              <Text size="14px" color={theme.color.gray3}>
                 모임이 없습니다
                 <br />
                 모임을 추가해보세요!

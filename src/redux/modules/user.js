@@ -8,7 +8,11 @@ export const register = createAsyncThunk(
   'user/register',
   async (data, { rejectWithValue }) => {
     try {
-      return await URL.post(`/users/signup`, data).then(response => response);
+      return await URL.post(`/users/signup`, data).then(response => {
+        window.location.assign('/login');
+
+        return response;
+      });
     } catch (error) {
       window.alert(error.response.data.message);
 
