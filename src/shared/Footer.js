@@ -145,7 +145,7 @@ const NavBox = styled.div`
   @media ${({ theme }) => theme.device.laptop} {
     max-width: 35rem;
     max-width: 768px;
-    min-width: 360px;
+    min-width: 21rem;
     width: 64%;
     right: 30%;
     border: 1px solid #e4e4e4;
