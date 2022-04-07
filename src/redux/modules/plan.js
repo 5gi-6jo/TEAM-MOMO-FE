@@ -43,6 +43,12 @@ export const setPlans = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       return await tokenURL.post('/plans', data).then(res => {
+        if (res.response.data.message) {
+          window.alert(res.response.data.message);
+          return;
+        }
+        // window.location.replace('/main');
+
         return res.data;
       });
     } catch (error) {
@@ -141,7 +147,7 @@ export const setFCMTokenplan = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     const newdata = {
       ...data,
-      planId: 143,
+      planId: 198,
     };
     try {
       return await tokenURL
@@ -199,6 +205,7 @@ export const planSlice = createSlice({
       .addCase(getOnePlan.fulfilled, (state, action) => {
         state.showplan = action.payload;
       })
+      .addCase(setPlans.fulfilled, (state, action) => {})
       .addCase(deletePlans.fulfilled, (state, action) => {
         state.showplan = null;
         // console.log(state.plans[1].planId);
