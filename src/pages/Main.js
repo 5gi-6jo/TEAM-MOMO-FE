@@ -12,6 +12,8 @@ import { IoIosAddCircle } from 'react-icons/io';
 import { FiLink } from 'react-icons/fi';
 import theme from '../Styles/theme';
 import { getCookie } from '../shared/utils/Cookie';
+import { setCalendarDay } from '../redux/modules/mainsys';
+import ModalConfirm from '../components/Modal/ModalConfirm';
 
 /**
  * @param {*} props
@@ -28,6 +30,7 @@ const Main = props => {
   const user = useSelector(state => state.user.user_info);
 
   const [checktime, setChecktime] = useState();
+  const [copyopen, setCopyopen] = useState(false);
   const data = {
     date: time,
   };
@@ -35,7 +38,9 @@ const Main = props => {
   // console.log(Plans);
   // console.log(time);
   // console.log(user);
-
+  const toggleModal = val => {
+    setCopyopen(val);
+  };
   useEffect(() => {
     if (moment(time).format('YYYY-MM') !== checktime) {
       dispatch(getPlans(data));
@@ -156,6 +161,7 @@ const Main = props => {
                     <PlanUrl
                       onClick={() => {
                         copy();
+                        setCopyopen(true);
                       }}
                     >
                       <CopyText>
@@ -177,7 +183,14 @@ const Main = props => {
       </PlanList>
 
       <div style={{ padding: '20px' }}></div>
-
+      <ModalConfirm
+        open={copyopen}
+        close={() => {
+          setCopyopen(false);
+        }}
+        title="복사"
+        contents="복사성공"
+      ></ModalConfirm>
       <WriteButton>
         <IoIosAddCircle
           className="WriteButton"

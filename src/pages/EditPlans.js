@@ -26,8 +26,10 @@ const EditPlans = props => {
   const [time, setTime] = useState('');
   const [minute, setMinute] = useState('');
 
+  const date = props.planDate.split('T')[0];
+
   let selectTime = moment(
-    props.planDate + time.split('시')[0] + minute.split('분')[0],
+    date + time.split('시')[0] + minute.split('분')[0],
     'YYYY-MM-DD h:mm',
   ).format();
   const timerButton = e => {
@@ -233,7 +235,7 @@ const EditPlans = props => {
                   props.setshow(false);
 
                   dispatch(editPlans(data));
-                  dispatch(setOnePlan(data));
+                  // dispatch(setOnePlan(data));
                 }}
               >
                 모임 수정하기

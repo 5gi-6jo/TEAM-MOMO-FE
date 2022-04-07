@@ -38,6 +38,10 @@ function MyCalendar(props) {
         );
       }
     }
+    return () => {
+      //다른페이지 돌아왓을때 버그 해결 용으로 오늘 데이터 넣기
+      dispatch(setCalendarDay(moment().format().split('+')[0]));
+    };
   }, [ismount, Plans]);
 
   return (

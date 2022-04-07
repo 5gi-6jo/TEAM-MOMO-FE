@@ -17,6 +17,6 @@ export const store = configureStore({
     main: mainReducer,
     map: mapReducer,
   },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({ serializableCheck: false }).concat(logger),
+  // middleware: getDefaultMiddleware =>
+  //   getDefaultMiddleware({ serializableCheck: false }).concat(logger),
 });

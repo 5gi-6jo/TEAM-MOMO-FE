@@ -153,7 +153,7 @@ const Mypage = () => {
       <Grid is_Grid padding="20px 30px">
         <div
           onClick={() => {
-            navigate('/alarm');
+            navigate('/alarm', { state: { user: user } });
           }}
         >
           <Text size="18px" bold margin="0px">
