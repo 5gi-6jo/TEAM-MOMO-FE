@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import { tokenURL, URL } from '../../shared/apis/API';
 import { deleteCookie, setCookie } from '../../shared/utils/Cookie';
 // import { useHistory } from 'react-router';
@@ -34,6 +35,7 @@ export const login = createAsyncThunk(
         // sessionStorage.setItem('token', response.headers.authorization);
         setTimeout(() => {});
         window.location.assign('/main');
+        // console.log('asdf');
 
         return response.data.data;
       });
@@ -85,9 +87,9 @@ export const setFCMToken = createAsyncThunk(
   'plan/setFCMToken',
   async (data, { rejectWithValue }) => {
     try {
-      return await tokenURL
-        .post(`/users/devices`, data)
-        .then(response => response.data.data);
+      return await tokenURL.post(`/users/devices`, data).then(response => {
+        return response.data.data;
+      });
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);

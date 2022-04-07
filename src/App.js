@@ -23,7 +23,7 @@ import Login from './pages/Login';
 import EditPlans from './pages/EditPlans';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getUserbyToken, setFCMToken } from './redux/modules/user';
+import { getUserbyToken, isFCMToken, setFCMToken } from './redux/modules/user';
 import PlanSetName from './pages/PlanSetName';
 import { deleteCookie, getCookie, setCookie } from './shared/utils/Cookie';
 import NoUrlplan from './pages/NoUrlplan';
@@ -55,48 +55,46 @@ function App() {
   useEffect(() => {
     // console.log('app.js::didmount');
 
-    if (user.isNoticeAllowed !== undefined) {
-      // console.log('noti ', user);
-      if (browsernoti === user.isNoticeAllowed) {
-        // console.log('noti서로 같음', user.isNoticeAllowed);
-        return;
-      } else {
-        // console.log('noti서로 다름', user.isNoticeAllowed);
-        if (!browsernoti) {
-          // console.log("noti '' 보냄");
-          const data = {
-            token: '',
-          };
-          getToken(messaging, {
-            vapidKey: process.env.REACT_APP_VAPID_KEY,
-          }).then(token => {
-            deleteToken(messaging).then(() => {
-              // console.log('deleteFCMtoken');
-              deleteCookie('FCMtoken');
-            });
-          });
-
-          dispatch(setFCMToken(data));
-          return;
-        } else {
-          // console.log('noti 토큰 보냄');
-
-          getToken(messaging, {
-            vapidKey: process.env.REACT_APP_VAPID_KEY,
-          }).then(token => {
-            // console.log(token);
-            setCookie('FCMtoken', token, 20);
-            const data = {
-              token: getCookie('FCMtoken'),
-            };
-
-            dispatch(setFCMToken(data));
-          });
-        }
-      }
-    }
     if (istoken && !islogin) {
       dispatch(getUserbyToken());
+
+      if (user.isNoticeAllowed !== undefined) {
+        // console.log('noti ', user);
+        if (browsernoti === user.isNoticeAllowed) {
+          // console.log('noti서로 같음', user.isNoticeAllowed);
+          return;
+        } else {
+          // console.log('noti서로 다름', user.isNoticeAllowed);
+          if (!browsernoti) {
+            // console.log("noti '' 보냄");
+            const data = {
+              token: '',
+            };
+            getToken(messaging, {
+              vapidKey: process.env.REACT_APP_VAPID_KEY,
+            }).then(token => {
+              deleteToken(messaging);
+              deleteCookie('FCMtoken');
+            });
+            dispatch(setFCMToken(data));
+
+            return;
+          } else {
+            // console.log('noti 토큰 보냄');
+
+            getToken(messaging, {
+              vapidKey: process.env.REACT_APP_VAPID_KEY,
+            }).then(token => {
+              // console.log(token);
+              setCookie('FCMtoken', token, 20);
+              const data = {
+                token: getCookie('FCMtoken'),
+              };
+              dispatch(setFCMToken(data));
+            });
+          }
+        }
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [istoken, user]);
