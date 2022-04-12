@@ -134,7 +134,7 @@ const AddPlans = props => {
                 모두모여 시간*
               </Text>
               <div style={{ padding: '7px 0px' }}>
-                <Text size="10px" color={theme.color.gray2}>
+                <Text size="12px" color={theme.color.gray2}>
                   이 시간부터는 지도가 생성되며 서로의 위치를 공유할 수
                   있습니다.
                 </Text>
@@ -241,6 +241,11 @@ const AddPlans = props => {
                 };
                 dispatch(setPlans(data)).then(res => {
                   navigate('/main');
+
+                  if (Notification.permission !== 'granted')
+                    window.alert(
+                      '브라우저 알림 설정을 허용하셔야 알림을 받을 수 있습니다.',
+                    );
                 });
               }}
             >

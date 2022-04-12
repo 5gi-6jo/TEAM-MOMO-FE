@@ -119,6 +119,7 @@ const PlansDetail = props => {
 
       {showModal && (
         <EditPlans
+          finished={Plan.finished}
           planDate={Plan.planDate}
           planName={Plan.planName}
           des={Plan.destination}

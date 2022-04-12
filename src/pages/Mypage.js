@@ -7,6 +7,7 @@ import { HiOutlineChevronRight } from 'react-icons/hi';
 import theme from '../Styles/theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/modules/user';
+import { deleteCookie } from '../shared/utils/Cookie';
 
 /**
  * @param {*} props
@@ -46,6 +47,7 @@ const Mypage = () => {
   const Logout = () => {
     // logout function
     dispatch(logout());
+    deleteCookie('token');
   };
 
   return (

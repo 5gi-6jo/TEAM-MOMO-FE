@@ -1,10 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-
-import styled, { ThemeProvider } from 'styled-components';
-import theme from './Styles/theme';
-
-//백그라운드 이미지
-import { backImg2, frame } from './img/index';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Main from './pages/Main';
 import Plans from './pages/Plans';
@@ -17,17 +13,20 @@ import Home from './pages/Home';
 import OAuthHandler from './service/OAuthHandler';
 import Alarm from './pages/Alarm';
 
-import firebase from 'firebase/compat/app';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import EditPlans from './pages/EditPlans';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { getUserbyToken, isFCMToken, setFCMToken } from './redux/modules/user';
+import { getUserbyToken, setFCMToken } from './redux/modules/user';
 import PlanSetName from './pages/PlanSetName';
-import { deleteCookie, getCookie, setCookie } from './shared/utils/Cookie';
 import NoUrlplan from './pages/NoUrlplan';
+
+import { deleteCookie, getCookie, setCookie } from './shared/utils/Cookie';
+import styled, { ThemeProvider } from 'styled-components';
+import theme from './Styles/theme';
 import ReactGA4 from 'react-ga4';
+import { backImg2, frame } from './img/index';
+
+import firebase from 'firebase/compat/app';
 import { deleteToken, getToken } from 'firebase/messaging';
 import { messaging } from './firebase';
 
@@ -49,24 +48,16 @@ function App() {
 
   const userNick = useSelector(state => state.user.user_info).nickname;
   const user = useSelector(state => state.user.user_info);
-  // console.log(userNick, guestNick, '::::app.js');
-  // setGuestNick(userNick);
   const browsernoti = Notification.permission === 'granted' ? true : false;
   useEffect(() => {
-    // console.log('app.js::didmount');
-
     if (istoken && !islogin) {
       dispatch(getUserbyToken());
 
       if (user.isNoticeAllowed !== undefined) {
-        // console.log('noti ', user);
         if (browsernoti === user.isNoticeAllowed) {
-          // console.log('noti서로 같음', user.isNoticeAllowed);
           return;
         } else {
-          // console.log('noti서로 다름', user.isNoticeAllowed);
           if (!browsernoti) {
-            // console.log("noti '' 보냄");
             const data = {
               token: '',
             };
@@ -80,12 +71,9 @@ function App() {
 
             return;
           } else {
-            // console.log('noti 토큰 보냄');
-
             getToken(messaging, {
               vapidKey: process.env.REACT_APP_VAPID_KEY,
             }).then(token => {
-              // console.log(token);
               setCookie('FCMtoken', token, 20);
               const data = {
                 token: getCookie('FCMtoken'),
@@ -95,6 +83,16 @@ function App() {
           }
         }
       }
+      //처음 로딩시 알림 토큰
+      getToken(messaging, {
+        vapidKey: process.env.REACT_APP_VAPID_KEY,
+      }).then(token => {
+        setCookie('FCMtoken', token, 20);
+        const data = {
+          token: getCookie('FCMtoken'),
+        };
+        dispatch(setFCMToken(data));
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [istoken, user]);
@@ -115,7 +113,6 @@ function App() {
               }}
             >
               <View>
-                {/* <FCMtoken /> */}
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route
@@ -144,18 +141,6 @@ function App() {
                   />
                   <Route path="/Alarm" element={<Alarm />} />
                   <Route path="/*" element={<NoUrlplan />} />
-
-                  {/* <Route
-                    path="/planmap/:url"
-                    element={
-                      <PlanMap
-                        // userNick={userNick}
-                        guestNick={guestNick}
-                        setGuestNick={setGuestNick}
-                        isChating={isChating}
-                      />
-                    }
-                  /> */}
                 </Routes>
               </View>
               <Footer />
@@ -180,14 +165,6 @@ const Web = styled.div`
 const FramePhone = styled.div`
   width: 100vw;
   height: 100%;
-  /* width: 100%;
-  height: 100%;
-  right: 50%;
-  top: 50%;
-  transform: translate(50%, -50%);
-  position: fixed;
-  right: 50%;
-  top: 50%; */
   @media ${theme.device.laptop} {
     transform: translate(50%, -50%);
     position: fixed;
@@ -197,7 +174,6 @@ const FramePhone = styled.div`
     min-width: 360px;
     min-height: 500px;
     max-height: 847px;
-    /* min-height: 750px; */
     right: 50%;
     top: 50%;
     background: url(${frame}) no-repeat;
@@ -240,25 +216,15 @@ const View = styled.div`
   ::-webkit-scrollbar {
     display: none; /* Chrome , Safari , Opera */
   }
-  /* right: 50%;
-  top: 50%;
-  transform: translate(50%, -50%); */
+
   @media ${theme.device.laptop} {
     width: 21rem;
-
     height: 83.5%;
-
-    /* calc(84% - 46px); */
-
     border-radius: 40px;
-    /* right: 42.8%;
-    top: 46.5%; */
     max-width: 360px;
-
     top: 49%;
     right: 48%;
     transform: translate(50%, -50%);
-    /* border-radius: 40px 40px 0px 0px; */
     border-radius: 40px;
   }
 `;

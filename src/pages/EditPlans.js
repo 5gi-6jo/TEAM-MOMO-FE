@@ -221,6 +221,10 @@ const EditPlans = props => {
                     window.alert('*표시 내용을 모두 입력해주세요');
                     return;
                   }
+                  if (props.finished) {
+                    window.alert('이미 완료된 모임입니다.');
+                    return;
+                  }
 
                   const data = {
                     id: props.id,

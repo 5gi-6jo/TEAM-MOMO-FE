@@ -37,27 +37,6 @@ const Login = ({ isLogin }) => {
         <IconMomoKor src={momoKor} />
       </Grid>
       <LoginForm />
-      {/* <FindInfo>
-        <div
-          onClick={() => {
-            navigate('/', { replace: true });
-          }}
-        >
-          <Text color={theme.color.gray4} size="12px">
-            아이디 찾기
-          </Text>
-        </div>
-        <LineMini src={Line4} />
-        <div
-          onClick={() => {
-            navigate('/', { replace: true });
-          }}
-        >
-          <Text color={theme.color.gray4} size="12px">
-            비밀번호 찾기
-          </Text>
-        </div>
-      </FindInfo> */}
       <div style={{ padding: '20px' }}></div>
       <hr />
       <div style={{ padding: '20px' }}></div>

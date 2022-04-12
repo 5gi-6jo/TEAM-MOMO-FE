@@ -116,9 +116,9 @@ const PlanMap = forwardRef((props, ref) => {
   };
 
   //내위치 반복 보내기
-  // useInterval(() => {
-  //   sendMyLocation();
-  // }, 3000);
+  useInterval(() => {
+    sendMyLocation();
+  }, 3000);
   // eslint-disable-next-line no-unused-vars
   const bounds = useMemo(() => {
     const bounds = new kakao.maps.LatLngBounds();
