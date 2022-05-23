@@ -1,7 +1,8 @@
 #  Front-end
 ## - Websocket을 활용한 실시간 위치 공유 및 스케쥴 관리 서비스
 
-
+페이지 소개
+https://www.notion.so/MOMO-7f149b8be7cb429497e15fb6e5e1ac17
 
 <h3 align="center"><b>모두모여(Momo)</b></h3>
 
